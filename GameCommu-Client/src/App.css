@@ -6,7 +6,7 @@
     color: white;
     text-decoration: none;
     font-size: 1.5rem;
-    margin-right: 100vh;
+    margin-right: 75%;
 }
 
 .nav-bg .nav-con .nav-tog {
@@ -31,6 +31,9 @@
 }
 
 @media screen and (max-width: 992px) {
+    .nav-bg {
+        padding-bottom: 1em;
+    }
     #nav-active a.active {
         color: white;
         background-color: #526D82;
@@ -40,7 +43,7 @@
       color: gray;
     }
     .nav-bg .nav-con .nav-logo {
-        margin-bottom: 1.5em;
+        margin-bottom: 1em;
         margin-right: 0vh;
     }
   }

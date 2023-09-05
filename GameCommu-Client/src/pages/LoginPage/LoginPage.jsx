@@ -18,7 +18,9 @@ function LoginPage() {
   const { Formik } = formik;
 
   const validationSchema = yup.object().shape({
-    username: yup.string().required('กรุณากรอกชื่อผู้ใช้งาน'),
+    username: yup.string()
+      .min(8, 'ชื่อผู้ใช้งานต้องมีอย่างน้อย 8 ตัว')
+      .required('กรุณากรอกชื่อผู้ใช้งาน'),
     password: yup
       .string()
       .min(8, 'รหัสผ่านต้องมีอย่างน้อย 8 ตัว')

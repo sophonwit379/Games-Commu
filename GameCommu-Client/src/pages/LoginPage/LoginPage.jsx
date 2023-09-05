@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import { 
   FloatingLabel,
   Form,
@@ -13,34 +14,60 @@ import {
 function LoginPage() {
   const navigate = useNavigate();
 
-  const login = () => {
-    navigate("/home")
+  const [username,setUsername] = useState('');
+  const [password,setPassword] = useState('');
+
+  const handleUsernameChange = (e) => {
+    setUsername(e.target.value);
+  };
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  };
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    console.log(username,password);
+    navigate("/home");
   }
+
+  
 
   return (
     <>
-      <Container style={{marginTop:'9rem'}} className='h-50 d-flex justify-content-center'>
-        <Row className="w-50 align-self-center">
+      <Container style={{marginTop:'8rem'}} className='h-50 d-flex justify-content-center'>
+        <Row className="w-50 item flex-column align-self-center">
           <Col>
             <Card>
               <Card.Body className="mt-3 d-flex flex-column ">
-                <FloatingLabel
-                  controlId="floatingInput"
-                  label="Username"
-                  className="mb-4"
-                >
-                  <Form.Control placeholder="username007" />
-                </FloatingLabel>
-                <FloatingLabel controlId="floatingPassword" label="Password">
-                    <Form.Control type="password" placeholder="Password" />
-                </FloatingLabel>
-                <Button 
-                  className="mt-4 " 
-                  variant="secondary"
-                  onClick={login}
+                <Form onSubmit={handleLogin}>
+                  <FloatingLabel
+                    controlId="floatingInput"
+                    label="Username"
+                    className="mb-4"
                   >
-                    Login
-                </Button>
+                    <Form.Control 
+                      placeholder="username007"
+                      onChange={handleUsernameChange} 
+                      value={username}
+                    />
+                  </FloatingLabel>
+                  <FloatingLabel controlId="floatingPassword" label="Password">
+                      <Form.Control 
+                        type="password" 
+                        placeholder="Password"
+                        onChange={handlePasswordChange}
+                        value={password}  
+                      />
+                  </FloatingLabel>
+                  <Button 
+                    className="mt-4 w-100" 
+                    variant="secondary"
+                    type="submit"
+                    >
+                      Login
+                  </Button>
+                </Form>
               </Card.Body>
             </Card>
           </Col>

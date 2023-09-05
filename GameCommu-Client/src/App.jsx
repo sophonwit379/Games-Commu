@@ -18,10 +18,10 @@ function App() {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav id="nav-active" className="me-auto">
               <NavLink className='links' to="/login" >
-                Login
+                เข้าสู่ระบบ
               </NavLink>
               <NavLink className='links' to="/register" >
-                Register
+                สมัครสมาชิก
               </NavLink>
             </Nav>
           </Navbar.Collapse>

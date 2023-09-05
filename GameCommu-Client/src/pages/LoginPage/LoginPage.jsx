@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import * as formik from 'formik';
 import * as yup from 'yup';
-
 import { 
   FloatingLabel,
   Form,
@@ -19,13 +18,13 @@ function LoginPage() {
   const { Formik } = formik;
 
   const validationSchema = yup.object().shape({
-    username: yup.string().required(),
+    username: yup.string().required('กรุณากรอกชื่อผู้ใช้งาน'),
     password: yup
       .string()
-      .min(8, 'Password must be 8 characters long')
-      .matches(/[0-9]/, 'Password requires a number')
-      .matches(/[A-Za-z]/, 'Password requires at least one letter')
-      .required(),
+      .min(8, 'รหัสผ่านต้องมีอย่างน้อย 8 ตัว')
+      .matches(/[0-9]/, 'รหัสผ่านต้องมีตัวเลขอย่างน้อย 1 ตัว')
+      .matches(/[A-Za-z]/, 'รหัสผ่านต้องมีตัวอักษรภาษาอังกฤษอย่างน้อย 1 ตัว')
+      .required('กรุณากรอกรหัสผ่าน'),
   });
 
   const initialValues = {
@@ -33,7 +32,8 @@ function LoginPage() {
       password: '',
   };
 
-  const onSubmit = () => {
+  const onSubmit = (values) => {
+    console.log(values)
     navigate("/home");
   }
 
@@ -46,13 +46,16 @@ function LoginPage() {
       initialValues={initialValues}
     >
       {({handleSubmit, handleChange, values, errors}) => (
-        <Container style={{marginTop:'8rem'}} className='h-50 d-flex justify-content-center'>
+        <Container style={{minHeight:'50vh'}} className='d-flex justify-content-center'>
           <Row className="w-50 item flex-column align-self-center">
-            <Col>
-              <Card>
+            <Col className="d-flex flex-column align-items-center">
+              <h1 className="mb-5 mt-5">
+                Game Commu
+              </h1>
+              <Card className="w-100">
                 <Card.Body className="mt-3 d-flex flex-column ">
                   <Form onSubmit={handleSubmit}>
-                    <FloatingLabel controlId="floatingInput" label="Username" className="mb-4"
+                    <FloatingLabel controlId="floatingInput" label="ชื่อผู้ใช้งาน" className="mb-4"
                     >
                       <Form.Control 
                         placeholder="username007"
@@ -65,7 +68,7 @@ function LoginPage() {
                         {errors.username}
                       </Form.Control.Feedback>
                     </FloatingLabel>
-                    <FloatingLabel controlId="floatingPassword" label="Password">
+                    <FloatingLabel controlId="floatingPassword" label="รหัสผ่าน">
                         <Form.Control 
                           type="password" 
                           placeholder="Password"
@@ -83,7 +86,7 @@ function LoginPage() {
                       variant="secondary"
                       type="submit"
                       >
-                        Login
+                        เข้าสู่ระบบ
                     </Button>
                   </Form>
                 </Card.Body>

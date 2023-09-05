@@ -48,15 +48,15 @@ function LoginPage() {
       initialValues={initialValues}
     >
       {({handleSubmit, handleChange, values, errors}) => (
-        <Container style={{minHeight:'50vh'}} className='d-flex justify-content-center'>
-          <Row className="w-50 item flex-column align-self-center">
+        <Container style={{minHeight:'60vh'}} className='d-flex justify-content-center'>
+          <Row className="w-50 align-self-center">
             <Col className="d-flex flex-column align-items-center">
               <h1 className="mb-5 mt-5">
                 Game Commu
               </h1>
               <Card className="w-100">
                 <Card.Body className="mt-3 d-flex flex-column ">
-                  <Form onSubmit={handleSubmit}>
+                  <Form noValidate onSubmit={handleSubmit}>
                     <FloatingLabel controlId="floatingInput" label="ชื่อผู้ใช้งาน" className="mb-4"
                     >
                       <Form.Control 

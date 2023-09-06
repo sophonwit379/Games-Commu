@@ -1,5 +1,8 @@
 import * as formik from 'formik';
 import * as yup from 'yup';
+import { useNavigate } from 'react-router-dom';
+import { AiFillEye,AiFillEyeInvisible } from "react-icons/ai";
+import useTogglePassword from '../../hooks/use-toggle-password';
 import { 
   FloatingLabel,
   Form,
@@ -8,36 +11,42 @@ import {
   Row,
   Col,
   Button,
+  InputGroup
 } from "react-bootstrap";
 
-const { Formik } = formik;
-
-const validationSchema = yup.object().shape({
-  username: yup.string().required('กรุณากรอกชื่อผู้ใช้งาน'),
-  email: yup.string().email('กรุณากรอกอีเมล์ให่้ถูกต้อง').required('กรุณากรอกอีเมล์'),
-  password: yup
-    .string()
-    .min(8, 'รหัสผ่านต้องมีอย่างน้อย 8 ตัว')
-    .matches(/[0-9]/, 'รหัสผ่านต้องมีตัวเลขอย่างน้อย 1 ตัว')
-    .matches(/[A-Za-z]/, 'รหัสผ่านต้องมีตัวอักษรภาษาอังกฤษอย่างน้อย 1 ตัว')
-    .required('กรุณากรอกรหัสผ่าน'),
-  confirmPassword: yup.string()
-  .oneOf([yup.ref('password'), null], 'รหัสผ่านไม่ตรงกัน')
-  .required('กรุณากรอกรหัสผ่านอีกครั้ง'),
-});
-
-const initialValues = {
-    username: '',
-    email:'',
-    password: '',
-    confirmPassword:'',
-};
-
-const onSubmit = (values) => {
-  console.log(values)
-}
 
 function Register() {
+  const { showPwd,togglePwd } = useTogglePassword();
+  const navigate = useNavigate();
+  const { Formik } = formik;
+
+  const validationSchema = yup.object().shape({
+    username: yup.string()
+      .min(8, 'ชื่อผู้ใช้งานต้องมีอย่างน้อย 8 ตัว')
+      .required('กรุณากรอกชื่อผู้ใช้งาน'),
+    email: yup.string().email('กรุณากรอกอีเมล์ให่้ถูกต้อง').required('กรุณากรอกอีเมล์'),
+    password: yup
+      .string()
+      .min(8, 'รหัสผ่านต้องมีอย่างน้อย 8 ตัว')
+      .matches(/[0-9]/, 'รหัสผ่านต้องมีตัวเลขอย่างน้อย 1 ตัว')
+      .matches(/[A-Za-z]/, 'รหัสผ่านต้องมีตัวอักษรภาษาอังกฤษอย่างน้อย 1 ตัว')
+      .required('กรุณากรอกรหัสผ่าน'),
+    confirmPassword: yup.string()
+    .oneOf([yup.ref('password'), null], 'รหัสผ่านไม่ตรงกัน')
+    .required('กรุณากรอกรหัสผ่านอีกครั้ง'),
+  });
+
+  const initialValues = {
+      username: '',
+      email:'',
+      password: '',
+      confirmPassword:'',
+  };
+
+  const onSubmit = () => {
+    navigate('/login');
+  }
+
     return (
       <Formik
         validationSchema={validationSchema}
@@ -51,7 +60,7 @@ function Register() {
                 <Card className='w-100'>
                   <Card.Body>
                     <Form noValidate onSubmit={handleSubmit} >
-                      <FloatingLabel controlId="username" label="ชื่อผู้ใช้งาน" className="mb-4"
+                      <FloatingLabel controlId="username" label="ชื่อผู้ใช้งาน" className="mb-5"
                       >
                         <Form.Control 
                           placeholder="username007"
@@ -60,11 +69,11 @@ function Register() {
                           onChange={handleChange}
                           isInvalid={!!errors.username}
                         />
-                        <Form.Control.Feedback type="invalid">
+                        <Form.Control.Feedback type="invalid" className='position-absolute'>
                           {errors.username}
                         </Form.Control.Feedback>
                       </FloatingLabel>
-                      <FloatingLabel controlId="email" label="อีเมล์" className="mb-4">
+                      <FloatingLabel controlId="email" label="อีเมล์" className="mb-5">
                           <Form.Control 
                             type="email" 
                             placeholder="Email"
@@ -73,42 +82,60 @@ function Register() {
                             onChange={handleChange}
                             isInvalid={!!errors.email} 
                           />
-                        <Form.Control.Feedback type="invalid">
+                        <Form.Control.Feedback type="invalid" className='position-absolute'>
                           {errors.email}
                         </Form.Control.Feedback>                        
                       </FloatingLabel>
-                      <FloatingLabel controlId="password" label="รหัสผ่าน" className='mb-4'>
+                      <InputGroup className="mb-5">
+                      <FloatingLabel controlId="floatingPassword" label="รหัสผ่าน">
                           <Form.Control 
-                            type="password" 
+                            type={showPwd ? 'text' : 'password'} 
                             placeholder="Password"
                             name="password"
                             value={values.password}
                             onChange={handleChange}
                             isInvalid={!!errors.password} 
                           />
-                        <Form.Control.Feedback type="invalid">
+                        <Form.Control.Feedback type="invalid" className="position-fixed">
                           {errors.password}
-                        </Form.Control.Feedback>                        
+                        </Form.Control.Feedback>
+                        
                       </FloatingLabel>
-                      <FloatingLabel controlId="confirmPassword" label="กรอกรหัสผ่านอีกครั้ง">
+                      <Button
+                        variant="outline-secondary"
+                        onClick={togglePwd}
+                      >
+                        {showPwd ? <AiFillEyeInvisible/> : <AiFillEye/>}
+                      </Button>
+                    </InputGroup>
+                    <InputGroup className="mb-4">
+                      <FloatingLabel controlId="confirmPassword" label="รหัสผ่านอีกครั้ง">
                           <Form.Control 
-                            type="password" 
-                            placeholder="ConfirmPassword"
+                            type={showPwd ? 'text' : 'password'} 
+                            placeholder="confirmPassword"
                             name="confirmPassword"
                             value={values.confirmPassword}
                             onChange={handleChange}
                             isInvalid={!!errors.confirmPassword} 
                           />
-                        <Form.Control.Feedback type="invalid">
+                        <Form.Control.Feedback type="invalid" className="position-fixed">
                           {errors.confirmPassword}
-                        </Form.Control.Feedback>                        
+                        </Form.Control.Feedback>
+                        
                       </FloatingLabel>
+                      <Button
+                        variant="outline-secondary"
+                        onClick={togglePwd}
+                      >
+                        {showPwd ? <AiFillEyeInvisible/> : <AiFillEye/>}
+                      </Button>
+                    </InputGroup>
                       <Button 
                         className="mt-4 w-100" 
                         variant="secondary"
                         type="submit"
                         >
-                          ถัดไป
+                          สมัคร
                       </Button>
                     </Form>
                   </Card.Body>

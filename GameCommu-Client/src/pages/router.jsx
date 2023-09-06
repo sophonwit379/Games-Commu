@@ -4,6 +4,7 @@ import ErrorPage from "./ErrorPage/ErrorPage";
 import LoginPage from "./LoginPage/LoginPage";
 import RegisterPage from "./RegisterPage/Register";
 import HomePage from "./HomePage/HomePage";
+import SelectGamesPage from "./SelectGamesPage/SelectGamesPage";
 
 export  const router  = createBrowserRouter([
     {
@@ -19,6 +20,10 @@ export  const router  = createBrowserRouter([
           path: "register",
           element: <RegisterPage />,
         },
+        {
+          path: "select-game",
+          element: <SelectGamesPage/>
+        }
       ],
     },
     {

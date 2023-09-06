@@ -1,6 +1,8 @@
 import { useNavigate } from "react-router-dom";
+import useTogglePassword from "../../hooks/use-toggle-password";
 import * as formik from 'formik';
 import * as yup from 'yup';
+import { AiFillEye,AiFillEyeInvisible } from "react-icons/ai";
 import { 
   FloatingLabel,
   Form,
@@ -9,10 +11,13 @@ import {
   Row,
   Col,
   Button,
+  InputGroup
 } from "react-bootstrap";
 
 
 function LoginPage() {
+  const { showPwd,togglePwd } = useTogglePassword();
+
   const navigate = useNavigate();
 
   const { Formik } = formik;
@@ -57,7 +62,7 @@ function LoginPage() {
               <Card className="w-100">
                 <Card.Body className="mt-3 d-flex flex-column ">
                   <Form noValidate onSubmit={handleSubmit}>
-                    <FloatingLabel controlId="floatingInput" label="ชื่อผู้ใช้งาน" className="mb-4"
+                    <FloatingLabel controlId="floatingInput" label="ชื่อผู้ใช้งาน" className="mb-5"
                     >
                       <Form.Control 
                         placeholder="username007"
@@ -66,23 +71,32 @@ function LoginPage() {
                         onChange={handleChange}
                         isInvalid={!!errors.username}
                       />
-                      <Form.Control.Feedback type="invalid">
+                      <Form.Control.Feedback type="invalid" className="position-absolute">
                         {errors.username}
                       </Form.Control.Feedback>
                     </FloatingLabel>
-                    <FloatingLabel controlId="floatingPassword" label="รหัสผ่าน">
-                        <Form.Control 
-                          type="password" 
-                          placeholder="Password"
-                          name="password"
-                          value={values.password}
-                          onChange={handleChange}
-                          isInvalid={!!errors.password} 
-                        />
-                      <Form.Control.Feedback type="invalid">
-                        {errors.password}
-                      </Form.Control.Feedback>                        
-                    </FloatingLabel>
+                    <InputGroup className="mb-3">
+                      <FloatingLabel  controlId="floatingPassword" label="รหัสผ่าน">
+                          <Form.Control 
+                            type={showPwd ? 'text' : 'password'} 
+                            placeholder="Password"
+                            name="password"
+                            value={values.password}
+                            onChange={handleChange}
+                            isInvalid={!!errors.password} 
+                          />
+                        <Form.Control.Feedback type="invalid" className="position-absolute">
+                            {errors.password}
+                        </Form.Control.Feedback>
+                        
+                      </FloatingLabel>
+                      <Button
+                        variant="outline-secondary"
+                        onClick={togglePwd}
+                      >
+                        {showPwd ? <AiFillEyeInvisible/> : <AiFillEye/>}
+                      </Button>
+                    </InputGroup>
                     <Button 
                       className="mt-4 w-100" 
                       variant="secondary"

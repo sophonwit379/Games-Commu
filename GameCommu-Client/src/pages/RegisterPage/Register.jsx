@@ -43,8 +43,8 @@ function Register() {
       confirmPassword:'',
   };
 
-  const onSubmit = () => {
-    navigate('/login');
+  const onSubmit = (values) => {
+    navigate('/select-game',{state:{values}});
   }
 
     return (

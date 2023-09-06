@@ -20,15 +20,17 @@ export  const router  = createBrowserRouter([
           path: "register",
           element: <RegisterPage />,
         },
-        {
-          path: "select-game",
-          element: <SelectGamesPage/>
-        }
       ],
     },
     {
       path: "home",
       element: <HomePage/>,
+      errorElement: <ErrorPage />,
+    },
+    {
+      path: "select-game",
+      element: <SelectGamesPage/>,
+      errorElement: <ErrorPage />
     }
 
   ]);

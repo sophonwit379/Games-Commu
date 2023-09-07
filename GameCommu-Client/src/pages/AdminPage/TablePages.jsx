@@ -1,6 +1,5 @@
-import React from "react";
 import "./AdminPage.css";
-import { MDBDataTable } from "mdbreact";
+import { MDBTable } from "mdb-react-ui-kit";
 
 const item = {
   columns: [
@@ -30,7 +29,7 @@ export function TablePages() {
   const MapTable = () => {
     return item.map((item, id) => {
       return (
-        <tr>
+        <tr key={id}>
           <td >{id}</td>
           <td>{item.name}</td>
           <td>{item.age}</td>
@@ -62,7 +61,7 @@ export function TablePages() {
           </div>
         </div>
         <div>
-          <MDBDataTable striped bordered  responsive  data={item} className="customTable"/>
+          <MDBTable striped bordered  responsive  data={item} className="customTable"/>
         </div>
       </div>
     </div>

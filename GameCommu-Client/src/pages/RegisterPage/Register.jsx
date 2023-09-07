@@ -45,7 +45,7 @@ function Register() {
 
   const onSubmit = (values) => {
     navigate('/select-game',{state:{values}});
-  }
+  };
 
     return (
       <Formik

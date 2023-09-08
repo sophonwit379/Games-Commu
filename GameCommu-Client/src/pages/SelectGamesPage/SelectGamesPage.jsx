@@ -18,11 +18,11 @@ function SelectGamesPage() {
   const {data,isFetching,error} = useFetchGameListQuery();
   const [addGame,addGameResult] = useAddGameMutation();
 
-  // useEffect(() => {
-  //   if(userData === ''){
-  //     navigate('/register');
-  //   }
-  // }),[userData];
+  useEffect(() => {
+    if(userData === ''){
+      navigate('/register');
+    }
+  }),[userData];
 
   const handleSelectGame = (game) => {
     const check = selectedGame.includes(game);

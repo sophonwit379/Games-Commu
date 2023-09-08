@@ -3,7 +3,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import './App.css';
 import { Outlet,Link,NavLink } from "react-router-dom";
-import gLogo from './assets/gamecredits-game-logo.svg';
+import gLogo from './assets/game-credits-game-logo.svg';
 
 function App() {
 

@@ -1,0 +1,12 @@
+.table-con{
+    height: 80%;
+}
+.indexTable-con{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.tableContent-con{
+    width: 100%;
+    height: 90%;
+}

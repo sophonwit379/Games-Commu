@@ -46,12 +46,15 @@ function SelectGamesPage() {
       return (
         <Row key={game.id}>
           <Container 
-              className="m-3 d-flex flex-column justify-content-center align-items-center"
+              className="m-3 d-flex flex-column justify-content-center align-items-center w-100 h-100"
               onClick={() => handleSelectGame(game)}
           >
-            <Image src={game.url} rounded height={125} width={175}/>
-            <h6>{game.name}</h6>
-           {selectedGame.includes(game) && <Card className="position-absolute">Selected</Card>}
+            <div style={{width:'95%',height:'95%'}} className="position-relative justify-content-center d-flex align-items-center flex-column">
+              <Image src={game.url} rounded height={125} width={175} className="z-1"/>
+              <h6 className="z-1">{game.name}</h6>
+              {selectedGame.includes(game) && <div style={{backgroundColor:'#9DB2BF'}} className="position-absolute w-100 h-100 d-flex"></div>}
+            </div>
+           
           </Container>
         </Row>
       );
@@ -59,7 +62,9 @@ function SelectGamesPage() {
   }
   
   const handleSubmit = () => {
-    console.log(selectedGame);
+    if(selectedGame.length >= 3 ){
+      navigate('/login')
+    }
   }
 
 
@@ -78,7 +83,7 @@ function SelectGamesPage() {
                 + AddGame
               </Button>
             </h4>
-              <h6>at least 5 game</h6>
+              <h6>at least 3 game</h6>
           </Card.Header>
           <Card.Body style={{overflowX:"hidden"}} className="d-flex flex-wrap">
             {content}
@@ -86,7 +91,7 @@ function SelectGamesPage() {
         </Card>
         <div className="d-flex justify-content-end mt-3">
           <Button 
-            className="w-25" 
+            className="w-25 mr-3" 
             variant="secondary"
             onClick={handleSubmit}
           >

@@ -135,7 +135,7 @@ function Register() {
                         variant="secondary"
                         type="submit"
                         >
-                          สมัคร
+                          ถัดไป
                       </Button>
                     </Form>
                   </Card.Body>

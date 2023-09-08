@@ -16,10 +16,10 @@ function HomePage() {
             <img style={{width:'4rem'}} src={gLogo} alt="logo" className="d-flex"/>
           </Link>
           <Navbar.Toggle className='nav-tog' aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav"> 
-            <Nav id="nav-active">
-              <Dropdown style={{width:'3rem',height:'3rem'}}>
-                <FaUserCircle style={{color:'white'}} className='w-100 h-100 position-absolute'/>
+          <Navbar.Collapse id="basic-navbar-nav" > 
+            <Nav style={{width:'3rem',height:'3rem',marginLeft:'13em'}}>
+              <Dropdown className='w-100 h-100'>
+                <FaUserCircle style={{color:'#DDE6ED'}} className='w-100 h-100 position-absolute'/>
                 <Dropdown.Toggle className='opacity-0 w-100 h-100'>
                 </Dropdown.Toggle>
                 <Dropdown.Menu id='drop-d-m' >

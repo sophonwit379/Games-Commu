@@ -2,11 +2,12 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Navbar from 'react-bootstrap/Navbar';
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 import gLogo from '../../assets/game-credits-game-logo.svg';
 import { FaUserCircle } from "react-icons/fa";
 
 function HomePage() {
+  const navigate = useNavigate();
  
   return (
     <div className='min-vh-100'>
@@ -23,8 +24,14 @@ function HomePage() {
                 <Dropdown.Toggle className='opacity-0 w-100 h-100'>
                 </Dropdown.Toggle>
                 <Dropdown.Menu id='drop-d-m' >
-                  <Dropdown.Item >Profile</Dropdown.Item>
-                  <Dropdown.Item >Logout</Dropdown.Item>
+                  <Dropdown.Item 
+                  >
+                    Profile
+                  </Dropdown.Item>
+                  <Dropdown.Item 
+                    onClick={() => navigate('/')}
+                    >Logout
+                  </Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
             </Nav>

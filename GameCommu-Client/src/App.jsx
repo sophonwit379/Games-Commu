@@ -10,13 +10,13 @@ function App() {
   return (
     <div className='min-vh-100'>
       <Navbar expand="lg" className="nav-bg">
-        <Container className='nav-con'> 
+        <Container className='nav-contain'> 
           <Link className='nav-logo' to='/'>  
             <img style={{width:'4rem'}} src={gLogo} alt="logo" className="d-flex"/>
           </Link>
           <Navbar.Toggle className='nav-tog' aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav id="nav-active" className="me-auto">
+          <Navbar.Collapse className='justify-content-end'>
+            <Nav id="nav-active">
               <NavLink className='links' to="/login" >
                 เข้าสู่ระบบ
               </NavLink>

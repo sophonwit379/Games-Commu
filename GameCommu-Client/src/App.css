@@ -2,14 +2,13 @@
     background: #27374D;
 }
 
-.nav-bg .nav-con .nav-logo {
+.nav-bg .nav-contain .nav-logo {
     color: white;
     text-decoration: none;
     font-size: 1.5rem;
-    margin-right: 75%;
 }
 
-.nav-bg .nav-con .nav-tog {
+.nav-bg .nav-contain .nav-tog {
     background-color: #526D82;
     
 }
@@ -42,7 +41,7 @@
       background-color: transparent;
       color: gray;
     }
-    .nav-bg .nav-con .nav-logo {
+    .nav-bg .nav-contain .nav-logo {
         margin-right: 0vh;
         margin-top: 0.5rem;
         margin-bottom: 1rem;

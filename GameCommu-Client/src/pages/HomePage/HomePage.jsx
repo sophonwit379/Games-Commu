@@ -1,11 +1,14 @@
-import { Navbar,Container,Form,Button } from 'react-bootstrap';
+import { Navbar,Container,Form,Button,Row,Col, Card } from 'react-bootstrap';
 import { Link,useNavigate } from 'react-router-dom';
 import gLogo from '../../assets/game-credits-game-logo.svg';
 import { FaUserCircle } from "react-icons/fa";
 import './HomePage.css'
+import Post from '../../components/Post';
+import { useState } from 'react';
 
 function HomePage() {
   const navigate = useNavigate();
+  const [modalShow, setModalShow] = useState(false);
 
   const handleLogout = () => {
     navigate('/');
@@ -16,7 +19,7 @@ function HomePage() {
       <Navbar expand="lg" className="nav-bg min-vw-100 d-flex justify-content-between">
         <Container className='d-flex'> 
           <div className='d-flex'>
-            <Link className='nav-logo mr-3' to='/home'>  
+            <Link className='nav-logo mr-4' to='/home'>  
                   <img style={{width:'4rem'}} src={gLogo} alt="logo" className="d-flex"/>
             </Link>
             <Form className="d-flex align-items-center">
@@ -35,6 +38,27 @@ function HomePage() {
           </Navbar.Collapse>
         </Container>
       </Navbar>
+      <div>
+        <Row className='m-0 p-0'>
+          <Col>1 of 3</Col>
+          <Col xs={7}>
+            <Container className='d-flex justify-content-center flex-column align-items-center'>
+              <Button className='mt-4 w-75' variant='outline-secondary' onClick={()=>setModalShow(true)}>
+                สร้างโพสต์
+              </Button>
+              <Post
+                show={modalShow}
+                onHide={()=>setModalShow(false)}
+              />
+              <Card className='mt-4 w-75'>
+                <Card.Header>Test</Card.Header>
+                <Card.Body>Test</Card.Body>
+              </Card>
+            </Container>
+          </Col>
+          <Col></Col>
+        </Row>
+      </div>    
     </div>
   );
 }

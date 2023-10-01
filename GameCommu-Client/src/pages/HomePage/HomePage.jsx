@@ -6,6 +6,7 @@ import './HomePage.css'
 import Post from '../../components/Post';
 import { useState } from 'react';
 import GamePanel from '../../components/GamePanel/GamePanel';
+import { IoCreateOutline,IoSearchCircleOutline,IoLogOutOutline } from "react-icons/io5";
 
 function HomePage() {
   const navigate = useNavigate();
@@ -30,12 +31,16 @@ function HomePage() {
                 className="me-2"
                 aria-label="Search"
               />
-              <Button variant="secondary">Search</Button>
+              <Button variant="secondary" className='d-flex flex-row align-items-center'> 
+                <IoSearchCircleOutline size={25}/> Search
+              </Button>
             </Form>
           </div>
           <Navbar.Toggle id='nav-tog' aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id='nav-collapse' className='justify-content-end'> 
-            <Link className='nav-link' onClick={handleLogout}>ออกจากระบบ</Link>
+            <Link className='nav-link' onClick={handleLogout}>
+              <IoLogOutOutline size={25}/> ออกจากระบบ
+            </Link>
           </Navbar.Collapse>
         </Container>
       </Navbar>
@@ -46,13 +51,14 @@ function HomePage() {
           </Col>
           <Col xl={7}>
             <Container className='d-flex justify-content-center flex-column align-items-center'>
-              <Button className='mt-4 w-75' variant='outline-secondary' onClick={()=>setModalShow(true)}>
-                สร้างโพสต์
+              <Button className='mt-4 w-75 d-flex justify-content-center align-items-center' variant='outline-secondary' onClick={()=>setModalShow(true)}>
+                <IoCreateOutline size={25}/> สร้างโพสต์
               </Button>
               <Post
                 show={modalShow}
                 onHide={()=>setModalShow(false)}
               />
+              
               <Card className='mt-4 w-75'>
                 <Card.Header>Test</Card.Header>
                 <Card.Body>Test</Card.Body>

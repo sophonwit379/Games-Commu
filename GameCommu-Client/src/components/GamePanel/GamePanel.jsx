@@ -1,13 +1,8 @@
-import { Container,Accordion } from "react-bootstrap";
+import { Container,Accordion, Button } from "react-bootstrap";
 import './GamePanel.css'
+import { IoAddCircleOutline } from "react-icons/io5";
 
 function GamePanel() {
-    const main_bg = {
-        background: 'linear-gradient(to right, #DDE6ED, white)',
-    };
-    const bg = {
-        background: 'linear-gradient(to right, #DDE6ED, white)',
-    };
 
     return (
         <Container fluid className="p-0 pb-2 rounded" id='main'>
@@ -35,6 +30,9 @@ function GamePanel() {
                     </Accordion.Body>
                 </Accordion.Item>
             </Accordion>
+            <Button id="add-bt" variant="outline-secondary" className="w-100 d-flex flex-row align-items-center">
+                <IoAddCircleOutline size={25} className="mr-1"/>เพิ่มกลุ่ม
+            </Button>
         </Container>
     )
 }

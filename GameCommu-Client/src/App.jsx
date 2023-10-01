@@ -4,6 +4,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import './App.css';
 import { Outlet,Link,NavLink } from "react-router-dom";
 import gLogo from './assets/game-credits-game-logo.svg';
+import { IoLogInOutline,IoBookOutline } from "react-icons/io5";
 
 function App() {
 
@@ -18,10 +19,11 @@ function App() {
           <Navbar.Collapse className='justify-content-end'>
             <Nav id="nav-active">
               <NavLink className='links' to="/login" >
+                <IoLogInOutline size={25}/>
                 เข้าสู่ระบบ
               </NavLink>
               <NavLink className='links' to="/register" >
-                สมัครสมาชิก
+                <IoBookOutline size={22}/> สมัครสมาชิก
               </NavLink>
             </Nav>
           </Navbar.Collapse>

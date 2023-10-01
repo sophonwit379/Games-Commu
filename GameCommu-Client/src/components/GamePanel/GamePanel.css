@@ -13,9 +13,14 @@
 }
 
 .accordion-button:not(.collapsed) {
-    color: #000000 !important;
+    color: black !important;
 }
 
 .accordion-body {
     background: linear-gradient(to right, #DDE6ED, white) !important;
+}
+
+#add-bt{
+    border:none;
+    border-radius: 0;
 }

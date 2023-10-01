@@ -1,0 +1,21 @@
+.accordion-item {
+    border: none !important;
+    
+  }
+
+.accordion-button {
+    border-radius: 0 !important;
+    background: linear-gradient(to right, #9DB2BF, white) !important;
+}
+
+.accordion-button:focus {
+    box-shadow: none !important;
+}
+
+.accordion-button:not(.collapsed) {
+    color: #000000 !important;
+}
+
+.accordion-body {
+    background: linear-gradient(to right, #DDE6ED, white) !important;
+}

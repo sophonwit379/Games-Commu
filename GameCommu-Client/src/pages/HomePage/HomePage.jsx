@@ -5,6 +5,7 @@ import { FaUserCircle } from "react-icons/fa";
 import './HomePage.css'
 import Post from '../../components/Post';
 import { useState } from 'react';
+import GamePanel from '../../components/GamePanel/GamePanel';
 
 function HomePage() {
   const navigate = useNavigate();
@@ -38,10 +39,12 @@ function HomePage() {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-      <div>
+      <Container fluid className='p-0'>
         <Row className='m-0 p-0'>
-          <Col>1 of 3</Col>
-          <Col xs={7}>
+          <Col xl className='p-0'>
+            <GamePanel/>
+          </Col>
+          <Col xl={7}>
             <Container className='d-flex justify-content-center flex-column align-items-center'>
               <Button className='mt-4 w-75' variant='outline-secondary' onClick={()=>setModalShow(true)}>
                 สร้างโพสต์
@@ -56,9 +59,9 @@ function HomePage() {
               </Card>
             </Container>
           </Col>
-          <Col></Col>
+          <Col ></Col>
         </Row>
-      </div>    
+      </Container>    
     </div>
   );
 }

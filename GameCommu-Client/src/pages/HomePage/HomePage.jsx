@@ -32,7 +32,7 @@ function HomePage() {
           </div>
           <Navbar.Toggle id='nav-tog' aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id='nav-collapse' className='justify-content-between'> 
-            <Form className="d-flex align-items-center">
+            <Form className="d-flex align-items-center nav-search">
               <Form.Control
                 type="search"
                 placeholder="Search"

@@ -13,7 +13,7 @@ import {
   Button,
   InputGroup
 } from "react-bootstrap";
-
+import './LoginPage.css'
 
 function LoginPage() {
   const { showPwd,togglePwd } = useTogglePassword();
@@ -53,10 +53,10 @@ function LoginPage() {
       initialValues={initialValues}
     >
       {({handleSubmit, handleChange, values, errors}) => (
-        <Container style={{minHeight:'60vh'}} className='d-flex justify-content-center'>
-          <Row className="w-50 align-self-center">
+        <Container id="contain" className='d-flex justify-content-center'>
+          <Row className="align-self-center contain-row">
             <Col className="d-flex flex-column align-items-center">
-              <h1 className="mb-5 mt-5">
+              <h1 className="mb-5">
                 Game Commu
               </h1>
               <Card className="w-100">

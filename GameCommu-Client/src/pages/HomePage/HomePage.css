@@ -19,6 +19,9 @@
         margin-top: 1em;
         margin-bottom: 0.1em;
     }
+    #nav-collapse .nav-search {
+        margin-top: 1em;
+    }
     #nav-tog{
         background-color: #526D82;
     }

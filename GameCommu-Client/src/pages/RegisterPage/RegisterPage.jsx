@@ -13,9 +13,10 @@ import {
   Button,
   InputGroup
 } from "react-bootstrap";
+import './RegisterPage.css'
 
 
-function Register() {
+function RegisterPage() {
   const { showPwd,togglePwd } = useTogglePassword();
   const navigate = useNavigate();
   const { Formik } = formik;
@@ -54,8 +55,8 @@ function Register() {
         onSubmit={onSubmit}       
       >
         {({handleSubmit,handleChange,values, errors}) => (
-          <Container style={{minHeight:'75vh'}} className='d-flex justify-content-center'>
-            <Row className='w-50 align-self-center'>
+          <Container id="contain" className='d-flex justify-content-center'>
+            <Row className='align-self-center contain-row'>
               <Col className="d-flex flex-column align-items-center"> 
                 <Card className='w-100'>
                   <Card.Body>
@@ -96,7 +97,7 @@ function Register() {
                             onChange={handleChange}
                             isInvalid={!!errors.password} 
                           />
-                        <Form.Control.Feedback type="invalid" className="position-fixed">
+                        <Form.Control.Feedback type="invalid" className="position-absolute">
                           {errors.password}
                         </Form.Control.Feedback>
                         
@@ -118,7 +119,7 @@ function Register() {
                             onChange={handleChange}
                             isInvalid={!!errors.confirmPassword} 
                           />
-                        <Form.Control.Feedback type="invalid" className="position-fixed">
+                        <Form.Control.Feedback type="invalid" className="position-absolute">
                           {errors.confirmPassword}
                         </Form.Control.Feedback>
                         
@@ -149,4 +150,4 @@ function Register() {
     )
   }
   
-  export default Register;
+  export default RegisterPage;

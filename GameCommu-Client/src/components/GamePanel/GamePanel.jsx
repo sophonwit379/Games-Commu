@@ -1,8 +1,11 @@
-import { Container,Accordion, Button } from "react-bootstrap";
+import { Container,Accordion, Button,Modal } from "react-bootstrap";
 import './GamePanel.css'
 import { IoAddCircleOutline } from "react-icons/io5";
+import { useState } from "react";
+import AddGamePanel from './AddGamePannel';
 
 function GamePanel() {
+    const [modalShow, setModalShow] = useState(false);
 
     return (
         <Container fluid className="p-0 pb-2 rounded" id='main'>
@@ -30,9 +33,18 @@ function GamePanel() {
                     </Accordion.Body>
                 </Accordion.Item>
             </Accordion>
-            <Button id="add-bt" variant="outline-secondary" className="w-100 d-flex flex-row align-items-center">
+            <Button 
+                id="add-bt" 
+                variant="outline-secondary" 
+                className="w-100 d-flex flex-row align-items-center"
+                onClick={()=>setModalShow(true)}
+            >
                 <IoAddCircleOutline size={25} className="mr-1"/>เพิ่มกลุ่ม
             </Button>
+            <AddGamePanel 
+                show={modalShow}
+                onHide={()=>setModalShow(false)}
+            />
         </Container>
     )
 }

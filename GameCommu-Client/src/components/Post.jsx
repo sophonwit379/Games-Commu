@@ -2,20 +2,14 @@
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form  from 'react-bootstrap/Form';
-import Image from 'react-bootstrap/Image';
 import * as formik from 'formik';
 import * as yup from 'yup';
-import { useEffect, useState } from 'react';
 
-function Post(props) {
+function Post({ show,onHide,modalFormRef}) {
     const { Formik } = formik;
     const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
     const ALLOWED_FILE_TYPES = ['image/jpeg', 'image/png', 'image/gif','image/jpg'];
-    const [preImage, setPreImage] = useState([]);
-    
-    useEffect(() => {
-        console.log("re")
-    },[preImage]);
+
 
     const imageSchema = yup.object().shape({
         textA: yup.string().required('กรุณาพิมพ์ข้อความ'),
@@ -39,10 +33,11 @@ function Post(props) {
     });
 
     const handleSubmit = (e) => {
+     
         console.log(e)
         URL.revokeObjectURL(e.images)
         console.log(e)
-        props.onHide()
+        onHide()
     }
 
     return (
@@ -53,10 +48,13 @@ function Post(props) {
             }}
             validationSchema={imageSchema}
             onSubmit={handleSubmit}
+            validateOnChange={false}
+            innerRef={modalFormRef}
         >
-            {({handleSubmit,handleChange, setFieldValue,values, errors}) => (
+            {({handleSubmit, setFieldValue,values, errors}) => (
                 <Modal
-                {...props}
+                show={show}
+                onHide={onHide}
                 size="lg"
                 aria-labelledby="contained-modal-title-vcenter"
                 centered
@@ -76,7 +74,9 @@ function Post(props) {
                                     placeholder='พิมข้อความ' 
                                     rows={4}
                                     value={values.textA}
-                                    onChange={handleChange}
+                                    onChange={(event) => {
+                                        setFieldValue('textA',event.target.value)
+                                    }}
                                     isInvalid={!!errors.textA} 
                                 />
                                 <Form.Control.Feedback type="invalid">
@@ -90,9 +90,8 @@ function Post(props) {
                                     type="file"
                                     name="images"
                                     onChange={(event) => {
-                                        const filesArray = Array.from(event.currentTarget.files);
+                                        const filesArray = [...event.target.files];
                                         setFieldValue('images', filesArray);
-                                        setPreImage(filesArray.map((file) => URL.createObjectURL(file)));
                                     }}
                                     isInvalid={!!errors.images}
                                     multiple 
@@ -100,15 +99,10 @@ function Post(props) {
                                 <Form.Control.Feedback type="invalid">
                                     {errors.images}
                                 </Form.Control.Feedback>
-                            </Form.Group>
-                            {values.images.length > 0 && preImage.map((image,id) => {
-                                    {console.log(image)}
-                                    <Image key={id} src={image} width={300} height={250} alt='image-upload' />
-                                })
-                            }
+                            </Form.Group> 
                             <Button className='w-25 mt-2 mb-2 align-self-end' variant='outline-secondary' type='submit'>โพสต์</Button>
                         </Form>                                   
-                    </Modal.Body>                    
+                    </Modal.Body>               
                 </Modal>
             )} 
         </Formik>

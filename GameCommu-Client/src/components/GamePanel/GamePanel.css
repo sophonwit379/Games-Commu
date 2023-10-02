@@ -1,26 +1,28 @@
 .accordion-item {
-    border: none !important;
-    
-  }
+    border: none !important;  
+}
 
 .accordion-button {
+    color: white;
     border-radius: 0 !important;
-    background: linear-gradient(to right, #9DB2BF, white) !important;
+    background: linear-gradient(100deg, rgba(39,55,77,1) 10%, rgba(255,255,255,1) 100%);
 }
 
 .accordion-button:focus {
     box-shadow: none !important;
+    border-color: rgba(0,0,0,.125);
 }
 
 .accordion-button:not(.collapsed) {
-    color: black !important;
+     color: white;
 }
 
 .accordion-body {
-    background: linear-gradient(to right, #DDE6ED, white) !important;
+    background: linear-gradient(to right, #9DB2BF, white) !important;
 }
 
 #add-bt{
     border:none;
     border-radius: 0;
+    box-shadow: none;
 }

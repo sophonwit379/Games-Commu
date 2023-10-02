@@ -1,20 +1,25 @@
 import { Navbar,Container,Form,Button,Row,Col, Card } from 'react-bootstrap';
 import { Link,useNavigate } from 'react-router-dom';
 import gLogo from '../../assets/game-credits-game-logo.svg';
-import { FaUserCircle } from "react-icons/fa";
 import './HomePage.css'
 import Post from '../../components/Post';
-import { useState } from 'react';
+import { useState,useRef } from 'react';
 import GamePanel from '../../components/GamePanel/GamePanel';
 import { IoCreateOutline,IoSearchCircleOutline,IoLogOutOutline } from "react-icons/io5";
 
 function HomePage() {
   const navigate = useNavigate();
   const [modalShow, setModalShow] = useState(false);
+  const modalFormRef = useRef(null);
 
   const handleLogout = () => {
     navigate('/');
   };
+
+  const handleCloseModal = () => {
+    setModalShow(false);
+    modalFormRef.current.resetForm();
+  }
  
   return (
     <div className='min-vh-100'>
@@ -24,6 +29,9 @@ function HomePage() {
             <Link className='nav-logo mr-4' to='/home'>  
                   <img style={{width:'4rem'}} src={gLogo} alt="logo" className="d-flex"/>
             </Link>
+          </div>
+          <Navbar.Toggle id='nav-tog' aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id='nav-collapse' className='justify-content-between'> 
             <Form className="d-flex align-items-center">
               <Form.Control
                 type="search"
@@ -35,9 +43,6 @@ function HomePage() {
                 <IoSearchCircleOutline size={25}/> Search
               </Button>
             </Form>
-          </div>
-          <Navbar.Toggle id='nav-tog' aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id='nav-collapse' className='justify-content-end'> 
             <Link className='nav-link' onClick={handleLogout}>
               <IoLogOutOutline size={25}/> ออกจากระบบ
             </Link>
@@ -56,7 +61,8 @@ function HomePage() {
               </Button>
               <Post
                 show={modalShow}
-                onHide={()=>setModalShow(false)}
+                onHide={handleCloseModal}
+                modalFormRef={modalFormRef}
               />
               
               <Card className='mt-4 w-75'>

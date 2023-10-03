@@ -19,8 +19,7 @@ function App() {
           <Navbar.Collapse className='justify-content-end'>
             <Nav id="nav-active">
               <NavLink className='links' to="/login" >
-                <IoLogInOutline size={25}/>
-                เข้าสู่ระบบ
+                <IoLogInOutline size={25}/> เข้าสู่ระบบ
               </NavLink>
               <NavLink className='links' to="/register" >
                 <IoBookOutline size={22}/> สมัครสมาชิก

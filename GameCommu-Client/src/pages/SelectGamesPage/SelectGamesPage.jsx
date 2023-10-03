@@ -8,6 +8,7 @@ import {
   Row
 } from "react-bootstrap";
 import { useAddGameMutation,useFetchGameListQuery } from "../../store";
+import { toast } from 'react-toastify';
 
 
 function SelectGamesPage() {
@@ -64,6 +65,15 @@ function SelectGamesPage() {
   const handleSubmit = () => {
     if(selectedGame.length >= 3 ){
       navigate('/login')
+      toast.success('Register Successfully', {
+        position: "bottom-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        progress: undefined,
+        theme: "light",
+      });
     }
   }
 

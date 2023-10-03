@@ -11,9 +11,11 @@ import {
   Row,
   Col,
   Button,
-  InputGroup
+  InputGroup,
 } from "react-bootstrap";
+import { toast } from 'react-toastify';
 import './LoginPage.css'
+
 
 function LoginPage() {
   const { showPwd,togglePwd } = useTogglePassword();
@@ -39,9 +41,18 @@ function LoginPage() {
       password: '',
   };
 
+
   const onSubmit = (values) => {
-    console.log(values)
     navigate("/home");
+    toast.success('Login Successfully', {
+      position: "bottom-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      progress: undefined,
+      theme: "light",
+    });
   }
 
   

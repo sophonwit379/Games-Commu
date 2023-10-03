@@ -6,6 +6,10 @@ import Post from '../../components/Post';
 import { useState,useRef } from 'react';
 import GamePanel from '../../components/GamePanel/GamePanel';
 import { IoCreateOutline,IoSearchCircleOutline,IoLogOutOutline } from "react-icons/io5";
+import { AiOutlineUser,AiOutlineProfile } from "react-icons/ai";
+import { toast } from 'react-toastify';
+import NavDropdown from 'react-bootstrap/NavDropdown';
+import Nav from 'react-bootstrap/Nav';
 
 function HomePage() {
   const navigate = useNavigate();
@@ -14,6 +18,15 @@ function HomePage() {
 
   const handleLogout = () => {
     navigate('/');
+    toast.success('ออกจากระบบสำเร็จ', {
+      position: "bottom-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      progress: undefined,
+      theme: "light",
+    });
   };
 
   const handleCloseModal = () => {
@@ -31,7 +44,8 @@ function HomePage() {
             </Link>
           </div>
           <Navbar.Toggle id='nav-tog' aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id='nav-collapse' className='justify-content-between'> 
+          <Navbar.Collapse id='nav-collapse'> 
+          <Nav className="w-100 d-flex justify-content-between">
             <Form className="d-flex align-items-center nav-search">
               <Form.Control
                 type="search"
@@ -43,9 +57,17 @@ function HomePage() {
                 <IoSearchCircleOutline size={25}/> Search
               </Button>
             </Form>
-            <Link className='nav-link' onClick={handleLogout}>
-              <IoLogOutOutline size={25}/> ออกจากระบบ
-            </Link>
+            <NavDropdown title={<div className='d-flex justify-content-center align-items-center'><AiOutlineUser size={25}/> Username</div>} className='custom-nav-dropdown'>
+              <NavDropdown.Item >
+                <Button className='bt-link'>
+                  <AiOutlineProfile size={25} className='icon-m'/> โปรไฟล์
+                </Button>
+                <Button className='bt-link' onClick={handleLogout}>
+                  <IoLogOutOutline size={25} className='icon-m'/> ออกจากระบบ
+                </Button>
+              </NavDropdown.Item>
+            </NavDropdown>
+          </Nav>
           </Navbar.Collapse>
         </Container>
       </Navbar>

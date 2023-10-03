@@ -65,7 +65,7 @@ function SelectGamesPage() {
   const handleSubmit = () => {
     if(selectedGame.length >= 3 ){
       navigate('/login')
-      toast.success('Register Successfully', {
+      toast.success('สมัครสมาชิกสำเร็จ', {
         position: "bottom-right",
         autoClose: 2000,
         hideProgressBar: false,

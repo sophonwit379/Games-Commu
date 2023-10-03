@@ -4,6 +4,10 @@
     width: 50%;
  }
 
+ #bt{
+    box-shadow: none;
+ }
+
 @media screen and (max-width: 992px) {
     #contain .contain-row {
        width: 100%;

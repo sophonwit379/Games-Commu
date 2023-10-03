@@ -52,6 +52,7 @@ function RegisterPage() {
       <Formik
         validationSchema={validationSchema}
         initialValues={initialValues}
+        validateOnChange={false}
         onSubmit={onSubmit}       
       >
         {({handleSubmit,handleChange,values, errors}) => (
@@ -102,7 +103,8 @@ function RegisterPage() {
                         </Form.Control.Feedback>
                         
                       </FloatingLabel>
-                      <Button
+                      <Button 
+                        id='bt'
                         variant="outline-secondary"
                         onClick={togglePwd}
                       >
@@ -124,12 +126,6 @@ function RegisterPage() {
                         </Form.Control.Feedback>
                         
                       </FloatingLabel>
-                      <Button
-                        variant="outline-secondary"
-                        onClick={togglePwd}
-                      >
-                        {showPwd ? <AiFillEyeInvisible/> : <AiFillEye/>}
-                      </Button>
                     </InputGroup>
                       <Button 
                         className="mt-4 w-100" 

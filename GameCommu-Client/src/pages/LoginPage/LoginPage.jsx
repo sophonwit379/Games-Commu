@@ -44,7 +44,7 @@ function LoginPage() {
 
   const onSubmit = (values) => {
     navigate("/home");
-    toast.success('Login Successfully', {
+    toast.success('เข้าสู่ระบบสำเร็จ', {
       position: "bottom-right",
       autoClose: 2000,
       hideProgressBar: false,
@@ -62,6 +62,7 @@ function LoginPage() {
       validationSchema={validationSchema}
       onSubmit={onSubmit}
       initialValues={initialValues}
+      validateOnChange={false}
     >
       {({handleSubmit, handleChange, values, errors}) => (
         <Container id="contain" className='d-flex justify-content-center'>
@@ -102,6 +103,7 @@ function LoginPage() {
                         
                       </FloatingLabel>
                       <Button
+                        id="bt"
                         variant="outline-secondary"
                         onClick={togglePwd}
                       >

@@ -52,7 +52,6 @@ function RegisterPage() {
       <Formik
         validationSchema={validationSchema}
         initialValues={initialValues}
-        validateOnChange={false}
         onSubmit={onSubmit}       
       >
         {({handleSubmit,handleChange,values, errors}) => (

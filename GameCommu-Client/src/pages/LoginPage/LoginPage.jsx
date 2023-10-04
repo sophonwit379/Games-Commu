@@ -60,9 +60,8 @@ function LoginPage() {
   return (
     <Formik 
       validationSchema={validationSchema}
-      onSubmit={onSubmit}
       initialValues={initialValues}
-      validateOnChange={false}
+      onSubmit={onSubmit}
     >
       {({handleSubmit, handleChange, values, errors}) => (
         <Container id="contain" className='d-flex justify-content-center'>

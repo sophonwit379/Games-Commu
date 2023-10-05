@@ -1,15 +1,19 @@
 #contain .contain-row {
     margin-top: 4rem;
     margin-bottom: 3rem;
-    width: 50%;
+    width: 65%;
  }
 
  #bt{
     box-shadow: none;
  }
 
+#next-icon path {
+   stroke: #fff;  
+}
+
 @media screen and (max-width: 992px) {
     #contain .contain-row {
-       width: 100%;
+       width: 75%;
     }
 }

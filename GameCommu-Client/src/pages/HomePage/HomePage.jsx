@@ -1,20 +1,24 @@
-import { Navbar,Container,Form,Button,Row,Col, Card } from 'react-bootstrap';
+import { Navbar,Container,Form,Button,Row,Col,Card,Image } from 'react-bootstrap';
 import { Link,useNavigate } from 'react-router-dom';
 import gLogo from '../../assets/game-credits-game-logo.svg';
 import './HomePage.css'
 import Post from '../../components/Post';
 import { useState,useRef } from 'react';
 import GamePanel from '../../components/GamePanel/GamePanel';
-import { IoCreateOutline,IoSearchCircleOutline,IoLogOutOutline } from "react-icons/io5";
-import { AiOutlineUser,AiOutlineProfile } from "react-icons/ai";
+import { IoCreateOutline,IoSearchCircleOutline,IoLogOutOutline,IoSettingsOutline } from "react-icons/io5";
 import { toast } from 'react-toastify';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Nav from 'react-bootstrap/Nav';
+import default_pfp from '../../assets/Default_pfp.svg'
 
 function HomePage() {
   const navigate = useNavigate();
   const [modalShow, setModalShow] = useState(false);
   const modalFormRef = useRef(null);
+  const username = 'Nameless'
+  const userprofile = <div className='d-flex justify-content-center align-items-center'>
+                        <Image src={default_pfp} width={45} className='mr-1' roundedCircle/>{username}
+                      </div>
 
   const handleLogout = () => {
     navigate('/');
@@ -57,10 +61,10 @@ function HomePage() {
                 <IoSearchCircleOutline size={25}/> Search
               </Button>
             </Form>
-            <NavDropdown title={<div className='d-flex justify-content-center align-items-center'><AiOutlineUser size={25}/> Username</div>} className='custom-nav-dropdown'>
+            <NavDropdown title={userprofile} className='custom-nav-dropdown'>
               <NavDropdown.Item >
-                <Button className='bt-link'>
-                  <AiOutlineProfile size={25} className='icon-m'/> โปรไฟล์
+                <Button onClick={()=> navigate(`/setting`)} className='bt-link'>
+                  <IoSettingsOutline size={25} className='icon-m'/> ตั้งค่า
                 </Button>
                 <Button className='bt-link' onClick={handleLogout}>
                   <IoLogOutOutline size={25} className='icon-m'/> ออกจากระบบ

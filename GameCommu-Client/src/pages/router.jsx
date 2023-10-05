@@ -7,6 +7,7 @@ import HomePage from "./HomePage/HomePage";
 import SelectGamesPage from "./SelectGamesPage/SelectGamesPage";
 import AdminPage from "./AdminPage/AdminPage"
 import TablePages from "./AdminPage/TablePages";
+import SettingPage from "./SettingPage/SettingPage";
 
 export  const router  = createBrowserRouter([
     {
@@ -17,16 +18,23 @@ export  const router  = createBrowserRouter([
         {
           path: "login",
           element: <LoginPage />,
+          errorElement: <ErrorPage />,
         },
         {
           path: "register",
           element: <RegisterPage />,
+          errorElement: <ErrorPage />,
         },
       ],
     },
     {
       path: "home",
       element: <HomePage/>,
+      errorElement: <ErrorPage />,
+    },
+    {
+      path: "setting",
+      element: <SettingPage/>,
       errorElement: <ErrorPage />,
     },
     {

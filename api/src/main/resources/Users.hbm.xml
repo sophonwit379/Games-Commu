@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated Sep 10, 2023, 2:06:15 PM by Hibernate Tools 6.1.7.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class catalog="game_commu" name="backend.model.Users" optimistic-lock="none" table="users">
+        <id name="uid" type="java.lang.Integer">
+            <column name="uid"/>
+            <generator class="identity"/>
+        </id>
+        <property name="email" type="string">
+            <column length="100" name="email" not-null="true"/>
+        </property>
+        <property name="password" type="string">
+            <column length="30" name="password" not-null="true"/>
+        </property>
+        <property name="username" type="string">
+            <column length="100" name="username" not-null="true"/>
+        </property>
+        <property name="name" type="string">
+            <column length="100" name="name" not-null="true"/>
+        </property>
+        <property name="surname" type="string">
+            <column length="100" name="surname" not-null="true"/>
+        </property>
+        <property name="roll" type="string">
+            <column length="10" name="roll" not-null="true"/>
+        </property>
+        <property name="status" type="string">
+            <column length="10" name="status" not-null="true"/>
+        </property>
+        <property name="lastLogin" type="timestamp">
+            <column length="19" name="last_login"/>
+        </property>
+        <property name="createAt" type="timestamp">
+            <column length="19" name="create_at" not-null="true"/>
+        </property>
+        <set fetch="select" inverse="true" lazy="true" name="gamesOfUserses" table="games_of_users">
+            <key>
+                <column name="uid" not-null="true"/>
+            </key>
+            <one-to-many class="backend.model.GamesOfUsers"/>
+        </set>
+        <set fetch="select" inverse="true" lazy="true" name="postses" table="posts">
+            <key>
+                <column name="uid" not-null="true"/>
+            </key>
+            <one-to-many class="backend.model.Posts"/>
+        </set>
+        <set fetch="select" inverse="true" lazy="true" name="reportedPostses" table="reported_posts">
+            <key>
+                <column name="uid" not-null="true"/>
+            </key>
+            <one-to-many class="backend.model.ReportedPosts"/>
+        </set>
+        <set fetch="select" inverse="true" lazy="true" name="imageses" table="images">
+            <key>
+                <column name="uid"/>
+            </key>
+            <one-to-many class="backend.model.Images"/>
+        </set>
+        <set fetch="select" inverse="true" lazy="true" name="commentses" table="comments">
+            <key>
+                <column name="uid" not-null="true"/>
+            </key>
+            <one-to-many class="backend.model.Comments"/>
+        </set>
+        <set fetch="select" inverse="true" lazy="true" name="likeds" table="liked">
+            <key>
+                <column name="uid" not-null="true"/>
+            </key>
+            <one-to-many class="backend.model.Liked"/>
+        </set>
+    </class>
+</hibernate-mapping>

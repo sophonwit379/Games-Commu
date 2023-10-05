@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.org/dtd/hibernate-reverse-engineering-3.0.dtd" >
+
+<hibernate-reverse-engineering>
+	<table-filter match-name="comments" match-catalog="game_commu"></table-filter>
+	<table-filter match-name="games" match-catalog="game_commu"></table-filter>
+	<table-filter match-name="games_of_users"
+		match-catalog="game_commu">
+	</table-filter>
+	<table-filter match-name="images" match-catalog="game_commu"></table-filter>
+	<table-filter match-name="liked" match-catalog="game_commu"></table-filter>
+	<table-filter match-name="posts" match-catalog="game_commu"></table-filter>
+	<table-filter match-name="reported_posts"
+		match-catalog="game_commu">
+	</table-filter>
+	<table-filter match-name="users" match-catalog="game_commu"></table-filter>
+</hibernate-reverse-engineering>

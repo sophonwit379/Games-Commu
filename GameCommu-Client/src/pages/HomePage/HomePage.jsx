@@ -15,9 +15,9 @@ function HomePage() {
   const navigate = useNavigate();
   const [modalShow, setModalShow] = useState(false);
   const modalFormRef = useRef(null);
-  const username = 'Nameless'
+  const username = 'Cpt.Snowball'
   const userprofile = <div className='d-flex justify-content-center align-items-center'>
-                        <Image src={default_pfp} width={45} className='mr-1' roundedCircle/>{username}
+                        <Image src={default_pfp} width={45} className='mr-1' roundedCircle/>
                       </div>
 
   const handleLogout = () => {
@@ -63,6 +63,7 @@ function HomePage() {
             </Form>
             <NavDropdown title={userprofile} className='custom-nav-dropdown'>
               <NavDropdown.Item >
+                <h5 className='txt-wrap'>{username}</h5>
                 <Button onClick={()=> navigate(`/setting`)} className='bt-link'>
                   <IoSettingsOutline size={25} className='icon-m'/> ตั้งค่า
                 </Button>

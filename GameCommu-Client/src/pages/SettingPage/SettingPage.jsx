@@ -11,12 +11,13 @@ function SettingPage() {
     const { Formik } = formik;
     const { showPwd,togglePwd } = useTogglePassword();
     const navigate = useNavigate();
-    const username = 'Nameless';
+    const username = 'Cpt.Snowball';
 
     const validationSchema = yup.object().shape({
         password: yup
           .string()
           .min(8, 'รหัสผ่านต้องมีอย่างน้อย 8 ตัว')
+          .max(20, 'รหัสผ่านมีได้สูงสุด 20 ตัว')
           .matches(/[0-9]/, 'รหัสผ่านต้องมีตัวเลขอย่างน้อย 1 ตัว')
           .matches(/[A-Za-z]/, 'รหัสผ่านต้องมีตัวอักษรภาษาอังกฤษอย่างน้อย 1 ตัว')
           .required('กรุณากรอกรหัสผ่าน'),
@@ -37,10 +38,10 @@ function SettingPage() {
 
     return (
         <Container className="min-vw-100 min-vh-100 d-flex justify-content-center align-items-center main">
-            <Card className="mb-5 p-3">
+            <Card className="mb-5 p-3 width">
                 <Container className="d-flex flex-row align-items-center mt-3">
-                    <Image src={default_pfp} className="w-50" alt="profile-image" roundedCircle/>
-                    <h3 className="ml-3">{username}</h3>
+                    <Image src={default_pfp} width={200} alt="profile-image" roundedCircle/>
+                    <h3 className="ml-3 text-break w-50">{username}</h3>
                 </Container>
                 <Card.Body>
                     <h4 className="mb-4">เปลี่ยนรหัสผ่าน</h4>

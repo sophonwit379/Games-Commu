@@ -1,3 +1,7 @@
 .main{
     background-color: #DDE6ED;
 }
+
+.main .width{
+    width: 45rem;
+}

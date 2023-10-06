@@ -43,7 +43,8 @@ public class SecurityConfig {
 
 		http.cors(AbstractHttpConfigurer::disable).csrf(AbstractHttpConfigurer::disable)
 				.authorizeHttpRequests((requests) -> requests.requestMatchers(new AntPathRequestMatcher("/api/authtoken/**")).permitAll()
-						.requestMatchers(new AntPathRequestMatcher("/api-docs/**"), new AntPathRequestMatcher("/swagger-ui/**")).permitAll().anyRequest().authenticated())
+						.requestMatchers(new AntPathRequestMatcher("/api-docs/**"), new AntPathRequestMatcher("/swagger-ui/**")).permitAll()
+						.requestMatchers(new AntPathRequestMatcher("/api/users/create/**")).permitAll().anyRequest().authenticated())
 				.formLogin(AbstractHttpConfigurer::disable).httpBasic(AbstractHttpConfigurer::disable)
 				.addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class)
 				.sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));

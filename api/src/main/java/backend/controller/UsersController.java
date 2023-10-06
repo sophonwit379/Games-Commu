@@ -42,6 +42,15 @@ public class UsersController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("You is not Admin");
 		}
 	}
+	
+	@SuppressWarnings("rawtypes")
+	@GetMapping("/user")
+	public ResponseEntity getByEmail() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentUserEmail = authentication.getName();
+		Users u = usersService.getByEmail(currentUserEmail);
+		return ResponseEntity.ok(u);
+	}
 
 	@PostMapping("/users/create")
 	public void createAccount(@RequestBody UsersDTO u) {

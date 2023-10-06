@@ -34,7 +34,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
     	
         Map<String, Object> errorDetails = new HashMap<>();
-
+        
         try {
             String accessToken = jwtUtil.resolveToken(request);
             if (accessToken == null ) {

@@ -1,25 +1,21 @@
 package backend.dto;
 
-public class UsersDTO {
+public class UserInfoDTO {
 	
-	private String email;
-	private String password;
 	private String username;
 	private String name;
 	private String surname;
 	
-	public String getEmail() {
-		return email;
+	public UserInfoDTO() {
+		
 	}
-	public void setEmail(String email) {
-		this.email = email;
+	
+	public UserInfoDTO(String username, String name, String surname) {
+		this.username = username;
+		this.name = name;
+		this.surname = surname;
 	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
+	
 	public String getUsername() {
 		return username;
 	}

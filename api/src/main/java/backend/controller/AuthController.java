@@ -36,26 +36,19 @@ public class AuthController {
     @ResponseBody
     @PostMapping("/authtoken")
     public ResponseEntity login(@RequestBody LoginReq loginReq)  {
-    	System.out.println("Do");
         try {
         	Users existingUser = usersService.getByEmail(loginReq.getUsername());
         	if (existingUser != null && 
-        			//new BCryptPasswordEncoder().matches(loginReq.getPassword(), existingUser.getPassword())) {
         			existingUser.getPassword().equals(loginReq.getPassword())) {
-        		System.out.println("Do2");
-        		
         		Authentication authentication =
                         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginReq.getUsername(), loginReq.getPassword()));
-        		System.out.println("Do3");
         		String email = authentication.getName();
         		Users user = usersService.getByEmail(email);
                 String token = jwtUtil.createToken(user);
-                System.out.println(token);
+                usersService.nowLogin(email);
                 return ResponseEntity.ok(token);
         	}
         	else {
-        		System.out.println("login "+loginReq.getPassword());
-        		System.out.println("chk   "+existingUser.getPassword());
     			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Password or username incorrect.");
     		}    
 

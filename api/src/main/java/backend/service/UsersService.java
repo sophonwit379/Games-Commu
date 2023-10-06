@@ -1,5 +1,7 @@
 package backend.service;
 
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import backend.dto.UserInfoDTO;
 import backend.model.Users;
 import backend.repository.UsersRepository;
 
@@ -29,7 +32,21 @@ public class UsersService implements UserDetailsService
 		return usersRepository.findByEmail(email);
 	}
 	
-	public void updateAccount(Users u){
+	public void createAccount(Users u){
+		usersRepository.save(u);
+	}
+	
+	public void updateAccount(String email,UserInfoDTO uf){
+		Users u = usersRepository.findByEmail(email);
+		u.setUsername(uf.getUsername());
+		u.setName(uf.getName());
+		u.setSurname(uf.getSurname());
+		usersRepository.save(u);
+	}
+	
+	public void nowLogin(String email){
+		Users u = usersRepository.findByEmail(email);
+		u.setLastLogin(Timestamp.from(Instant.now()));
 		usersRepository.save(u);
 	}
 	
@@ -44,7 +61,6 @@ public class UsersService implements UserDetailsService
                         .password(user.getPassword())
                         .authorities(authorities)
                         .build();
-        System.out.println(username);
         return userDetails;
     }
 }

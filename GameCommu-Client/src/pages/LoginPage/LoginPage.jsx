@@ -3,6 +3,7 @@ import useTogglePassword from "../../hooks/use-toggle-password";
 import * as formik from 'formik';
 import * as yup from 'yup';
 import { AiFillEye,AiFillEyeInvisible } from "react-icons/ai";
+import { useLoginMutation } from "../../store";
 import { 
   FloatingLabel,
   Form,
@@ -19,10 +20,9 @@ import './LoginPage.css'
 
 function LoginPage() {
   const { showPwd,togglePwd } = useTogglePassword();
-
   const navigate = useNavigate();
-
   const { Formik } = formik;
+  const [login,loginResult] = useLoginMutation('');
 
   const validationSchema = yup.object().shape({
     username: yup.string()
@@ -43,16 +43,18 @@ function LoginPage() {
 
 
   const onSubmit = (values) => {
-    navigate("/home");
-    toast.success('เข้าสู่ระบบสำเร็จ', {
-      position: "bottom-right",
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      progress: undefined,
-      theme: "light",
-    });
+    login(values)
+    console.log(loginResult.error);
+    // navigate("/home");
+    // toast.success('เข้าสู่ระบบสำเร็จ', {
+    //   position: "bottom-right",
+    //   autoClose: 2000,
+    //   hideProgressBar: false,
+    //   closeOnClick: true,
+    //   pauseOnHover: true,
+    //   progress: undefined,
+    //   theme: "light",
+    // });
   }
 
   

@@ -1,12 +1,12 @@
-#contain .contain-row {
-    width: 50%;
- }
- #bt{
-    box-shadow: none;
- }
+#contain-card{
+   width: 75%;
+}
+#bt{
+   box-shadow: none;
+}
 
 @media screen and (max-width: 992px) {
-    #contain .contain-row {
-       width: 100%;
-    }
+   #contain-card{
+      width: 100%;
+   }
 }

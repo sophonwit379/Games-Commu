@@ -70,7 +70,7 @@ function LoginPage() {
               <h1 className="mb-5">
                 Game Commu
               </h1>
-              <Card className="w-100">
+              <Card id="contain-card">
                 <Card.Body className="mt-3 d-flex flex-column ">
                   <Form noValidate onSubmit={handleSubmit}>
                     <FloatingLabel controlId="floatingInput" label="ชื่อผู้ใช้งาน" className="mb-5"

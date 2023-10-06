@@ -16,7 +16,6 @@ import {
 } from "react-bootstrap";
 import './RegisterPage.css'
 
-
 function RegisterPage() {
   const { showPwd,togglePwd } = useTogglePassword();
   const navigate = useNavigate();
@@ -51,7 +50,7 @@ function RegisterPage() {
       surname:''
   };
 
-  const onSubmit = (values) => {
+  const onSubmit = async (values) => {
     navigate('/select-game',{state:{values}});
   };
 
@@ -177,6 +176,7 @@ function RegisterPage() {
                         </Col>
                       </Row>
                       <Button 
+                        id='bt-next'
                         className="w-100 d-flex flex-row justify-content-center align-items-center" 
                         variant="secondary"
                         type="submit"

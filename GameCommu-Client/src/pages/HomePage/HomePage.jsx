@@ -3,24 +3,31 @@ import { Link,useNavigate } from 'react-router-dom';
 import gLogo from '../../assets/game-credits-game-logo.svg';
 import './HomePage.css'
 import Post from '../../components/Post';
-import { useState,useRef } from 'react';
+import { useState,useRef, useEffect } from 'react';
 import GamePanel from '../../components/GamePanel/GamePanel';
 import { IoCreateOutline,IoSearchCircleOutline,IoLogOutOutline,IoSettingsOutline } from "react-icons/io5";
 import { toast } from 'react-toastify';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Nav from 'react-bootstrap/Nav';
 import default_pfp from '../../assets/Default_pfp.svg'
+import { useSelector } from 'react-redux';
+import { useDispatch } from "react-redux";
+import { clearToken } from '../../store';
+
 
 function HomePage() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [modalShow, setModalShow] = useState(false);
   const modalFormRef = useRef(null);
   const username = 'Cpt.Snowball'
   const userprofile = <div className='d-flex justify-content-center align-items-center'>
                         <Image src={default_pfp} width={45} className='mr-1' roundedCircle/>
                       </div>
-
+  const token = useSelector(state => state.auth.token)
   const handleLogout = () => {
+    localStorage.removeItem("Token");
+    dispatch(clearToken());
     navigate('/');
     toast.success('ออกจากระบบสำเร็จ', {
       position: "bottom-right",

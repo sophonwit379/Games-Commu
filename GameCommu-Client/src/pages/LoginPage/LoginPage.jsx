@@ -3,7 +3,7 @@ import useTogglePassword from "../../hooks/use-toggle-password";
 import * as formik from 'formik';
 import * as yup from 'yup';
 import { AiFillEye,AiFillEyeInvisible } from "react-icons/ai";
-import { useLoginMutation } from "../../store";
+import { setToken, useLoginMutation } from "../../store";
 import { 
   FloatingLabel,
   Form,
@@ -14,6 +14,7 @@ import {
   Button,
   InputGroup,
 } from "react-bootstrap";
+import { useDispatch } from "react-redux";
 import { toast } from 'react-toastify';
 import './LoginPage.css'
 
@@ -35,6 +36,7 @@ function LoginPage() {
       .matches(/[A-Za-z]/, 'รหัสผ่านต้องมีตัวอักษรภาษาอังกฤษอย่างน้อย 1 ตัว')
       .required('กรุณากรอกรหัสผ่าน'),
   });
+  const dispatch = useDispatch();
 
   const initialValues = {
       username: '',
@@ -42,19 +44,41 @@ function LoginPage() {
   };
 
 
-  const onSubmit = (values) => {
-    login(values)
-    console.log(loginResult.error);
-    // navigate("/home");
-    // toast.success('เข้าสู่ระบบสำเร็จ', {
-    //   position: "bottom-right",
-    //   autoClose: 2000,
-    //   hideProgressBar: false,
-    //   closeOnClick: true,
-    //   pauseOnHover: true,
-    //   progress: undefined,
-    //   theme: "light",
-    // });
+  const onSubmit = (user) => {
+    login(user)
+      .unwrap()
+      .then(response =>{
+        localStorage.setItem("Token", response);
+        dispatch(setToken(response));
+        navigate("/home");
+        toast.success('เข้าสู่ระบบสำเร็จ', {
+          position: "bottom-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          progress: undefined,
+          theme: "light",
+        });
+      })
+      .catch(rejected => {
+        let error;
+        if(rejected.data?.message){
+          error = "Password or username incorrect.";
+        }else{
+          error = rejected.data;
+        }
+        toast.error(error, {
+          position: "bottom-right",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          progress: undefined,
+          theme: "light",
+        });
+      }
+    );
   }
 
   
@@ -89,7 +113,7 @@ function LoginPage() {
                       </Form.Control.Feedback>
                     </FloatingLabel>
                     <InputGroup className="mb-3">
-                      <FloatingLabel  controlId="floatingPassword" label="รหัสผ่าน">
+                      <FloatingLabel controlId="floatingPassword" label="รหัสผ่าน">
                           <Form.Control 
                             type={showPwd ? 'text' : 'password'} 
                             placeholder="Password"

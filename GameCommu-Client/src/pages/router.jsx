@@ -8,6 +8,7 @@ import SelectGamesPage from "./SelectGamesPage/SelectGamesPage";
 import AdminPage from "./AdminPage/AdminPage"
 import TablePages from "./AdminPage/TablePages";
 import SettingPage from "./SettingPage/SettingPage";
+import PrivateRoute from "./Utilities/PrivateRoute";
 
 export  const router  = createBrowserRouter([
     {
@@ -29,7 +30,9 @@ export  const router  = createBrowserRouter([
     },
     {
       path: "home",
-      element: <HomePage/>,
+      element: <PrivateRoute>
+          <HomePage/>
+      </PrivateRoute>,
       errorElement: <ErrorPage />,
     },
     {

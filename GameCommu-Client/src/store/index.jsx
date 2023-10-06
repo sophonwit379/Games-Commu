@@ -3,9 +3,15 @@ import { setupListeners } from "@reduxjs/toolkit/dist/query";
 import { gameListApi } from "./apis/gameListApi";
 import { authenticationApi } from "./apis/authenticationApi";
 import { userApi } from "./apis/userApi";
+import {
+    authReducer,
+    clearToken,
+    setToken
+} from "./slices/authSlice";
 
 export const store = configureStore({
     reducer:{
+        auth:authReducer,
         [gameListApi.reducerPath]: gameListApi.reducer,
         [userApi.reducerPath]: userApi.reducer,
         [authenticationApi.reducerPath]: authenticationApi.reducer,
@@ -19,6 +25,11 @@ export const store = configureStore({
 });
 
 setupListeners(store.dispatch);
+
+export {
+    clearToken,
+    setToken
+}
 
 export {
     useLoginMutation

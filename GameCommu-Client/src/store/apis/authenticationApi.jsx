@@ -3,7 +3,7 @@ import { createApi,fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
 const authenticationApi = createApi({
     reducerPath:'authenticationApi',
     baseQuery:fetchBaseQuery({
-        baseUrl:'http://localhost:8080/api/authtoken'
+        baseUrl:'http://localhost:8080/api/authtoken',
     }),
     endpoints(builder){
         return{
@@ -11,7 +11,8 @@ const authenticationApi = createApi({
                 query: (user) => {
                     return {
                         method:'POST',
-                        body:user
+                        body:user,
+                        responseHandler: 'content-type'
                     }
                 }
             })

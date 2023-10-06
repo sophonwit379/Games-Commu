@@ -17,4 +17,14 @@ public class GamesService {
 	public List<Games> getAll(){
 		return (List<Games>) gamesRepository.findAll();
 	}	
+	
+	public Games getByNameAndYear(String name,String year){
+		return gamesRepository.findByNameAndYear(name,year);
+	}
+	
+	public void createGame(Games g){
+		gamesRepository.save(g);
+	}
+	
+	
 }

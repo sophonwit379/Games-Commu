@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- Generated Oct 6, 2023, 8:07:22 PM by Hibernate Tools 6.1.7.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-    <class catalog="game_commu" name="backend.model.ReportedPosts" optimistic-lock="none" table="reported_posts">
-        <id name="rpid" type="java.lang.Integer">
-            <column name="rpid"/>
+    <class catalog="game_commu" name="backend.model.RequestedGames" optimistic-lock="none" table="requested_games">
+        <id name="rgid" type="java.lang.Integer">
+            <column name="rgid"/>
             <generator class="identity"/>
         </id>
-        <many-to-one class="backend.model.Posts" fetch="select" name="posts">
-            <column name="pid" not-null="true"/>
-        </many-to-one>
         <many-to-one class="backend.model.Users" fetch="select" name="users">
             <column name="uid" not-null="true"/>
         </many-to-one>
-        <property name="reason" type="string">
-            <column length="65535" name="reason" not-null="true"/>
+        <property name="name" type="string">
+            <column length="255" name="name" not-null="true"/>
+        </property>
+        <property name="year" type="string">
+            <column length="4" name="year"/>
         </property>
         <property name="status" type="string">
-            <column length="30" name="status" not-null="true"/>
+            <column length="50" name="status" not-null="true"/>
         </property>
     </class>
 </hibernate-mapping>

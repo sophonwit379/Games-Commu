@@ -13,5 +13,8 @@
 	<table-filter match-name="reported_posts"
 		match-catalog="game_commu">
 	</table-filter>
+	<table-filter match-name="requested_games"
+		match-catalog="game_commu">
+	</table-filter>
 	<table-filter match-name="users" match-catalog="game_commu"></table-filter>
 </hibernate-reverse-engineering>

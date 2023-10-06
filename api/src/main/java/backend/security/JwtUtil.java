@@ -30,7 +30,6 @@ public class JwtUtil {
     @SuppressWarnings("deprecation")
 	public String createToken(Users user) {
         Claims claims = Jwts.claims().setSubject(user.getEmail());
-        //claims.put("firstName",user.getFirstName());
         //claims.put("lastName",user.getLastName());
         Date tokenCreateTime = new Date();
         Date tokenValidity = new Date(tokenCreateTime.getTime() + TimeUnit.MINUTES.toMillis(accessTokenValidity));

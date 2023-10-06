@@ -17,4 +17,16 @@ public class PostsService {
 	public List<Posts> getAll(){
 		return (List<Posts>) postsRepository.findAll();
 	}
+	
+	public Posts getByPID(int pid){
+		return postsRepository.findById(pid).get();
+	}
+	
+	public void createPost(Posts p){
+		postsRepository.save(p);
+	}
+	
+	public void updatePost(Posts p){
+		postsRepository.save(p);
+	}
 }

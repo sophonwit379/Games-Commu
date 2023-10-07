@@ -33,6 +33,15 @@ const userApi = createApi({
                     }
                 },
             }),
+            editUser: builder.mutation({
+                query: (user) => {
+                    return{
+                        url:'/users/update',
+                        method: 'PUT',
+                        body: user,
+                    }
+                },
+            }),
         }
     }
 });
@@ -40,5 +49,6 @@ const userApi = createApi({
 export { userApi };
 export const {
     useAddUserMutation,
-    useFetchUserQuery
+    useFetchUserQuery,
+    useEditUserMutation
 } = userApi;

@@ -3,5 +3,9 @@
 }
 
 .main .width{
-    width: 45rem;
+    width: 40rem;
+}
+
+#con-bt .bt{
+    box-shadow: none;
 }

@@ -31,13 +31,15 @@ export  const router  = createBrowserRouter([
     {
       path: "home",
       element: <PrivateRoute>
-          <HomePage/>
+        <HomePage/>
       </PrivateRoute>,
       errorElement: <ErrorPage />,
     },
     {
       path: "setting",
-      element: <SettingPage/>,
+      element: <PrivateRoute>
+        <SettingPage/>
+      </PrivateRoute>,
       errorElement: <ErrorPage />,
     },
     {

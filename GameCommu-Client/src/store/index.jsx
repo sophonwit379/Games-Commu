@@ -48,7 +48,8 @@ export {
 
 export {
     useAddUserMutation,
-    useFetchUserQuery
+    useFetchUserQuery,
+    useEditUserMutation
 } from './apis/userApi';
 
 export {

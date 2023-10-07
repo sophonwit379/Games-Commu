@@ -3,37 +3,23 @@ import { Link,useNavigate } from 'react-router-dom';
 import gLogo from '../../assets/game-credits-game-logo.svg';
 import './HomePage.css'
 import Post from '../../components/Post';
-import { useState,useRef, useEffect } from 'react';
+import { useState,useRef } from 'react';
 import GamePanel from '../../components/GamePanel/GamePanel';
 import { IoCreateOutline,IoSearchCircleOutline,IoLogOutOutline,IoSettingsOutline } from "react-icons/io5";
 import { toast } from 'react-toastify';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Nav from 'react-bootstrap/Nav';
 import default_pfp from '../../assets/Default_pfp.svg'
-import { useDispatch, useSelector } from "react-redux";
-import { setUserData } from '../../store';
 import { useFetchUserQuery } from '../../store';
 
 function HomePage() {
   const navigate = useNavigate();
-  const userData = useSelector(state => state.auth.user);
-  const dispatch = useDispatch();
   const { data } = useFetchUserQuery();
   const [modalShow, setModalShow] = useState(false);
   const modalFormRef = useRef(null);
   const userprofile = <div className='d-flex justify-content-center align-items-center'>
                         <Image src={default_pfp} width={45} className='mr-1' roundedCircle/>
                       </div>
-
-  useEffect(()=>{
-    if(userData !== data){
-      dispatch(setUserData(data))
-    }
-  },[dispatch, userData,data])
-
-  useEffect(() => {
-    console.log(userData);
-  }, [userData]);
 
   const handleLogout = () => {
     navigate('/');
@@ -78,7 +64,7 @@ function HomePage() {
             </Form>
             <NavDropdown title={userprofile} className='custom-nav-dropdown'>
               <NavDropdown.Item >
-                <h5 className='txt-wrap'>{userData?.username}</h5>
+                <h5 className='txt-wrap'>{data?.username}</h5>
                 <Button onClick={()=> navigate(`/setting`)} className='bt-link'>
                   <IoSettingsOutline size={25} className='icon-m'/> ตั้งค่า
                 </Button>

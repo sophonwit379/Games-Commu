@@ -10,24 +10,32 @@ import { toast } from 'react-toastify';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Nav from 'react-bootstrap/Nav';
 import default_pfp from '../../assets/Default_pfp.svg'
-import { useSelector } from 'react-redux';
-import { useDispatch } from "react-redux";
-import { clearToken } from '../../store';
-
+import { useDispatch, useSelector } from "react-redux";
+import { setUserData } from '../../store';
+import { useFetchUserQuery } from '../../store';
 
 function HomePage() {
   const navigate = useNavigate();
+  const userData = useSelector(state => state.auth.user);
   const dispatch = useDispatch();
+  const { data } = useFetchUserQuery();
   const [modalShow, setModalShow] = useState(false);
   const modalFormRef = useRef(null);
-  const username = 'Cpt.Snowball'
   const userprofile = <div className='d-flex justify-content-center align-items-center'>
                         <Image src={default_pfp} width={45} className='mr-1' roundedCircle/>
                       </div>
-  const token = useSelector(state => state.auth.token)
+
+  useEffect(()=>{
+    if(userData !== data){
+      dispatch(setUserData(data))
+    }
+  },[dispatch, userData,data])
+
+  useEffect(() => {
+    console.log(userData);
+  }, [userData]);
+
   const handleLogout = () => {
-    localStorage.removeItem("Token");
-    dispatch(clearToken());
     navigate('/');
     toast.success('ออกจากระบบสำเร็จ', {
       position: "bottom-right",
@@ -70,7 +78,7 @@ function HomePage() {
             </Form>
             <NavDropdown title={userprofile} className='custom-nav-dropdown'>
               <NavDropdown.Item >
-                <h5 className='txt-wrap'>{username}</h5>
+                <h5 className='txt-wrap'>{userData?.username}</h5>
                 <Button onClick={()=> navigate(`/setting`)} className='bt-link'>
                   <IoSettingsOutline size={25} className='icon-m'/> ตั้งค่า
                 </Button>

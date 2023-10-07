@@ -6,15 +6,13 @@ import { Outlet,Link,NavLink } from "react-router-dom";
 import gLogo from './assets/game-credits-game-logo.svg';
 import { IoLogInOutline,IoBookOutline } from "react-icons/io5";
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { clearToken } from './store';
+import useClearUserToken from './hooks/use-clear-user-token';
 
 function App() {
-  const dispatch = useDispatch();
+  const { clear } = useClearUserToken();
   useEffect(()=>{
-    localStorage.removeItem("Token");
-    dispatch(clearToken());
-  },[dispatch])
+    clear();
+  },[clear])
   
   return (
     <div className='min-vh-100'>

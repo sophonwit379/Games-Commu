@@ -16,14 +16,21 @@ import {
 } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { toast } from 'react-toastify';
+import useClearUserToken from '../../hooks/use-clear-user-token';
+import { useEffect } from "react";
 import './LoginPage.css'
-
 
 function LoginPage() {
   const { showPwd,togglePwd } = useTogglePassword();
   const navigate = useNavigate();
   const { Formik } = formik;
-  const [login,loginResult] = useLoginMutation();
+  const [login] = useLoginMutation();
+
+  const { clear } = useClearUserToken();
+
+  useEffect(()=>{
+    clear();
+  },[clear])
 
   const validationSchema = yup.object().shape({
     username: yup.string()

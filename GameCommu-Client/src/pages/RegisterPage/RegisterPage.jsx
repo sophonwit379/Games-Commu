@@ -6,6 +6,8 @@ import useTogglePassword from '../../hooks/use-toggle-password';
 import { GrFormNextLink } from "react-icons/gr";
 import { setToken, useAddUserMutation, useLoginMutation } from '../../store';
 import { useDispatch } from 'react-redux';
+import useClearUserToken from '../../hooks/use-clear-user-token';
+import { useEffect } from 'react';
 import { 
   FloatingLabel,
   Form,
@@ -19,6 +21,7 @@ import {
 import './RegisterPage.css'
 
 function RegisterPage() {
+  const { clear } = useClearUserToken();
   const dispatch = useDispatch();
   const [login] = useLoginMutation();
   const { showPwd,togglePwd } = useTogglePassword();
@@ -26,9 +29,12 @@ function RegisterPage() {
   const { Formik } = formik;
   const [addUser] = useAddUserMutation();
 
+  useEffect(()=>{
+    clear();
+  },[clear])
+
   const validationSchema = yup.object().shape({
     username: yup.string()
-      .min(8, 'ชื่อผู้ใช้งานต้องมีอย่างน้อย 8 ตัว')
       .max(18, 'ชื่อผู้ใช้งานมีได้สูงสุด 18 ตัว')
       .required('กรุณากรอกชื่อผู้ใช้งาน'),
     email: yup.string().email('กรุณากรอกอีเมล์ให่้ถูกต้อง').required('กรุณากรอกอีเมล์'),

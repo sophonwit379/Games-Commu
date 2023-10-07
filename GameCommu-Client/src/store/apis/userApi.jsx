@@ -1,15 +1,25 @@
 import { createApi,fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
+import { baseUrl } from "./Utils/baseApi";
 
 const userApi = createApi({
     reducerPath:'user',
     baseQuery:fetchBaseQuery({
-        baseUrl: 'http://localhost:8080/api/users',
+        baseUrl: baseUrl,
+        prepareHeaders:(headers, { getState }) => {
+            const token = getState().auth.token;
+            if(token){
+                headers.set('Authorization', `Bearer ${token}`);
+            }
+            return headers;
+        },
     }),
     endpoints(builder){
         return {
             fetchUser: builder.query({
+                providesTags:'FetchUser',
                 query:()=> {
                     return{
+                        url:'/user',
                         method:'GET',
                     }
                 }
@@ -17,11 +27,11 @@ const userApi = createApi({
             addUser: builder.mutation({
                 query: (user) => {
                     return{
-                        url:'/create',
+                        url:'/users/create',
                         method: 'POST',
-                        body: user
+                        body: user,
                     }
-                }
+                },
             }),
         }
     }
@@ -32,9 +42,3 @@ export const {
     useAddUserMutation,
     useFetchUserQuery
 } = userApi;
-
-// "email": `"${user.email}"`,
-// "password": `"${user.password}"`,
-// "username": `"${user.username}"`,
-// "name": `"${user.name}"`,
-// "surname": `"${user.surname}"`

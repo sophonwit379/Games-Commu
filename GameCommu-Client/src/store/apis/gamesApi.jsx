@@ -1,9 +1,9 @@
 import { createApi,fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
-
+import { baseUrl } from "./Utils/baseApi";
 const gamesApi = createApi({
     reducerPath:'games',
     baseQuery:fetchBaseQuery({
-        baseUrl: 'http://localhost:8080/api',
+        baseUrl: baseUrl,
         prepareHeaders:(headers, { getState }) => {
             const token = getState().auth.token;
             console.log(token);

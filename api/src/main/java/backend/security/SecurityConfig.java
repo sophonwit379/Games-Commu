@@ -51,6 +51,7 @@ public class SecurityConfig {
 	        return corsConfig;
 	    })
 	    .and()
+	    .csrf().disable()
 	    .authorizeHttpRequests((requests) -> requests
 	        .requestMatchers(new AntPathRequestMatcher("/api/authtoken/**")).permitAll()
 	        .requestMatchers(new AntPathRequestMatcher("/api-docs/**"), new AntPathRequestMatcher("/swagger-ui/**")).permitAll()

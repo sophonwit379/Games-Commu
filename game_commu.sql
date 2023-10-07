@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 05, 2023 at 02:09 PM
+-- Generation Time: Oct 07, 2023 at 10:28 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -162,6 +162,20 @@ INSERT INTO `reported_posts` (`rpid`, `pid`, `uid`, `reason`, `status`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `requested_games`
+--
+
+CREATE TABLE `requested_games` (
+  `rgid` int(10) NOT NULL,
+  `uid` int(10) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `year` varchar(4) DEFAULT NULL,
+  `status` varchar(50) NOT NULL DEFAULT 'Waiting for approval'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
 
@@ -183,8 +197,11 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`uid`, `email`, `password`, `username`, `name`, `surname`, `roll`, `status`, `last_login`, `create_at`) VALUES
-(1, 'proqppq123@gmail.com', '6Eb88c@5', 'CloudyTLC', 'บวรวัชร', 'ทองอยู่', 'User', 'Normal', NULL, '2023-07-23 09:02:18'),
-(2, 'proqppq111@gmail.com', '6eb88cc5', 'Cloud', 'เมฆาคราม', 'เมฆาวงศ์', 'User', 'Normal', NULL, '2023-07-23 09:05:27');
+(1, 'proqppq123@gmail.com', '6Eb88c@5', 'CloudyTLC', 'บวรวัชร', 'ทองอยู่', 'User', 'Normal', '2023-10-06 08:37:24', '2023-07-23 09:02:18'),
+(2, 'proqppq111@gmail.com', '6eb88cc5', 'Cloud', 'เมฆาคราม', 'เมฆาวงศ์', 'User', 'Normal', NULL, '2023-07-23 09:05:27'),
+(3, 'testtest', 'test', 'Testadsgva', 'test', 'test', 'Uesr', 'Normal', '2023-10-06 09:27:51', '2023-10-06 03:19:51'),
+(4, 'admin@gmail.com', 'admin', 'admin', 'admin', 'admin', 'Admin', 'Normal', '2023-10-06 08:44:22', '2023-10-06 08:43:43'),
+(7, 'admin@gmail.co', 'test', 'Testadsgva', 'test', 'test', 'Uesr', 'Normal', NULL, '2023-10-06 09:32:06');
 
 --
 -- Indexes for dumped tables
@@ -249,10 +266,18 @@ ALTER TABLE `reported_posts`
   ADD KEY `uid` (`uid`);
 
 --
+-- Indexes for table `requested_games`
+--
+ALTER TABLE `requested_games`
+  ADD PRIMARY KEY (`rgid`),
+  ADD KEY `uid` (`uid`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`uid`);
+  ADD PRIMARY KEY (`uid`),
+  ADD UNIQUE KEY `email` (`email`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -274,7 +299,7 @@ ALTER TABLE `games`
 -- AUTO_INCREMENT for table `games_of_users`
 --
 ALTER TABLE `games_of_users`
-  MODIFY `guid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `guid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `images`
@@ -301,10 +326,16 @@ ALTER TABLE `reported_posts`
   MODIFY `rpid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `requested_games`
+--
+ALTER TABLE `requested_games`
+  MODIFY `rgid` int(10) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `uid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `uid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Constraints for dumped tables
@@ -355,6 +386,12 @@ ALTER TABLE `posts`
 ALTER TABLE `reported_posts`
   ADD CONSTRAINT `reported_posts_ibfk_1` FOREIGN KEY (`pid`) REFERENCES `posts` (`pid`) ON DELETE NO ACTION ON UPDATE CASCADE,
   ADD CONSTRAINT `reported_posts_ibfk_2` FOREIGN KEY (`uid`) REFERENCES `users` (`uid`) ON DELETE NO ACTION ON UPDATE CASCADE;
+
+--
+-- Constraints for table `requested_games`
+--
+ALTER TABLE `requested_games`
+  ADD CONSTRAINT `requested_games_ibfk_1` FOREIGN KEY (`uid`) REFERENCES `users` (`uid`) ON DELETE NO ACTION ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

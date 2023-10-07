@@ -1,5 +1,7 @@
 package backend.security;
 
+import java.util.Arrays;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -12,6 +14,7 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.cors.CorsConfiguration;
 
 import backend.service.UsersService;
 
@@ -40,17 +43,25 @@ public class SecurityConfig {
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+	    http.cors().configurationSource(request -> {
+	        CorsConfiguration corsConfig = new CorsConfiguration();
+	        corsConfig.addAllowedOrigin("http://localhost:5173"); 
+	        corsConfig.addAllowedMethod("*");
+	        corsConfig.addAllowedHeader("*");
+	        return corsConfig;
+	    })
+	    .and()
+	    .authorizeHttpRequests((requests) -> requests
+	        .requestMatchers(new AntPathRequestMatcher("/api/authtoken/**")).permitAll()
+	        .requestMatchers(new AntPathRequestMatcher("/api-docs/**"), new AntPathRequestMatcher("/swagger-ui/**")).permitAll()
+	        .requestMatchers(new AntPathRequestMatcher("/api/users/create/**")).permitAll()
+	        .anyRequest().authenticated())
+	    .formLogin().disable() // Disable form-based login
+	    .httpBasic().disable() // Disable HTTP Basic authentication
+	    .addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class)
+	    .sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
-		http.cors(AbstractHttpConfigurer::disable).csrf(AbstractHttpConfigurer::disable)
-				.authorizeHttpRequests((requests) -> requests.requestMatchers(new AntPathRequestMatcher("/api/authtoken/**")).permitAll()
-						.requestMatchers(new AntPathRequestMatcher("/api-docs/**"), new AntPathRequestMatcher("/swagger-ui/**")).permitAll()
-						.requestMatchers(new AntPathRequestMatcher("/api/users/create/**")).permitAll()
-						.anyRequest().authenticated())
-				.formLogin(AbstractHttpConfigurer::disable).httpBasic(AbstractHttpConfigurer::disable)
-				.addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class)
-				.sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-
-		return http.build();
+	    return http.build();
 	}
 
     @Bean

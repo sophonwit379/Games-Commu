@@ -3,6 +3,8 @@ import { setupListeners } from "@reduxjs/toolkit/dist/query";
 import { gameListApi } from "./apis/gameListApi";
 import { authenticationApi } from "./apis/authenticationApi";
 import { userApi } from "./apis/userApi";
+import { selectGamesApi } from "./apis/selectGamesApi";
+import { gamesApi } from "./apis/gamesApi";
 import {
     authReducer,
     clearToken,
@@ -15,11 +17,15 @@ export const store = configureStore({
         [gameListApi.reducerPath]: gameListApi.reducer,
         [userApi.reducerPath]: userApi.reducer,
         [authenticationApi.reducerPath]: authenticationApi.reducer,
+        [gamesApi.reducerPath]: gamesApi.reducer,
+        [selectGamesApi.reducerPath]: selectGamesApi.reducer,
     },
     middleware: (getDefaultMiddleware) => {
         return getDefaultMiddleware()
             .concat(gameListApi.middleware)
             .concat(userApi.middleware)
+            .concat(selectGamesApi.middleware)
+            .concat(gamesApi.middleware)
             .concat(authenticationApi.middleware);
     }
 });
@@ -30,6 +36,10 @@ export {
     clearToken,
     setToken
 }
+
+export {
+    useAddSelectGameMutation
+} from './apis/selectGamesApi';
 
 export {
     useLoginMutation
@@ -45,3 +55,6 @@ export {
     useFetchUserQuery
 } from './apis/userApi';
 
+export {
+    useGetGamesQuery
+} from './apis/gamesApi'

@@ -5,9 +5,17 @@ import './App.css';
 import { Outlet,Link,NavLink } from "react-router-dom";
 import gLogo from './assets/game-credits-game-logo.svg';
 import { IoLogInOutline,IoBookOutline } from "react-icons/io5";
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { clearToken } from './store';
 
 function App() {
-
+  const dispatch = useDispatch();
+  useEffect(()=>{
+    localStorage.removeItem("Token");
+    dispatch(clearToken());
+  },[dispatch])
+  
   return (
     <div className='min-vh-100'>
       <Navbar expand="lg" className="nav-bg">

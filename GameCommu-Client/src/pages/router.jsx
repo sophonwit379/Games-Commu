@@ -8,7 +8,7 @@ import SelectGamesPage from "./SelectGamesPage/SelectGamesPage";
 import AdminPage from "./AdminPage/AdminPage"
 import TablePages from "./AdminPage/TablePages";
 import SettingPage from "./SettingPage/SettingPage";
-import PrivateRoute from "./Utilities/PrivateRoute";
+import PrivateRoute from "./Util/PrivateRoute";
 
 export  const router  = createBrowserRouter([
     {

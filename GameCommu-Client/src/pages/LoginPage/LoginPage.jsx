@@ -23,7 +23,7 @@ function LoginPage() {
   const { showPwd,togglePwd } = useTogglePassword();
   const navigate = useNavigate();
   const { Formik } = formik;
-  const [login,loginResult] = useLoginMutation('');
+  const [login,loginResult] = useLoginMutation();
 
   const validationSchema = yup.object().shape({
     username: yup.string()
@@ -44,8 +44,8 @@ function LoginPage() {
   };
 
 
-  const onSubmit = (user) => {
-    login(user)
+  const onSubmit = async (user) => {
+   await login(user)
       .unwrap()
       .then(response =>{
         localStorage.setItem("Token", response);
@@ -99,7 +99,7 @@ function LoginPage() {
               <Card id="contain-card">
                 <Card.Body className="mt-3 d-flex flex-column ">
                   <Form noValidate onSubmit={handleSubmit}>
-                    <FloatingLabel controlId="floatingInput" label="ชื่อผู้ใช้งาน" className="mb-5"
+                    <FloatingLabel controlId="floatingInput" label="อีเมล์" className="mb-5"
                     >
                       <Form.Control 
                         placeholder="username007"

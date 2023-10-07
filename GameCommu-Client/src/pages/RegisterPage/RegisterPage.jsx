@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { AiFillEye,AiFillEyeInvisible } from "react-icons/ai";
 import useTogglePassword from '../../hooks/use-toggle-password';
 import { GrFormNextLink } from "react-icons/gr";
+import { setToken, useAddUserMutation, useLoginMutation } from '../../store';
+import { useDispatch } from 'react-redux';
 import { 
   FloatingLabel,
   Form,
@@ -17,9 +19,12 @@ import {
 import './RegisterPage.css'
 
 function RegisterPage() {
+  const dispatch = useDispatch();
+  const [login] = useLoginMutation();
   const { showPwd,togglePwd } = useTogglePassword();
   const navigate = useNavigate();
   const { Formik } = formik;
+  const [addUser] = useAddUserMutation();
 
   const validationSchema = yup.object().shape({
     username: yup.string()
@@ -51,7 +56,26 @@ function RegisterPage() {
   };
 
   const onSubmit = async (values) => {
-    navigate('/select-game',{state:{values}});
+    await addUser(values);
+    const user = {
+      username: values.email,
+      password: values.password
+    }
+    await login(user)
+      .unwrap()
+      .then(response =>{
+        localStorage.setItem("Token", response);
+        dispatch(setToken(response));
+      })
+      .catch(rejected => {
+        let error;
+        if(rejected.data?.message){
+          error = "Password or username incorrect.";
+        }else{
+          error = rejected.data;
+        }
+      });
+      navigate('/select-game');
   };
 
     return (

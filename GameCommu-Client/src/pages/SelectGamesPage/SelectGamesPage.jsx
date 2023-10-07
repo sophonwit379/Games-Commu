@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { useLocation,useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { 
   Button,
   Card,
@@ -7,23 +7,16 @@ import {
   Image,
   Row
 } from "react-bootstrap";
-import { useAddGameMutation,useFetchGameListQuery } from "../../store";
 import { toast } from 'react-toastify';
+import { useGetGamesQuery } from "../../store";
+import { useAddSelectGameMutation } from "../../store";
 
 
 function SelectGamesPage() {
   const [selectedGame,setSelectedGame] = useState([]);
-  const { state } = useLocation();
   const navigate = useNavigate();
-  const userData  = state?.values || '';
-  const {data,isFetching,error} = useFetchGameListQuery();
-  const [addGame,addGameResult] = useAddGameMutation();
-
-  useEffect(() => {
-    if(userData === ''){
-      navigate('/register');
-    }
-  }),[userData];
+  const [addSelectGames] = useAddSelectGameMutation();
+  const { data: gamesData, isFetching: gamesIsFetching } = useGetGamesQuery();
 
   const handleSelectGame = (game) => {
     const check = selectedGame.includes(game);
@@ -40,12 +33,12 @@ function SelectGamesPage() {
 
 
   let content;
-  if(isFetching){
+  if(gamesIsFetching){
     content = <div>Loading......</div>
   }else{
-    content = data.map(game => {
+    content = gamesData?.map((game,id) => {
       return (
-        <Row key={game.id}>
+        <Row key={id}>
           <Container 
               className="m-3 d-flex flex-column justify-content-center align-items-center w-100 h-100"
               onClick={() => handleSelectGame(game)}
@@ -63,11 +56,25 @@ function SelectGamesPage() {
   }
   
   const handleSubmit = () => {
-    if(selectedGame.length >= 3 ){
-      navigate('/login')
+    if(selectedGame.length >= 1 ){
+      selectedGame.forEach(async game => {
+        console.log(game);
+        await addSelectGames(game)
+      });
+      navigate('/home')
       toast.success('สมัครสมาชิกสำเร็จ', {
         position: "bottom-right",
         autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }else{
+      toast.error('กรุณาเลือกเกมอย่างน้อย 3 เกม', {
+        position: "bottom-right",
+        autoClose: 1000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -86,14 +93,8 @@ function SelectGamesPage() {
       <Container style={{minHeight:'75vh',marginTop:'5rem'}}>
         <Card style={{maxHeight:'70vh',backgroundColor:'#DDE6ED'}}>
           <Card.Header>
-            <h4>SELECT GAME 
-              <Button onClick={() => {
-                  addGame();
-                }}>
-                + AddGame
-              </Button>
-            </h4>
-              <h6>at least 3 game</h6>
+            <h4>SELECT GAME</h4>
+              <h6>กรุณาเลือกเกมอย่างน้อย 3 เกม</h6>
           </Card.Header>
           <Card.Body style={{overflowX:"hidden"}} className="d-flex flex-wrap">
             {content}

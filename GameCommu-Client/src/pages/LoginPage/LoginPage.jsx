@@ -33,9 +33,7 @@ function LoginPage() {
   },[clear])
 
   const validationSchema = yup.object().shape({
-    username: yup.string()
-      .min(8, 'ชื่อผู้ใช้งานต้องมีอย่างน้อย 8 ตัว')
-      .required('กรุณากรอกชื่อผู้ใช้งาน'),
+    email: yup.string().email('กรุณากรอกอีเมล์ให่้ถูกต้อง').required('กรุณากรอกอีเมล์'),
     password: yup
       .string()
       .min(8, 'รหัสผ่านต้องมีอย่างน้อย 8 ตัว')
@@ -46,7 +44,7 @@ function LoginPage() {
   const dispatch = useDispatch();
 
   const initialValues = {
-      username: '',
+      email: '',
       password: '',
   };
 
@@ -106,17 +104,18 @@ function LoginPage() {
               <Card id="contain-card">
                 <Card.Body className="mt-3 d-flex flex-column ">
                   <Form noValidate onSubmit={handleSubmit}>
-                    <FloatingLabel controlId="floatingInput" label="อีเมล์" className="mb-5"
+                    <FloatingLabel controlId="floatingInput" label="อีเมล์" className="mb-3"
                     >
                       <Form.Control 
-                        placeholder="username007"
-                        name="username"
-                        value={values.username}
+                        autoComplete="email"
+                        placeholder="email"
+                        name="email"
+                        value={values.email}
                         onChange={handleChange}
-                        isInvalid={!!errors.username}
+                        isInvalid={!!errors.email}
                       />
-                      <Form.Control.Feedback type="invalid" className="position-absolute">
-                        {errors.username}
+                      <Form.Control.Feedback type="invalid">
+                        {errors.email}
                       </Form.Control.Feedback>
                     </FloatingLabel>
                     <InputGroup className="mb-3">

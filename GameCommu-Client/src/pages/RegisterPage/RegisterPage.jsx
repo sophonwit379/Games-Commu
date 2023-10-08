@@ -102,22 +102,24 @@ function RegisterPage() {
                     <Form noValidate onSubmit={handleSubmit} >
                       <Row>
                         <Col lg>
-                          <FloatingLabel controlId="username" label="ชื่อผู้ใช้งาน" className="mb-5">
+                          <FloatingLabel controlId="username" label="ชื่อผู้ใช้งาน" className="mb-3">
                             <Form.Control 
+                              autoComplete="username"
                               placeholder="username007"
                               name="username"
                               value={values.username}
                               onChange={handleChange}
                               isInvalid={!!errors.username}
                             />
-                            <Form.Control.Feedback type="invalid" className='position-absolute'>
+                            <Form.Control.Feedback type="invalid">
                               {errors.username}
                             </Form.Control.Feedback>
                           </FloatingLabel>
                         </Col>
                         <Col>
-                          <FloatingLabel controlId="email" label="อีเมล์" className="mb-5">
+                          <FloatingLabel controlId="email" label="อีเมล์" className="mb-3">
                               <Form.Control 
+                                autoComplete="email"
                                 type="email" 
                                 placeholder="Email"
                                 name="email"
@@ -125,7 +127,7 @@ function RegisterPage() {
                                 onChange={handleChange}
                                 isInvalid={!!errors.email} 
                               />
-                            <Form.Control.Feedback type="invalid" className='position-absolute'>
+                            <Form.Control.Feedback type="invalid">
                               {errors.email}
                             </Form.Control.Feedback>                        
                           </FloatingLabel>
@@ -133,21 +135,22 @@ function RegisterPage() {
                       </Row>
                       <Row>
                         <Col lg>
-                          <FloatingLabel controlId="name" label="ชื่อ" className="mb-5">
+                          <FloatingLabel controlId="name" label="ชื่อ" className="mb-3">
                             <Form.Control 
+                              autoComplete='name'
                               placeholder="name"
                               name="name"
                               value={values.name}
                               onChange={handleChange}
                               isInvalid={!!errors.name}
                             />
-                            <Form.Control.Feedback type="invalid" className='position-absolute'>
+                            <Form.Control.Feedback type="invalid">
                               {errors.name}
                             </Form.Control.Feedback>
                           </FloatingLabel>
                         </Col>
                         <Col>
-                          <FloatingLabel controlId="surname" label="นามสกุล" className="mb-5">
+                          <FloatingLabel controlId="surname" label="นามสกุล" className="mb-3">
                             <Form.Control 
                               placeholder="surname"
                               name="surname"
@@ -155,7 +158,7 @@ function RegisterPage() {
                               onChange={handleChange}
                               isInvalid={!!errors.surname}
                             />
-                            <Form.Control.Feedback type="invalid" className='position-absolute'>
+                            <Form.Control.Feedback type="invalid">
                               {errors.surname}
                             </Form.Control.Feedback>
                           </FloatingLabel>

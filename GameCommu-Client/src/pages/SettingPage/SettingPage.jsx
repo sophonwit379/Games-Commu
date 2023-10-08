@@ -51,6 +51,7 @@ function SettingPage() {
                     <Form noValidate onSubmit={handleSubmit} className="d-flex flex-column">
                         <FloatingLabel controlId="floatingUsername" label="ชื่อผู้ใช้งาน" className="mb-3">
                                 <Form.Control 
+                                    autoComplete="username"
                                     disabled={edit}
                                     placeholder="username"
                                     name="username"
@@ -64,6 +65,7 @@ function SettingPage() {
                         </FloatingLabel>
                         <FloatingLabel controlId="name" label="ชื่อ" className="mb-3">
                                 <Form.Control 
+                                    autoComplete="name"
                                     disabled={edit}
                                     placeholder="name"
                                     name="name"

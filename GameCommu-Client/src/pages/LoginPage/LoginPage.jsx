@@ -50,7 +50,6 @@ function LoginPage() {
 
 
   const onSubmit = async (user) => {
-    console.log(user);
     await login(user)
       .unwrap()
       .then(response =>{

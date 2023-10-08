@@ -13,7 +13,7 @@ const PrivateRoute = ({  children }) => {
     const [isAuthenticated,setIsAuthenticated] = useState(null);
 
     useEffect(() => {
-        console.log(`"token:"${token}`);
+        console.log(`token:${token}`);
         if(token){
             // console.log(`"decode:"${jwtDecode(token).data}`);
             let tokenExpiration = jwtDecode(token).exp;

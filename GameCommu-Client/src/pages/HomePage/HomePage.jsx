@@ -14,7 +14,7 @@ import { useFetchUserQuery } from '../../store';
 
 function HomePage() {
   const navigate = useNavigate();
-  const { data } = useFetchUserQuery();
+  const { data:user } = useFetchUserQuery();
   const [modalShow, setModalShow] = useState(false);
   const modalFormRef = useRef(null);
   const userprofile = <div className='d-flex justify-content-center align-items-center'>
@@ -64,7 +64,7 @@ function HomePage() {
             </Form>
             <NavDropdown title={userprofile} className='custom-nav-dropdown'>
               <NavDropdown.Item >
-                <h5 className='txt-wrap'>{data?.username}</h5>
+                <h5 className='txt-wrap'>{user?.username}</h5>
                 <Button onClick={()=> navigate(`/setting`)} className='bt-link'>
                   <IoSettingsOutline size={25} className='icon-m'/> ตั้งค่า
                 </Button>

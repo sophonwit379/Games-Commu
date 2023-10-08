@@ -33,9 +33,6 @@ function Post({ show,onHide,modalFormRef}) {
     });
 
     const handleSubmit = (e) => {
-     
-        console.log(e)
-        URL.revokeObjectURL(e.images)
         console.log(e)
         onHide()
     }

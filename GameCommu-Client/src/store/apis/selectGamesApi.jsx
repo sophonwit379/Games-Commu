@@ -21,12 +21,21 @@ const selectGamesApi = createApi({
                         body: game
                     }
                 }
-            })
+            }),
+            fetchGameOfUser: builder.query({
+                query:()=>{
+                    return {
+                        url:'/gamesofuser',
+                        method:'GET',
+                    }
+                }
+            }),
         }
     }
 });
 
 export { selectGamesApi };
 export const {
+    useFetchGameOfUserQuery,
     useAddSelectGameMutation
 } = selectGamesApi;

@@ -3,6 +3,7 @@ import { setupListeners } from "@reduxjs/toolkit/dist/query";
 import { authenticationApi } from "./apis/authenticationApi";
 import { userApi } from "./apis/userApi";
 import { selectGamesApi } from "./apis/selectGamesApi";
+import { postApi } from "./apis/postApi";
 import { gamesApi } from "./apis/gamesApi";
 import {
     authReducer,
@@ -19,12 +20,14 @@ export const store = configureStore({
         [authenticationApi.reducerPath]: authenticationApi.reducer,
         [gamesApi.reducerPath]: gamesApi.reducer,
         [selectGamesApi.reducerPath]: selectGamesApi.reducer,
+        [postApi.reducerPath]: postApi.reducer,
     },
     middleware: (getDefaultMiddleware) => {
         return getDefaultMiddleware()
             .concat(userApi.middleware)
             .concat(selectGamesApi.middleware)
             .concat(gamesApi.middleware)
+            .concat(postApi.middleware)
             .concat(authenticationApi.middleware);
     }
 });
@@ -39,7 +42,8 @@ export {
 }
 
 export {
-    useAddSelectGameMutation
+    useAddSelectGameMutation,
+    useFetchGameOfUserQuery
 } from './apis/selectGamesApi';
 
 export {
@@ -55,3 +59,8 @@ export {
 export {
     useGetGamesQuery
 } from './apis/gamesApi'
+
+export {
+    useAddPostMutation,
+    useEditPostMutation
+} from './apis/postApi'

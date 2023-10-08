@@ -3,6 +3,7 @@ import './GamePanel.css'
 import { IoAddCircleOutline } from "react-icons/io5";
 import { useState } from "react";
 import AddGamePanel from './AddGamePannel';
+import GameItems from "./GameItems";
 
 function GamePanel() {
     const [modalShow, setModalShow] = useState(false);
@@ -25,11 +26,7 @@ function GamePanel() {
                 <Accordion.Item eventKey="0">
                     <Accordion.Header>กลุ่มของคุณ</Accordion.Header>
                     <Accordion.Body>
-                        <h6 className="pl-2">game 1</h6>
-                        <h6 className="pl-2">game 1</h6>
-                        <h6 className="pl-2">game 1</h6>
-                        <h6 className="pl-2">game 1</h6>
-                        <h6 className="pl-2">game 1</h6>
+                        <GameItems/>
                     </Accordion.Body>
                 </Accordion.Item>
             </Accordion>

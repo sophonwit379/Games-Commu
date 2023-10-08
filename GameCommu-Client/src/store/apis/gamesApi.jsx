@@ -6,7 +6,6 @@ const gamesApi = createApi({
         baseUrl: baseUrl,
         prepareHeaders:(headers, { getState }) => {
             const token = getState().auth.token;
-            console.log(token);
             headers.set('Authorization', `Bearer ${token}`);
             return headers;
         },

@@ -46,6 +46,7 @@ function SelectGamesPage() {
             <div style={{width:'95%',height:'95%'}} className="position-relative justify-content-center d-flex align-items-center flex-column">
               <Image src={game.url} rounded height={125} width={175} className="z-1"/>
               <h6 className="z-1">{game.name}</h6>
+              <p className="z-1">{game.year}</p>
               {selectedGame.includes(game) && <div style={{backgroundColor:'#9DB2BF'}} className="position-absolute w-100 h-100 d-flex"></div>}
             </div>
            
@@ -56,7 +57,7 @@ function SelectGamesPage() {
   }
   
   const handleSubmit = () => {
-    if(selectedGame.length >= 1 ){
+    if(selectedGame.length >= 3 ){
       selectedGame.forEach(async game => {
         console.log(game);
         await addSelectGames(game)

@@ -33,7 +33,7 @@ function LoginPage() {
   },[clear])
 
   const validationSchema = yup.object().shape({
-    email: yup.string().email('กรุณากรอกอีเมล์ให่้ถูกต้อง').required('กรุณากรอกอีเมล์'),
+    username: yup.string().email('กรุณากรอกอีเมล์ให่้ถูกต้อง').required('กรุณากรอกอีเมล์'),
     password: yup
       .string()
       .min(8, 'รหัสผ่านต้องมีอย่างน้อย 8 ตัว')
@@ -44,13 +44,14 @@ function LoginPage() {
   const dispatch = useDispatch();
 
   const initialValues = {
-      email: '',
+      username: '',
       password: '',
   };
 
 
   const onSubmit = async (user) => {
-   await login(user)
+    console.log(user);
+    await login(user)
       .unwrap()
       .then(response =>{
         localStorage.setItem("Token", response);
@@ -107,15 +108,15 @@ function LoginPage() {
                     <FloatingLabel controlId="floatingInput" label="อีเมล์" className="mb-3"
                     >
                       <Form.Control 
-                        autoComplete="email"
-                        placeholder="email"
-                        name="email"
-                        value={values.email}
+                        autoComplete="username"
+                        placeholder="username"
+                        name="username"
+                        value={values.username}
                         onChange={handleChange}
-                        isInvalid={!!errors.email}
+                        isInvalid={!!errors.username}
                       />
                       <Form.Control.Feedback type="invalid">
-                        {errors.email}
+                        {errors.username}
                       </Form.Control.Feedback>
                     </FloatingLabel>
                     <InputGroup className="mb-3">

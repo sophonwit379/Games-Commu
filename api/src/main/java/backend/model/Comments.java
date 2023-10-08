@@ -42,6 +42,15 @@ public class Comments implements java.io.Serializable {
 		this.date = date;
 	}
 	
+	public Comments(Posts posts, Comments comments, Users users, String detail, Timestamp date) {
+		super();
+		this.posts = posts;
+		this.comments = comments;
+		this.users = users;
+		this.detail = detail;
+		this.date = date;
+	}
+
 	@SuppressWarnings("rawtypes")
 	public Comments(Posts posts, Comments comments, Users users, String detail, Timestamp date, Set imageses,
 			Set commentses, Set likeds) {

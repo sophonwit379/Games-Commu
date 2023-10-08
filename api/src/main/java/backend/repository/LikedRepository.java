@@ -22,4 +22,10 @@ public interface LikedRepository extends CrudRepository<Liked, Integer> {
 	
 	@Query("from Liked l where l.comments=:comment")
 	public List<Liked> findByComment(@Param("comment")Comments comment);
+	
+	@Query("from Liked l where l.posts=:post and l.users=:user")
+	public Liked findByUserAndPost(@Param("user")Users user,@Param("post")Posts post);
+	
+	@Query("from Liked l where l.comments=:comment and l.users=:user")
+	public Liked findByUserAndComment(@Param("user")Users user,@Param("comment")Comments comment);
 }

@@ -28,6 +28,17 @@ public class Liked implements java.io.Serializable {
 		this.users = users;
 	}
 
+	public Liked(Comments comments, Users users) {
+		this.comments = comments;
+		this.users = users;
+	}
+
+	public Liked(Posts posts, Users users) {
+		super();
+		this.posts = posts;
+		this.users = users;
+	}
+
 	public Integer getLid() {
 		return this.lid;
 	}

@@ -5,6 +5,8 @@ import java.time.Instant;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import backend.dto.PageDTO;
 import backend.dto.PostsDTO;
 import backend.dto.PostsInfoDTO;
 import backend.model.Games;
@@ -35,25 +38,39 @@ public class PostsController {
 	private UsersService usersService;
 	@Autowired
 	private GamesService gamesService;
-	
+
 	@GetMapping("/posts")
-	public List<Posts> getAll(){
+	public List<Posts> getAll() {
 		return (List<Posts>) postsService.getAll();
 	}
-	
+
+	@GetMapping("/posts/user")
+	public ResponseEntity<List<Posts>> getByTagOfUser(@RequestBody PageDTO page) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentUserEmail = authentication.getName();
+		Page<Posts> postsPage = postsService.getByTagOfUser(currentUserEmail, page.getPage());
+		List<Posts> postsList = postsPage.getContent();
+		return ResponseEntity.ok(postsList);
+	}
+
 	@PostMapping("/posts/create")
 	public void createPost(@RequestBody PostsDTO p) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentUserEmail = authentication.getName();
 		Users u = usersService.getByEmail(currentUserEmail);
 		Games g = gamesService.getByNameAndYear(p.getGameName(), p.getGameYear());
-		postsService.createPost(new Posts(g,u,p.getDetail(),Timestamp.from(Instant.now())));
+		postsService.createPost(new Posts(g, u, p.getDetail(), Timestamp.from(Instant.now())));
 	}
-	
+
 	@PutMapping("/posts/update")
 	public void updatePost(@RequestBody PostsInfoDTO pf) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentUserEmail = authentication.getName();
+		Users u = usersService.getByEmail(currentUserEmail);
 		Posts p = postsService.getByPID(pf.getPid());
-		p.setDetail(pf.getDetail());
-		postsService.updatePost(p);
+		if (p.getUsers() == u) {
+			p.setDetail(pf.getDetail());
+			postsService.updatePost(p);
+		}
 	}
 }

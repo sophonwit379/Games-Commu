@@ -1,4 +1,5 @@
 package backend.model;
+
 // Generated Oct 6, 2023, 8:07:22 PM by Hibernate Tools 6.1.7.Final
 
 /**
@@ -11,16 +12,40 @@ public class Images implements java.io.Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	private Integer iid;
+	//@ManyToOne(fetch = FetchType.EAGER)
 	private Games games;
+	//@ManyToOne(fetch = FetchType.EAGER)
 	private Posts posts;
+	//@ManyToOne(fetch = FetchType.EAGER)
 	private Comments comments;
+	//@ManyToOne(fetch = FetchType.EAGER)
 	private Users users;
 	private String path;
 
 	public Images() {
 	}
 
-	public Images(String path) {
+	public Images(Users users, String path) {
+		super();
+		this.users = users;
+		this.path = path;
+	}
+
+	public Images(Comments comments, String path) {
+		super();
+		this.comments = comments;
+		this.path = path;
+	}
+
+	public Images(Posts posts, String path) {
+		super();
+		this.posts = posts;
+		this.path = path;
+	}
+
+	public Images(Games games, String path) {
+		super();
+		this.games = games;
 		this.path = path;
 	}
 

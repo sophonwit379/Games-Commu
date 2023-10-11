@@ -8,8 +8,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import backend.dto.GamesWithPageDTO;
+import backend.model.Games;
 import backend.model.Posts;
 import backend.model.Users;
+import backend.repository.GamesRepository;
 import backend.repository.PostsRepository;
 import backend.repository.UsersRepository;
 
@@ -20,6 +23,8 @@ public class PostsService {
 	private PostsRepository postsRepository;
 	@Autowired
 	private UsersRepository usersRepository;
+	@Autowired
+	private GamesRepository gamesRepository;
 	
 	public List<Posts> getAll(){
 		return (List<Posts>) postsRepository.findAll();
@@ -33,6 +38,12 @@ public class PostsService {
 		Users u = usersRepository.findByEmail(email);
         Pageable pageable = PageRequest.of(page, 5);
         return postsRepository.findByTagOfUser(u, pageable);
+    }
+	
+	public Page<Posts> getByGame(GamesWithPageDTO gwp) {
+        Pageable pageable = PageRequest.of(gwp.getPage(), 5);
+        Games g = gamesRepository.findByNameAndYear(gwp.getName(), gwp.getYear());
+        return postsRepository.findByGame(g, pageable);
     }
 	
 	public void createPost(Posts p){

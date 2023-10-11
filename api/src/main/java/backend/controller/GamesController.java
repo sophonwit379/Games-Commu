@@ -35,6 +35,14 @@ public class GamesController {
 		return (List<Games>) gamesService.getAll();
 	}
 	
+	@GetMapping("/games/notintag")
+	public List<Games> getNotGamesTagByUser(){
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentUserEmail = authentication.getName();
+		Users u = usersService.getByEmail(currentUserEmail);
+		return (List<Games>) gamesService.getNotGamesTagByUser(u);
+	}
+	
 	@SuppressWarnings("rawtypes")
 	@PostMapping("/games/create")
 	public ResponseEntity createGame(@RequestBody GamesDTO g){

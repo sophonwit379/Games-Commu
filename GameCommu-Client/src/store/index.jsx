@@ -5,6 +5,7 @@ import { userApi } from "./apis/userApi";
 import { selectGamesApi } from "./apis/selectGamesApi";
 import { postApi } from "./apis/postApi";
 import { gamesApi } from "./apis/gamesApi";
+import { imageApi } from "./apis/imageApi";
 import {
     authReducer,
     clearToken,
@@ -20,6 +21,7 @@ export const store = configureStore({
         [authenticationApi.reducerPath]: authenticationApi.reducer,
         [gamesApi.reducerPath]: gamesApi.reducer,
         [selectGamesApi.reducerPath]: selectGamesApi.reducer,
+        [imageApi.reducerPath]: imageApi.reducer,
         [postApi.reducerPath]: postApi.reducer,
     },
     middleware: (getDefaultMiddleware) => {
@@ -28,6 +30,7 @@ export const store = configureStore({
             .concat(selectGamesApi.middleware)
             .concat(gamesApi.middleware)
             .concat(postApi.middleware)
+            .concat(imageApi.middleware)
             .concat(authenticationApi.middleware);
     }
 });
@@ -59,6 +62,11 @@ export {
 export {
     useGetGamesQuery
 } from './apis/gamesApi'
+
+export {
+    useUploadImgMutation
+} from './apis/imageApi'
+
 
 export {
     useAddPostMutation,

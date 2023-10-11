@@ -1,5 +1,5 @@
 import { Navbar,Container,Form,Button,Row,Col,Card,Image } from 'react-bootstrap';
-import { Link,useNavigate } from 'react-router-dom';
+import { Link,useNavigate,useLocation  } from 'react-router-dom';
 import gLogo from '../../assets/game-credits-game-logo.svg';
 import './HomePage.css'
 import Post from '../../components/Post';
@@ -13,6 +13,7 @@ import default_pfp from '../../assets/Default_pfp.svg'
 import { useFetchUserQuery } from '../../store';
 
 function HomePage() {
+  const location = useLocation()
   const navigate = useNavigate();
   const { data:user } = useFetchUserQuery();
   const [modalShow, setModalShow] = useState(false);
@@ -91,6 +92,7 @@ function HomePage() {
                 show={modalShow}
                 onHide={handleCloseModal}
                 modalFormRef={modalFormRef}
+                gid={location.pathname.split('/home/')[1]}
               />
               
               <Card className='mt-4 w-75'>

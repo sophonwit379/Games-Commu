@@ -1,7 +1,7 @@
 package backend.dto;
 
 public class LikeCommentDTO {
-	
+
 	private Integer cid;
 
 	public LikeCommentDTO() {

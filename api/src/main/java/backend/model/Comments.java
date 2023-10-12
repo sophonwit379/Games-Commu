@@ -41,7 +41,7 @@ public class Comments implements java.io.Serializable {
 		this.detail = detail;
 		this.date = date;
 	}
-	
+
 	public Comments(Posts posts, Comments comments, Users users, String detail, Timestamp date) {
 		super();
 		this.posts = posts;

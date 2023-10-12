@@ -65,7 +65,7 @@ public class PostsService {
 		return pp;
 	}
 
-	public List<PostsDRO> getByGame(int gid,int page) {
+	public List<PostsDRO> getByGame(int gid, int page) {
 		List<Object> o = postsRepository.getByGame(gid);
 		List<PostsDRO> p = PostsDRO.convertToPostsDRO(o);
 		List<PostsDRO> pp = new ArrayList<>();

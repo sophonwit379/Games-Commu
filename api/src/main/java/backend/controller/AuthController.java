@@ -20,46 +20,43 @@ import backend.service.UsersService;
 @CrossOrigin(origins = "http://localhost:5173")
 public class AuthController {
 
-    private final AuthenticationManager authenticationManager;
-    
-    @Autowired
-    private UsersService usersService;
+	private final AuthenticationManager authenticationManager;
 
-    private JwtUtil jwtUtil;
-    public AuthController(AuthenticationManager authenticationManager, JwtUtil jwtUtil) {
-        this.authenticationManager = authenticationManager;
-        this.jwtUtil = jwtUtil;
+	@Autowired
+	private UsersService usersService;
 
-    }
+	private JwtUtil jwtUtil;
 
-    @SuppressWarnings("rawtypes")
-    @ResponseBody
-    @PostMapping("/authtoken")
-    public ResponseEntity login(@RequestBody LoginReq loginReq)  {
-        try {
-        	Users existingUser = usersService.getByEmail(loginReq.getUsername());
-        	if (existingUser != null && 
-        			existingUser.getPassword().equals(loginReq.getPassword())) {
-        		Authentication authentication =
-                        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginReq.getUsername(), loginReq.getPassword()));
-        		String email = authentication.getName();
-        		Users user = usersService.getByEmail(email);
-                String token = jwtUtil.createToken(user);
-                usersService.nowLogin(email);
-                return ResponseEntity.ok(token);
-        	}
-        	else {
-    			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Password or username incorrect.");
-    		}    
+	public AuthController(AuthenticationManager authenticationManager, JwtUtil jwtUtil) {
+		this.authenticationManager = authenticationManager;
+		this.jwtUtil = jwtUtil;
 
-        }
-        catch (BadCredentialsException e){
-            ErrorRes errorResponse = new ErrorRes(HttpStatus.BAD_REQUEST,"Invalid username or password");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
-        }
-        catch (Exception e){
-            ErrorRes errorResponse = new ErrorRes(HttpStatus.BAD_REQUEST, e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
-        }
-    }
+	}
+
+	@SuppressWarnings("rawtypes")
+	@ResponseBody
+	@PostMapping("/authtoken")
+	public ResponseEntity login(@RequestBody LoginReq loginReq) {
+		try {
+			Users existingUser = usersService.getByEmail(loginReq.getUsername());
+			if (existingUser != null && existingUser.getPassword().equals(loginReq.getPassword())) {
+				Authentication authentication = authenticationManager.authenticate(
+						new UsernamePasswordAuthenticationToken(loginReq.getUsername(), loginReq.getPassword()));
+				String email = authentication.getName();
+				Users user = usersService.getByEmail(email);
+				String token = jwtUtil.createToken(user);
+				usersService.nowLogin(email);
+				return ResponseEntity.ok(token);
+			} else {
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Password or username incorrect.");
+			}
+
+		} catch (BadCredentialsException e) {
+			ErrorRes errorResponse = new ErrorRes(HttpStatus.BAD_REQUEST, "Invalid username or password");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+		} catch (Exception e) {
+			ErrorRes errorResponse = new ErrorRes(HttpStatus.BAD_REQUEST, e.getMessage());
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+		}
+	}
 }

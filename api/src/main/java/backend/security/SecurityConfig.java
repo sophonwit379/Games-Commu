@@ -41,32 +41,28 @@ public class SecurityConfig {
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-	    http.cors().configurationSource(request -> {
-	        CorsConfiguration corsConfig = new CorsConfiguration();
-	        corsConfig.addAllowedOrigin("http://localhost:5173"); 
-	        corsConfig.addAllowedMethod("*");
-	        corsConfig.addAllowedHeader("*");
-	        return corsConfig;
-	    })
-	    .and()
-	    .csrf(AbstractHttpConfigurer::disable)
-	    .authorizeHttpRequests((requests) -> requests
-	        .requestMatchers(new AntPathRequestMatcher("/api/authtoken/**")).permitAll()
-	        .requestMatchers(new AntPathRequestMatcher("/api-docs/**"), new AntPathRequestMatcher("/swagger-ui/**")).permitAll()
-	        .requestMatchers(new AntPathRequestMatcher("/api/users/create/**")).permitAll()
-	        .requestMatchers(new AntPathRequestMatcher("/api/posts/notlogin/**")).permitAll()
-	        .anyRequest().authenticated())
-	    .formLogin().disable() // Disable form-based login
-	    .httpBasic().disable() // Disable HTTP Basic authentication
-	    .addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class)
-	    .sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+		http.cors().configurationSource(request -> {
+			CorsConfiguration corsConfig = new CorsConfiguration();
+			corsConfig.addAllowedOrigin("http://localhost:5173");
+			corsConfig.addAllowedMethod("*");
+			corsConfig.addAllowedHeader("*");
+			return corsConfig;
+		}).and().csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests((requests) -> requests
+				.requestMatchers(new AntPathRequestMatcher("/api/authtoken/**")).permitAll()
+				.requestMatchers(new AntPathRequestMatcher("/api-docs/**"), new AntPathRequestMatcher("/swagger-ui/**"))
+				.permitAll().requestMatchers(new AntPathRequestMatcher("/api/users/create/**")).permitAll()
+				.requestMatchers(new AntPathRequestMatcher("/api/posts/notlogin/**")).permitAll().anyRequest()
+				.authenticated()).formLogin().disable() // Disable form-based login
+				.httpBasic().disable() // Disable HTTP Basic authentication
+				.addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class)
+				.sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
-	    return http.build();
+		return http.build();
 	}
 
-    @Bean
-    public NoOpPasswordEncoder passwordEncoder() {
-        return (NoOpPasswordEncoder) NoOpPasswordEncoder.getInstance();
-    }
+	@Bean
+	public NoOpPasswordEncoder passwordEncoder() {
+		return (NoOpPasswordEncoder) NoOpPasswordEncoder.getInstance();
+	}
 
 }

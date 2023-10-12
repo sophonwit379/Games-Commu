@@ -64,7 +64,7 @@ public class RequestedGamesController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("You is not Admin");
 		}
 	}
-	
+
 	@SuppressWarnings("rawtypes")
 	@PostMapping("/requestedgames/reject")
 	public ResponseEntity reject(@RequestBody RequestedGamesDTO rgf) {

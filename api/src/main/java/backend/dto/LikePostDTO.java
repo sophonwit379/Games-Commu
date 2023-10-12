@@ -1,7 +1,7 @@
 package backend.dto;
 
 public class LikePostDTO {
-	
+
 	private Integer pid;
 
 	public LikePostDTO() {

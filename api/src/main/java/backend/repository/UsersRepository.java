@@ -9,7 +9,7 @@ import backend.model.Users;
 
 @Repository
 public interface UsersRepository extends CrudRepository<Users, Integer> {
-	
+
 	@Query("from Users u where u.email=:email")
-	public Users findByEmail(@Param("email")String email);
+	public Users findByEmail(@Param("email") String email);
 }

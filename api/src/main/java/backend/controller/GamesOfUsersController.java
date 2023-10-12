@@ -24,26 +24,26 @@ public class GamesOfUsersController {
 
 	@Autowired
 	private GamesOfUsersService gamesOfUsersService;
-	
+
 	@GetMapping("/gamesofusers")
-	public List<GamesOfUsers> getAll(){
+	public List<GamesOfUsers> getAll() {
 		return (List<GamesOfUsers>) gamesOfUsersService.getAll();
 	}
-	
+
 	@GetMapping("/gamesofuser")
-	public List<GamesOfUsers> getByUser(){
+	public List<GamesOfUsers> getByUser() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentUserEmail = authentication.getName();
 		return (List<GamesOfUsers>) gamesOfUsersService.getByUser(currentUserEmail);
 	}
-	
+
 	@PostMapping("/gamesofuser/create")
 	public void createTag(@RequestBody GamesDTO g) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentUserEmail = authentication.getName();
 		gamesOfUsersService.createTag(currentUserEmail, g);
 	}
-	
+
 	@DeleteMapping("/gamesofuser/delete")
 	public void deleteTag(@RequestBody GamesDTO g) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

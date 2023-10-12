@@ -21,34 +21,34 @@ import backend.service.CommentsService;
 @RequestMapping("/api")
 @CrossOrigin(origins = "http://localhost:5173")
 public class CommentsController {
-	
+
 	@Autowired
 	private CommentsService commentsService;
-	
+
 	@GetMapping("/comments")
-	public List<Comments> getAll(){
+	public List<Comments> getAll() {
 		return (List<Comments>) commentsService.getAll();
 	}
-	
+
 	@GetMapping("/comments/main")
-	public List<Comments> getMainComments(){
+	public List<Comments> getMainComments() {
 		return (List<Comments>) commentsService.getAll();
 	}
-	
+
 	@GetMapping("/comments/replycomments")
-	public List<Comments> getReplyComments(){
+	public List<Comments> getReplyComments() {
 		return (List<Comments>) commentsService.getAll();
 	}
-	
+
 	@PostMapping("/comments/create")
-	public void createComment(@RequestBody CommentsDTO cf){
+	public void createComment(@RequestBody CommentsDTO cf) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentUserEmail = authentication.getName();
 		commentsService.createComment(currentUserEmail, cf);
 	}
-	
+
 	@PostMapping("/comments/reply")
-	public void createReplyComment(@RequestBody ReplyCommentsDTO rcf){
+	public void createReplyComment(@RequestBody ReplyCommentsDTO rcf) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentUserEmail = authentication.getName();
 		commentsService.createReplyComment(currentUserEmail, rcf);

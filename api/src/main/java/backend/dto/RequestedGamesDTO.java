@@ -1,7 +1,7 @@
 package backend.dto;
 
 public class RequestedGamesDTO {
-	
+
 	private int rgid;
 	private String name;
 	private String year;

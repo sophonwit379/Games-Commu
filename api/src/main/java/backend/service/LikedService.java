@@ -25,21 +25,21 @@ public class LikedService {
 	private PostsRepository postsRepository;
 	@Autowired
 	private CommentsRepository commentsRepository;
-	
-	public List<Liked> getAll(){
+
+	public List<Liked> getAll() {
 		return (List<Liked>) likedRepository.findAll();
 	}
-	
-	public void likePost(int pid,String email){
+
+	public void likePost(int pid, String email) {
 		Users u = usersRepository.findByEmail(email);
 		Posts p = postsRepository.findById(pid).get();
-		Liked l = new Liked(p,u);
+		Liked l = new Liked(p, u);
 		if (likedRepository.findByUserAndPost(u, p) == null) {
 			likedRepository.save(l);
 		}
 	}
-	
-	public void unlikePost(int pid,String email){
+
+	public void unlikePost(int pid, String email) {
 		Users u = usersRepository.findByEmail(email);
 		Posts p = postsRepository.findById(pid).get();
 		if (likedRepository.findByUserAndPost(u, p) != null) {
@@ -47,17 +47,17 @@ public class LikedService {
 			likedRepository.delete(l);
 		}
 	}
-	
-	public void likeComment(int cid,String email){
+
+	public void likeComment(int cid, String email) {
 		Users u = usersRepository.findByEmail(email);
 		Comments c = commentsRepository.findById(cid).get();
-		Liked l = new Liked(c,u);
+		Liked l = new Liked(c, u);
 		if (likedRepository.findByUserAndComment(u, c) == null) {
 			likedRepository.save(l);
 		}
 	}
-	
-	public void unlikeComment(int cid,String email){
+
+	public void unlikeComment(int cid, String email) {
 		Users u = usersRepository.findByEmail(email);
 		Comments c = commentsRepository.findById(cid).get();
 		if (likedRepository.findByUserAndComment(u, c) != null) {

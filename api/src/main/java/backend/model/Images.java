@@ -12,13 +12,9 @@ public class Images implements java.io.Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	private Integer iid;
-	//@ManyToOne(fetch = FetchType.EAGER)
 	private Games games;
-	//@ManyToOne(fetch = FetchType.EAGER)
 	private Posts posts;
-	//@ManyToOne(fetch = FetchType.EAGER)
 	private Comments comments;
-	//@ManyToOne(fetch = FetchType.EAGER)
 	private Users users;
 	private String path;
 

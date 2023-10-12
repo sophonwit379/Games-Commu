@@ -184,7 +184,7 @@ public class Users implements java.io.Serializable {
 	public void setRequestedGameses(Set requestedGameses) {
 		this.requestedGameses = requestedGameses;
 	}
-	
+
 	@SuppressWarnings("rawtypes")
 	public Set getPostses() {
 		return this.postses;

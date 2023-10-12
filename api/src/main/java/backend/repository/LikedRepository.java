@@ -15,17 +15,17 @@ import backend.model.Users;
 @Repository
 public interface LikedRepository extends CrudRepository<Liked, Integer> {
 	@Query("from Liked l where l.users=:user")
-	public List<Liked> findByUser(@Param("user")Users user);
-	
+	public List<Liked> findByUser(@Param("user") Users user);
+
 	@Query("from Liked l where l.posts=:post")
-	public List<Liked> findByPost(@Param("post")Posts post);
-	
+	public List<Liked> findByPost(@Param("post") Posts post);
+
 	@Query("from Liked l where l.comments=:comment")
-	public List<Liked> findByComment(@Param("comment")Comments comment);
-	
+	public List<Liked> findByComment(@Param("comment") Comments comment);
+
 	@Query("from Liked l where l.posts=:post and l.users=:user")
-	public Liked findByUserAndPost(@Param("user")Users user,@Param("post")Posts post);
-	
+	public Liked findByUserAndPost(@Param("user") Users user, @Param("post") Posts post);
+
 	@Query("from Liked l where l.comments=:comment and l.users=:user")
-	public Liked findByUserAndComment(@Param("user")Users user,@Param("comment")Comments comment);
+	public Liked findByUserAndComment(@Param("user") Users user, @Param("comment") Comments comment);
 }

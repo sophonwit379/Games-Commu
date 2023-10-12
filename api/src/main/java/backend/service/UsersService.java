@@ -18,49 +18,45 @@ import backend.model.Users;
 import backend.repository.UsersRepository;
 
 @Service
-public class UsersService implements UserDetailsService 
-{
+public class UsersService implements UserDetailsService {
 
 	@Autowired
 	private UsersRepository usersRepository;
-	
-	public List<Users> getAll(){
+
+	public List<Users> getAll() {
 		return (List<Users>) usersRepository.findAll();
 	}
-	
-	public Users getByEmail(String email){
+
+	public Users getByEmail(String email) {
 		return usersRepository.findByEmail(email);
 	}
-	
-	public void createAccount(Users u){
+
+	public Users createAccount(Users u) {
 		usersRepository.save(u);
+		return u;
 	}
-	
-	public void updateAccount(String email,UserInfoDTO uf){
+
+	public void updateAccount(String email, UserInfoDTO uf) {
 		Users u = usersRepository.findByEmail(email);
 		u.setUsername(uf.getUsername());
 		u.setName(uf.getName());
 		u.setSurname(uf.getSurname());
 		usersRepository.save(u);
 	}
-	
-	public void nowLogin(String email){
+
+	public void nowLogin(String email) {
 		Users u = usersRepository.findByEmail(email);
 		u.setLastLogin(Timestamp.from(Instant.now()));
 		usersRepository.save(u);
 	}
-	
+
 	@Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    	Users user = usersRepository.findByEmail(username);
-    	List<GrantedAuthority> authorities = new ArrayList<>();
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		Users user = usersRepository.findByEmail(username);
+		List<GrantedAuthority> authorities = new ArrayList<>();
 		authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
-        UserDetails userDetails =
-                org.springframework.security.core.userdetails.User.builder()
-                        .username(user.getEmail())
-                        .password(user.getPassword())
-                        .authorities(authorities)
-                        .build();
-        return userDetails;
-    }
+		UserDetails userDetails = org.springframework.security.core.userdetails.User.builder().username(user.getEmail())
+				.password(user.getPassword()).authorities(authorities).build();
+		return userDetails;
+	}
 }

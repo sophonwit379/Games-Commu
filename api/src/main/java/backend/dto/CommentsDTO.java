@@ -1,10 +1,10 @@
 package backend.dto;
 
 public class CommentsDTO {
-	
+
 	private Integer pid;
 	private String detail;
-	
+
 	public CommentsDTO() {
 
 	}

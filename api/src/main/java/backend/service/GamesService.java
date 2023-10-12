@@ -19,30 +19,27 @@ public class GamesService {
 	private GamesOfUsersRepository gamesOfUsersRepository;
 	@Autowired
 	private GamesRepository gamesRepository;
-	
-	public List<Games> getAll(){
+
+	public List<Games> getAll() {
 		return (List<Games>) gamesRepository.findAll();
-	}	
-	
-	public List<Games> getNotGamesTagByUser(Users u){
+	}
+
+	public List<Games> getNotGamesTagByUser(Users u) {
 		List<Games> g = (List<Games>) gamesRepository.findAll();
 		List<GamesOfUsers> gou = gamesOfUsersRepository.findByUser(u);
-		
-		List<Games> tag = gou.stream()
-		        .map(GamesOfUsers::getGames)
-		        .collect(Collectors.toList());
-		
+
+		List<Games> tag = gou.stream().map(GamesOfUsers::getGames).collect(Collectors.toList());
+
 		g.removeAll(tag);
 		return g;
 	}
-	
-	public Games getByNameAndYear(String name,String year){
-		return gamesRepository.findByNameAndYear(name,year);
+
+	public Games getByNameAndYear(String name, String year) {
+		return gamesRepository.findByNameAndYear(name, year);
 	}
-	
-	public void createGame(Games g){
+
+	public void createGame(Games g) {
 		gamesRepository.save(g);
 	}
-	
-	
+
 }

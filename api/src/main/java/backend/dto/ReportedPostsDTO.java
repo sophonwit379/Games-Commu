@@ -1,14 +1,14 @@
 package backend.dto;
 
 public class ReportedPostsDTO {
-	
+
 	private Integer pid;
 	private String reason;
-	
+
 	public ReportedPostsDTO() {
 
 	}
-	
+
 	public ReportedPostsDTO(Integer pid, String reason) {
 		super();
 		this.pid = pid;

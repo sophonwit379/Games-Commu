@@ -29,69 +29,69 @@ public class ImagesService {
 	private GamesRepository gamesRepository;
 	@Autowired
 	private CommentsRepository commentsRepository;
-	
-	public List<Images> getAll(){
+
+	public List<Images> getAll() {
 		return (List<Images>) imagesRepository.findAll();
 	}
-	
-	public List<Images> getByGID(int gid){
+
+	public List<Images> getByGID(int gid) {
 		Games g = gamesRepository.findById(gid).get();
 		return (List<Images>) imagesRepository.findByGames(g);
 	}
-	
-	public List<Images> getByPID(int pid){
+
+	public List<Images> getByPID(int pid) {
 		Posts p = postsRepository.findById(pid).get();
 		return (List<Images>) imagesRepository.findByPosts(p);
 	}
-	
-	public List<Images> getByCID(int cid){
+
+	public List<Images> getByCID(int cid) {
 		Comments c = commentsRepository.findById(cid).get();
 		return (List<Images>) imagesRepository.findByComments(c);
 	}
-	
-	public List<Images> getByEmail(String email){
+
+	public List<Images> getByEmail(String email) {
 		Users u = usersRepository.findByEmail(email);
 		return (List<Images>) imagesRepository.findByUsers(u);
 	}
-	
-	public int countByGID(int gid){
+
+	public int countByGID(int gid) {
 		return imagesRepository.countByGID(gid);
 	}
-	
-	public int countByPID(int pid){
+
+	public int countByPID(int pid) {
 		return imagesRepository.countByPID(pid);
 	}
-	
-	public int countByCID(int cid){
+
+	public int countByCID(int cid) {
 		return imagesRepository.countByCID(cid);
 	}
-	
-	public int countByEmail(String email){
+
+	public int countByEmail(String email) {
 		Users u = usersRepository.findByEmail(email);
 		return imagesRepository.countByUID(u.getUid());
 	}
-	
-	public void createImageForGame(int gid,String path){
+
+	public void createImageForGame(int gid, String path) {
 		Games g = gamesRepository.findById(gid).get();
-		Images i = new Images(g,path);
+		Images i = new Images(g, path);
 		imagesRepository.save(i);
 	}
-	
-	public void createImageForPost(int pid,String path){
+
+	public void createImageForPost(int pid, String path) {
 		Posts p = postsRepository.findById(pid).get();
-		Images i = new Images(p,path);
+		Images i = new Images(p, path);
 		imagesRepository.save(i);
 	}
-	
-	public void createImageForComment(int cid,String path){
+
+	public void createImageForComment(int cid, String path) {
 		Comments c = commentsRepository.findById(cid).get();
-		Images i = new Images(c,path);
+		Images i = new Images(c, path);
 		imagesRepository.save(i);
 	}
-	
-	public void createImageForUser(String email,String path){
+
+	public void createImageForUser(String email, String path) {
 		Users u = usersRepository.findByEmail(email);
-		Images i = new Images(u,path);
+		Images i = new Images(u, path);
 		imagesRepository.save(i);
 	}
 }

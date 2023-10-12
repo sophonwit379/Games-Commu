@@ -25,23 +25,23 @@ public class CommentsService {
 	private UsersRepository usersRepository;
 	@Autowired
 	private PostsRepository postsRepository;
-	
-	public List<Comments> getAll(){
+
+	public List<Comments> getAll() {
 		return (List<Comments>) commentsRepository.findAll();
-	}	
-	
-	public void createComment(String email,CommentsDTO cf){
+	}
+
+	public void createComment(String email, CommentsDTO cf) {
 		Users u = usersRepository.findByEmail(email);
 		Posts p = postsRepository.findById(cf.getPid()).get();
-		Comments c = new Comments(p,u,cf.getDetail(),Timestamp.from(Instant.now()));
+		Comments c = new Comments(p, u, cf.getDetail(), Timestamp.from(Instant.now()));
 		commentsRepository.save(c);
 	}
-	
-	public void createReplyComment(String email,ReplyCommentsDTO rcf){
+
+	public void createReplyComment(String email, ReplyCommentsDTO rcf) {
 		Users u = usersRepository.findByEmail(email);
 		Posts p = postsRepository.findById(rcf.getPid()).get();
 		Comments c = commentsRepository.findById(rcf.getRid()).get();
-		Comments rc = new Comments(p,c,u,rcf.getDetail(),Timestamp.from(Instant.now()));
+		Comments rc = new Comments(p, c, u, rcf.getDetail(), Timestamp.from(Instant.now()));
 		commentsRepository.save(rc);
 	}
 }

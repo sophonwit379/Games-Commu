@@ -25,33 +25,33 @@ public class LikedController {
 
 	@Autowired
 	private LikedService likedService;
-	
+
 	@GetMapping("/likes")
-	public List<Liked> getAll(){
+	public List<Liked> getAll() {
 		return (List<Liked>) likedService.getAll();
 	}
-	
+
 	@PostMapping("/likes/likepost")
-	public void likePost(@RequestBody LikePostDTO lp){
+	public void likePost(@RequestBody LikePostDTO lp) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentUserEmail = authentication.getName();
 		likedService.likePost(lp.getPid(), currentUserEmail);
 	}
-	
+
 	@PostMapping("/likes/likecomment")
-	public void likeComment(@RequestBody LikeCommentDTO lc){
+	public void likeComment(@RequestBody LikeCommentDTO lc) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentUserEmail = authentication.getName();
 		likedService.likeComment(lc.getCid(), currentUserEmail);
 	}
-	
+
 	@DeleteMapping("/likes/unlikepost")
 	public void unlikePost(@RequestBody LikePostDTO lp) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentUserEmail = authentication.getName();
 		likedService.unlikePost(lp.getPid(), currentUserEmail);
 	}
-	
+
 	@DeleteMapping("/likes/unlikecomment")
 	public void unlikeComment(@RequestBody LikeCommentDTO lc) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

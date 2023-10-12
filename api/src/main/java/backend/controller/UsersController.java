@@ -30,9 +30,8 @@ public class UsersController {
 	@Autowired
 	private UsersService usersService;
 
-	@SuppressWarnings("rawtypes")
 	@GetMapping("/users")
-	public ResponseEntity getAll() {
+	public ResponseEntity<Object> getAll() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentUserEmail = authentication.getName();
 		Users u = usersService.getByEmail(currentUserEmail);
@@ -42,10 +41,9 @@ public class UsersController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("You is not Admin");
 		}
 	}
-	
-	@SuppressWarnings("rawtypes")
+
 	@GetMapping("/user")
-	public ResponseEntity getByEmail() {
+	public ResponseEntity<Users> getByEmail() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentUserEmail = authentication.getName();
 		Users u = usersService.getByEmail(currentUserEmail);
@@ -53,16 +51,18 @@ public class UsersController {
 	}
 
 	@PostMapping("/users/create")
-	public void createAccount(@RequestBody UsersDTO u) {
-		usersService.createAccount(new Users(u.getEmail(), u.getPassword(), u.getUsername(), u.getName(),
-				u.getSurname(), "Uesr", "Normal", Timestamp.from(Instant.now())));
+	public ResponseEntity<Integer> createAccount(@RequestBody UsersDTO udto) {
+		Users u = usersService.createAccount(new Users(udto.getEmail(), udto.getPassword(), udto.getUsername(),
+				udto.getName(), udto.getSurname(), "Uesr", "Normal", Timestamp.from(Instant.now())));
+		return ResponseEntity.ok(u.getUid());
 	}
 
 	@PutMapping("/users/update")
-	public void updateAccount(@RequestBody UserInfoDTO u) {
+	public ResponseEntity<String> updateAccount(@RequestBody UserInfoDTO u) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentUserEmail = authentication.getName();
 		usersService.updateAccount(currentUserEmail, u);
+		return ResponseEntity.ok("Update user information successfully");
 	}
 
 }

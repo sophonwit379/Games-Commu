@@ -1,15 +1,15 @@
 package backend.dto;
 
 public class ReplyCommentsDTO {
-	
+
 	private Integer pid;
 	private Integer rid;
 	private String detail;
-	
+
 	public ReplyCommentsDTO() {
 
 	}
-	
+
 	public ReplyCommentsDTO(Integer pid, Integer rid, String detail) {
 		this.pid = pid;
 		this.rid = rid;

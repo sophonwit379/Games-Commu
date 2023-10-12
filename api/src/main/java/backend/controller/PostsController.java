@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import backend.dto.GamesWithPageDTO;
-import backend.dto.PageDTO;
 import backend.dto.PostsDTO;
 import backend.dto.PostsInfoDTO;
 import backend.model.Games;
@@ -44,12 +44,27 @@ public class PostsController {
 	public List<Posts> getAll() {
 		return (List<Posts>) postsService.getAll();
 	}
+	
+	@GetMapping("/posts/notlogin")
+	public void getAllByPage(@RequestParam int page) {
+		Page<Posts> postsPage = postsService.getAllByPage(page);
+		List<Posts> postsList = postsPage.getContent();
+		for (Posts post : postsList) {
+	        System.out.println("Post ID: " + post.getPid());
+	        System.out.println("Post Title: " + post.getDetail());
+	        // Print other properties as needed
+	        System.out.println(); // Add a blank line to separate posts
+	    }
+		
+		//List<Posts> postsList = postsService.getAll();
+		//return ResponseEntity.ok(postsList);
+	}
 
 	@GetMapping("/posts/user")
-	public ResponseEntity<List<Posts>> getByTagOfUser(@RequestBody PageDTO page) {
+	public ResponseEntity<List<Posts>> getByTagOfUser(@RequestParam int page) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentUserEmail = authentication.getName();
-		Page<Posts> postsPage = postsService.getByTagOfUser(currentUserEmail, page.getPage());
+		Page<Posts> postsPage = postsService.getByTagOfUser(currentUserEmail, page);
 		List<Posts> postsList = postsPage.getContent();
 		return ResponseEntity.ok(postsList);
 	}

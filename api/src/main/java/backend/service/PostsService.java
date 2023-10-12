@@ -34,6 +34,11 @@ public class PostsService {
 		return postsRepository.findById(pid).get();
 	}
 	
+	public Page<Posts> getAllByPage(int page) {
+        Pageable pageable = PageRequest.of(page, 5);
+        return postsRepository.findAllByPage(pageable);
+    }
+	
 	public Page<Posts> getByTagOfUser(String email,int page) {
 		Users u = usersRepository.findByEmail(email);
         Pageable pageable = PageRequest.of(page, 5);

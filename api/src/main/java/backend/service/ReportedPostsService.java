@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import backend.dro.ReportedPostsDRO;
 import backend.dto.ReportedPostsDTO;
 import backend.model.Posts;
 import backend.model.ReportedPosts;
@@ -23,8 +24,11 @@ public class ReportedPostsService {
 	@Autowired
 	private PostsRepository postsRepository;
 	
-	public List<ReportedPosts> getAll(){
-		return (List<ReportedPosts>) reportedPostsRepository.findAll();
+	public List<ReportedPostsDRO> getAll(){
+		List<Object> o = reportedPostsRepository.getAll();
+		List<ReportedPostsDRO> rp = ReportedPostsDRO.convertToReportedPostsDRO(o);
+		return rp;
+		//return (List<ReportedPosts>) reportedPostsRepository.findAll();
 	}
 	
 	public void report(String email,ReportedPostsDTO rpf){

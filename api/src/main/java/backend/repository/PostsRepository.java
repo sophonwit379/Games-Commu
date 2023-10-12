@@ -13,6 +13,11 @@ import backend.model.Users;
 
 @Repository
 public interface PostsRepository extends PagingAndSortingRepository<Posts, Integer> {
+	
+	
+	@Query("from Posts p join p.commentses c join p.imageses i join p.likeds l")
+	Page<Posts> findAllByPage(Pageable pageable);
+	
 	@Query("from Posts p join p.games g join g.gamesOfUserses gou where gou.users=:user")
 	public Page<Posts> findByTagOfUser(@Param("user") Users user, Pageable pageable);
 	

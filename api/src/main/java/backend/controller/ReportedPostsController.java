@@ -10,10 +10,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import backend.dro.ReportedPostsDRO;
 import backend.dto.ReportedPostsDTO;
-import backend.model.ReportedPosts;
 import backend.service.ReportedPostsService;
 
 @RestController
@@ -25,14 +26,14 @@ public class ReportedPostsController {
 	private ReportedPostsService reportedPostsService;
 	
 	@GetMapping("/reportedposts")
-	public List<ReportedPosts> getAll(){
-		return (List<ReportedPosts>) reportedPostsService.getAll();
+	public List<ReportedPostsDRO> getAll(){
+		return reportedPostsService.getAll();
 	}
 	
 	@PostMapping("/reportedposts/report")
-	public void report(@RequestBody ReportedPostsDTO rpf){
+	public void report(){
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentUserEmail = authentication.getName();
-		reportedPostsService.report(currentUserEmail, rpf);
+		//reportedPostsService.report(currentUserEmail,);
 	}
 }

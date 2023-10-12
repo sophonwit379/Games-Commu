@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
-import { baseUrl } from "./Utils/baseApi";
+import { baseUrl } from '../../env/utils';
 
 const postApi = createApi({
     reducerPath:'post',
@@ -30,6 +30,14 @@ const postApi = createApi({
                     }
                 } 
             }),
+            fetchFollowedGame: builder.query({
+                query:(page) => {
+                    return {
+                        url:`/posts/user?page=${page}`,
+                        method:'GET',
+                    }
+                }
+            })
 
 
         }
@@ -40,4 +48,5 @@ export { postApi };
 export const {
     useAddPostMutation,
     useEditPostMutation,
+    useFetchFollowedGameQuery
 } = postApi;

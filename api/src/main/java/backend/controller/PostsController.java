@@ -5,7 +5,7 @@ import java.time.Instant;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import backend.dto.GamesWithPageDTO;
+import backend.dro.PostsDRO;
 import backend.dto.PostsDTO;
 import backend.dto.PostsInfoDTO;
 import backend.model.Games;
@@ -40,44 +40,28 @@ public class PostsController {
 	@Autowired
 	private GamesService gamesService;
 
-	@GetMapping("/posts")
-	public List<Posts> getAll() {
-		return (List<Posts>) postsService.getAll();
-	}
-	
 	@GetMapping("/posts/notlogin")
-	public void getAllByPage(@RequestParam int page) {
-		Page<Posts> postsPage = postsService.getAllByPage(page);
-		List<Posts> postsList = postsPage.getContent();
-		for (Posts post : postsList) {
-	        System.out.println("Post ID: " + post.getPid());
-	        System.out.println("Post Title: " + post.getDetail());
-	        // Print other properties as needed
-	        System.out.println(); // Add a blank line to separate posts
-	    }
-		
-		//List<Posts> postsList = postsService.getAll();
-		//return ResponseEntity.ok(postsList);
+	public ResponseEntity<List<PostsDRO>> getAllByPage(@RequestParam int page) {
+		List<PostsDRO> p = postsService.getAllWithPage(page);
+		return ResponseEntity.ok(p);
 	}
 
 	@GetMapping("/posts/user")
-	public ResponseEntity<List<Posts>> getByTagOfUser(@RequestParam int page) {
+	public ResponseEntity<List<PostsDRO>> getByTagOfUser(@RequestParam int page) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentUserEmail = authentication.getName();
-		Page<Posts> postsPage = postsService.getByTagOfUser(currentUserEmail, page);
-		List<Posts> postsList = postsPage.getContent();
-		return ResponseEntity.ok(postsList);
+		List<PostsDRO> p = postsService.getByTagOfUser(currentUserEmail, page);
+		return ResponseEntity.ok(p);
 	}
-	
+
 	@GetMapping("/posts/game")
-	public ResponseEntity<List<Posts>> getByGame(@RequestBody GamesWithPageDTO gwp) {
-		Page<Posts> postsPage = postsService.getByGame(gwp);
-		List<Posts> postsList = postsPage.getContent();
-		return ResponseEntity.ok(postsList);
+	public ResponseEntity<List<PostsDRO>> getByGame(@RequestParam int gid, @RequestParam int page) {
+		List<PostsDRO> p = postsService.getByGame(gid, page);
+		return ResponseEntity.ok(p);
 	}
 
 	@PostMapping("/posts/create")
-	public ResponseEntity<Integer>  createPost(@RequestBody PostsDTO pdto) {
+	public ResponseEntity<Integer> createPost(@RequestBody PostsDTO pdto) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentUserEmail = authentication.getName();
 		Users u = usersService.getByEmail(currentUserEmail);
@@ -87,7 +71,7 @@ public class PostsController {
 	}
 
 	@PutMapping("/posts/update")
-	public void updatePost(@RequestBody PostsInfoDTO pf) {
+	public ResponseEntity<String> updatePost(@RequestBody PostsInfoDTO pf) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentUserEmail = authentication.getName();
 		Users u = usersService.getByEmail(currentUserEmail);
@@ -95,6 +79,8 @@ public class PostsController {
 		if (p.getUsers() == u) {
 			p.setDetail(pf.getDetail());
 			postsService.updatePost(p);
+			return ResponseEntity.ok("Update post successfully");
 		}
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User not match");
 	}
 }

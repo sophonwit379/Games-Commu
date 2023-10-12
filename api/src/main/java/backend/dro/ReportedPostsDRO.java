@@ -11,34 +11,36 @@ public class ReportedPostsDRO {
 	private String reason;
 	private String status;
 	private String username;
-	
+	private int like;
+
+	public static List<ReportedPostsDRO> convertToReportedPostsDRO(List<Object> objects) {
+		return objects.stream().map(obj -> {
+			Object[] array = (Object[]) obj; // Assuming each object is an array
+
+			ReportedPostsDRO reportedPost = new ReportedPostsDRO();
+			reportedPost.setRpid((int) array[0]);
+			reportedPost.setPid((int) array[1]);
+			reportedPost.setUid((int) array[2]);
+			reportedPost.setReason((String) array[3]);
+			reportedPost.setStatus((String) array[4]);
+			reportedPost.setUsername((String) array[5]);
+
+			return reportedPost;
+		}).collect(Collectors.toList());
+	}
+
 	public ReportedPostsDRO() {
 
 	}
-	
-	public ReportedPostsDRO(int rpid, int pid, int uid, String reason, String status, String username) {
+
+	public ReportedPostsDRO(int rpid, int pid, int uid, String reason, String status, String username, int like) {
 		this.rpid = rpid;
 		this.pid = pid;
 		this.uid = uid;
 		this.reason = reason;
 		this.status = status;
 		this.username = username;
-	}
-
-	public static List<ReportedPostsDRO> convertToReportedPostsDRO(List<Object> objects) {
-	    return objects.stream().map(obj -> {
-	        Object[] array = (Object[]) obj; // Assuming each object is an array
-
-	        ReportedPostsDRO reportedPost = new ReportedPostsDRO();
-	        reportedPost.setRpid((int) array[0]);
-	        reportedPost.setPid((int) array[1]);
-	        reportedPost.setUid((int) array[2]);
-	        reportedPost.setReason((String) array[3]);
-	        reportedPost.setStatus((String) array[4]);
-	        reportedPost.setUsername((String) array[5]);
-
-	        return reportedPost;
-	    }).collect(Collectors.toList());
+		this.like = like;
 	}
 
 	public int getRpid() {
@@ -87,6 +89,14 @@ public class ReportedPostsDRO {
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+
+	public int getLike() {
+		return like;
+	}
+
+	public void setLike(int like) {
+		this.like = like;
 	}
 
 }

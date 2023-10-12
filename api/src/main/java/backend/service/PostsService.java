@@ -1,18 +1,14 @@
 package backend.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import backend.dto.GamesWithPageDTO;
-import backend.model.Games;
+import backend.dro.PostsDRO;
 import backend.model.Posts;
 import backend.model.Users;
-import backend.repository.GamesRepository;
 import backend.repository.PostsRepository;
 import backend.repository.UsersRepository;
 
@@ -23,40 +19,76 @@ public class PostsService {
 	private PostsRepository postsRepository;
 	@Autowired
 	private UsersRepository usersRepository;
-	@Autowired
-	private GamesRepository gamesRepository;
-	
-	public List<Posts> getAll(){
+
+	public List<Posts> getAll() {
 		return (List<Posts>) postsRepository.findAll();
 	}
-	
-	public Posts getByPID(int pid){
+
+	public Posts getByPID(int pid) {
 		return postsRepository.findById(pid).get();
 	}
-	
-	public Page<Posts> getAllByPage(int page) {
-        Pageable pageable = PageRequest.of(page, 5);
-        return postsRepository.findAllByPage(pageable);
-    }
-	
-	public Page<Posts> getByTagOfUser(String email,int page) {
+
+	public List<PostsDRO> getAllWithPage(int page) {
+		List<Object> o = postsRepository.getAll();
+		List<PostsDRO> p = PostsDRO.convertToPostsDRO(o);
+		List<PostsDRO> pp = new ArrayList<>();
+		if (((page + 1) * 5) - 5 < p.size()) {
+			for (int i = ((page + 1) * 5) - 5; i < (page + 1) * 5; i++) {
+				if (i < p.size()) {
+					pp.add(p.get(i));
+				} else {
+					return pp;
+				}
+			}
+		} else {
+			return pp;
+		}
+		return pp;
+	}
+
+	public List<PostsDRO> getByTagOfUser(String email, int page) {
 		Users u = usersRepository.findByEmail(email);
-        Pageable pageable = PageRequest.of(page, 5);
-        return postsRepository.findByTagOfUser(u, pageable);
-    }
-	
-	public Page<Posts> getByGame(GamesWithPageDTO gwp) {
-        Pageable pageable = PageRequest.of(gwp.getPage(), 5);
-        Games g = gamesRepository.findByNameAndYear(gwp.getName(), gwp.getYear());
-        return postsRepository.findByGame(g, pageable);
-    }
-	
-	public Posts createPost(Posts p){
+		List<Object> o = postsRepository.getByTagOfUser(u.getUid());
+		List<PostsDRO> p = PostsDRO.convertToPostsDRO(o);
+		List<PostsDRO> pp = new ArrayList<>();
+		if (((page + 1) * 5) - 5 < p.size()) {
+			for (int i = ((page + 1) * 5) - 5; i < (page + 1) * 5; i++) {
+				if (i < p.size()) {
+					pp.add(p.get(i));
+				} else {
+					return pp;
+				}
+			}
+		} else {
+			return pp;
+		}
+		return pp;
+	}
+
+	public List<PostsDRO> getByGame(int gid,int page) {
+		List<Object> o = postsRepository.getByGame(gid);
+		List<PostsDRO> p = PostsDRO.convertToPostsDRO(o);
+		List<PostsDRO> pp = new ArrayList<>();
+		if (((page + 1) * 5) - 5 < p.size()) {
+			for (int i = ((page + 1) * 5) - 5; i < (page + 1) * 5; i++) {
+				if (i < p.size()) {
+					pp.add(p.get(i));
+				} else {
+					return pp;
+				}
+			}
+		} else {
+			return pp;
+		}
+		return pp;
+	}
+
+	public Posts createPost(Posts p) {
 		postsRepository.save(p);
 		return p;
 	}
-	
-	public void updatePost(Posts p){
+
+	public void updatePost(Posts p) {
 		postsRepository.save(p);
 	}
 }

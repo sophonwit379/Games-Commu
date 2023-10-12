@@ -70,5 +70,6 @@ export {
 
 export {
     useAddPostMutation,
-    useEditPostMutation
+    useEditPostMutation,
+    useFetchFollowedGameQuery
 } from './apis/postApi'

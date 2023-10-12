@@ -11,12 +11,14 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import Nav from 'react-bootstrap/Nav';
 import default_pfp from '../../assets/Default_pfp.svg'
 import { useFetchUserQuery } from '../../store';
+import PostItem from '../../components/PostItem';
 
 function HomePage() {
   const location = useLocation()
   const navigate = useNavigate();
   const { data:user } = useFetchUserQuery();
   const [modalShow, setModalShow] = useState(false);
+  const [page,setPage] = useState(0);
   const modalFormRef = useRef(null);
   const userprofile = <div className='d-flex justify-content-center align-items-center'>
                         <Image src={default_pfp} width={45} className='mr-1' roundedCircle/>
@@ -94,11 +96,7 @@ function HomePage() {
                 modalFormRef={modalFormRef}
                 gid={location.pathname.split('/home/')[1]}
               />
-              
-              <Card className='mt-4 w-75'>
-                <Card.Header>Test</Card.Header>
-                <Card.Body>Test</Card.Body>
-              </Card>
+              <PostItem className='mt-4 w-75' page={page}/>
             </Container>
           </Col>
           <Col ></Col>

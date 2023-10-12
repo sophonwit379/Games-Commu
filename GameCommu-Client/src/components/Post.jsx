@@ -70,9 +70,9 @@ function Post({ show,onHide,modalFormRef,gid }) {
                 detail: e.textA
             }
         }   
-        console.log(postData);
+        post(postData);
         setSelectedValue(false);
-        // onHide()
+        onHide()
     }
 
     return (

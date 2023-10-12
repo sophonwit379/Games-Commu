@@ -77,12 +77,13 @@ public class PostsController {
 	}
 
 	@PostMapping("/posts/create")
-	public void createPost(@RequestBody PostsDTO p) {
+	public ResponseEntity<Integer>  createPost(@RequestBody PostsDTO pdto) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentUserEmail = authentication.getName();
 		Users u = usersService.getByEmail(currentUserEmail);
-		Games g = gamesService.getByNameAndYear(p.getGameName(), p.getGameYear());
-		postsService.createPost(new Posts(g, u, p.getDetail(), Timestamp.from(Instant.now())));
+		Games g = gamesService.getByNameAndYear(pdto.getGameName(), pdto.getGameYear());
+		Posts p = postsService.createPost(new Posts(g, u, pdto.getDetail(), Timestamp.from(Instant.now())));
+		return ResponseEntity.ok(p.getPid());
 	}
 
 	@PutMapping("/posts/update")

@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import backend.dro.ReportedPostsDRO;
-import backend.dto.ReportedPostsDTO;
 import backend.model.Posts;
 import backend.model.ReportedPosts;
 import backend.model.Users;
@@ -23,18 +22,17 @@ public class ReportedPostsService {
 	private UsersRepository usersRepository;
 	@Autowired
 	private PostsRepository postsRepository;
-	
-	public List<ReportedPostsDRO> getAll(){
+
+	public List<ReportedPostsDRO> getAll() {
 		List<Object> o = reportedPostsRepository.getAll();
 		List<ReportedPostsDRO> rp = ReportedPostsDRO.convertToReportedPostsDRO(o);
 		return rp;
-		//return (List<ReportedPosts>) reportedPostsRepository.findAll();
 	}
-	
-	public void report(String email,ReportedPostsDTO rpf){
+
+	public void report(String email, int pid, String reason) {
 		Users u = usersRepository.findByEmail(email);
-		Posts p = postsRepository.findById(rpf.getPid()).get();
-		ReportedPosts rp = new ReportedPosts(p, u, rpf.getReason(), "Waiting for process");
+		Posts p = postsRepository.findById(pid).get();
+		ReportedPosts rp = new ReportedPosts(p, u, reason, "Waiting for process");
 		reportedPostsRepository.save(rp);
 	}
 }

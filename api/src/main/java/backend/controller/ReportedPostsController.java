@@ -8,13 +8,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import backend.dro.ReportedPostsDRO;
-import backend.dto.ReportedPostsDTO;
 import backend.service.ReportedPostsService;
 
 @RestController
@@ -31,9 +29,9 @@ public class ReportedPostsController {
 	}
 	
 	@PostMapping("/reportedposts/report")
-	public void report(){
+	public void report(@RequestParam int pid,@RequestParam String reason){
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentUserEmail = authentication.getName();
-		//reportedPostsService.report(currentUserEmail,);
+		reportedPostsService.report(currentUserEmail,pid,reason);
 	}
 }

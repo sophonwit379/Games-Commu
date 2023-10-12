@@ -51,8 +51,9 @@ public class PostsService {
         return postsRepository.findByGame(g, pageable);
     }
 	
-	public void createPost(Posts p){
+	public Posts createPost(Posts p){
 		postsRepository.save(p);
+		return p;
 	}
 	
 	public void updatePost(Posts p){

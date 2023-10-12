@@ -110,7 +110,7 @@ public class ImagesController {
 		try {
 			// Validate the file's content type
 			String contentType = file.getContentType();
-			if (contentType != null && (contentType.equals("image/jpeg") || contentType.equals("image/png"))) {
+			if (contentType != null && (contentType.equals("image/jpeg") || contentType.equals("image/jpg")  || contentType.equals("image/png"))) {
 				// Generate a new unique file name (you can use your own naming convention)
 				String originalFileName = file.getOriginalFilename();
 				String fileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));

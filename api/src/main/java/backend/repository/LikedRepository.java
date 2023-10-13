@@ -14,6 +14,13 @@ import backend.model.Users;
 
 @Repository
 public interface LikedRepository extends CrudRepository<Liked, Integer> {
+
+	@Query(value = "SELECT COUNT(*) FROM liked WHERE pid = :pid", nativeQuery = true)
+	public int countLikeInPost(@Param("pid") int pid);
+	
+	@Query(value = "SELECT COUNT(*) FROM liked WHERE cid = :cid", nativeQuery = true)
+	public int countLikeInComment(@Param("cid") int cid);
+
 	@Query("from Liked l where l.users=:user")
 	public List<Liked> findByUser(@Param("user") Users user);
 

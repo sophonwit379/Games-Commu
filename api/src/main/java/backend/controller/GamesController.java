@@ -30,28 +30,27 @@ public class GamesController {
 	@Autowired
 	private UsersService usersService;
 
-	@GetMapping("/games")
-	public List<Games> getAll() {
-		return (List<Games>) gamesService.getAll();
+	@GetMapping("/games/all")
+	public ResponseEntity<List<Games>> getAll() {
+		return ResponseEntity.ok(gamesService.getAll());
 	}
 
 	@GetMapping("/games/notintag")
-	public List<Games> getNotGamesTagByUser() {
+	public ResponseEntity<List<Games>> getNotGamesTagByUser() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentUserEmail = authentication.getName();
 		Users u = usersService.getByEmail(currentUserEmail);
-		return (List<Games>) gamesService.getNotGamesTagByUser(u);
+		return ResponseEntity.ok(gamesService.getNotGamesTagByUser(u));
 	}
 
-	@SuppressWarnings("rawtypes")
 	@PostMapping("/games/create")
-	public ResponseEntity createGame(@RequestBody GamesDTO g) {
+	public ResponseEntity<Object> createGame(@RequestBody GamesDTO gdto) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentUserEmail = authentication.getName();
 		Users u = usersService.getByEmail(currentUserEmail);
 		if (u.getRoll().equals("Admin")) {
-			gamesService.createGame(new Games(g.getName(), g.getYear()));
-			return ResponseEntity.ok("Game added");
+			Games g = gamesService.createGame(new Games(gdto.getName(), gdto.getYear()));
+			return ResponseEntity.ok(g);
 		} else {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("You is not Admin");
 		}

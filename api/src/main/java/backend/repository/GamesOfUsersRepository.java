@@ -13,6 +13,11 @@ import backend.model.Users;
 
 @Repository
 public interface GamesOfUsersRepository extends CrudRepository<GamesOfUsers, Integer> {
+
+	@Query(value = "SELECT gou.guid, gou.uid, gou.gid, g.name, g.year "
+			+ "FROM games_of_users AS gou INNER JOIN games AS g ON gou.gid = g.gid WHERE gou.uid = :uid", nativeQuery = true)
+	public List<Object> getByUser(@Param("uid") int uid);
+
 	@Query("SELECT gou FROM GamesOfUsers gou JOIN FETCH gou.users u JOIN FETCH gou.games g WHERE u = :user")
 	public List<GamesOfUsers> findByUser(@Param("user") Users user);
 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 07, 2023 at 10:28 AM
+-- Generation Time: Oct 13, 2023 at 11:00 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -30,7 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `comments` (
   `cid` int(10) NOT NULL,
   `uid` int(10) NOT NULL,
-  `pid` int(10) NOT NULL,
+  `pid` int(10) DEFAULT NULL,
   `rid` int(10) DEFAULT NULL,
   `detail` text NOT NULL,
   `date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
@@ -41,7 +41,11 @@ CREATE TABLE `comments` (
 --
 
 INSERT INTO `comments` (`cid`, `uid`, `pid`, `rid`, `detail`, `date`) VALUES
-(1, 2, 1, NULL, 'Agreed!', '2023-07-23 09:07:00');
+(1, 2, 1, NULL, 'Agreed!', '2023-07-23 09:07:00'),
+(2, 4, 1, NULL, 'test', '2023-10-08 08:39:08'),
+(3, 4, 1, NULL, 'test reply', '2023-10-08 08:40:29'),
+(5, 2, 1, NULL, 'afehnoaefjphf', '2023-10-13 08:34:20'),
+(6, 2, NULL, 1, 'afehnoaefjasfadgsphf', '2023-10-13 08:57:36');
 
 -- --------------------------------------------------------
 
@@ -61,7 +65,8 @@ CREATE TABLE `games` (
 
 INSERT INTO `games` (`gid`, `name`, `year`) VALUES
 (1, 'League of Legends', '2009'),
-(2, 'Arknights (Global)', '2020');
+(2, 'Arknights (Global)', '2020'),
+(3, '0', '0');
 
 -- --------------------------------------------------------
 
@@ -80,7 +85,8 @@ CREATE TABLE `games_of_users` (
 --
 
 INSERT INTO `games_of_users` (`guid`, `uid`, `gid`) VALUES
-(1, 1, 2);
+(1, 1, 2),
+(5, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -96,6 +102,16 @@ CREATE TABLE `images` (
   `pid` int(10) DEFAULT NULL,
   `cid` int(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `images`
+--
+
+INSERT INTO `images` (`iid`, `path`, `uid`, `gid`, `pid`, `cid`) VALUES
+(1, 'a3aa1b58-bd87-43f4-8c6b-fc1f1daa6ed6.jpg', NULL, NULL, 1, NULL),
+(2, 'ef1b5bda-291f-4a9c-b431-c57dd7091163.jpg', NULL, NULL, 1, NULL),
+(3, '3509ffc9-52b6-49b4-882b-c6325e77798f.png', NULL, NULL, 1, NULL),
+(4, '7f5e157f-04c8-4449-8fe4-93dda8a5808b.png', NULL, NULL, 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -136,7 +152,18 @@ CREATE TABLE `posts` (
 --
 
 INSERT INTO `posts` (`pid`, `uid`, `gid`, `detail`, `date`) VALUES
-(1, 1, 2, 'Nian is cute.', '2023-07-23 09:04:11');
+(1, 1, 2, 'Fix Test', '2023-07-23 09:04:11'),
+(2, 1, 1, 'Testadsgva', '2023-10-08 08:24:15'),
+(3, 1, 1, 'Test2', '2023-10-08 08:24:25'),
+(4, 1, 1, 'Test3', '2023-10-08 08:24:32'),
+(5, 1, 1, 'Test4', '2023-10-08 08:24:35'),
+(6, 1, 1, 'Test5', '2023-10-08 08:24:38'),
+(7, 1, 1, 'Test6', '2023-10-08 08:24:40'),
+(8, 1, 1, 'Test6', '2023-10-12 13:15:53'),
+(9, 1, 3, 'aefg', '2023-10-12 14:17:52'),
+(10, 1, 3, 'aefg', '2023-10-12 14:17:57'),
+(11, 4, 2, 'asdgzxcv', '2023-10-12 14:19:18'),
+(12, 4, 2, 'asdgzxcv', '2023-10-12 14:19:23');
 
 -- --------------------------------------------------------
 
@@ -157,7 +184,8 @@ CREATE TABLE `reported_posts` (
 --
 
 INSERT INTO `reported_posts` (`rpid`, `pid`, `uid`, `reason`, `status`) VALUES
-(1, 1, 2, 'Useless.', 'Waiting for process');
+(1, 1, 2, 'Useless.', 'Waiting for process'),
+(2, 1, 1, 'test', 'Waiting for process');
 
 -- --------------------------------------------------------
 
@@ -172,6 +200,14 @@ CREATE TABLE `requested_games` (
   `year` varchar(4) DEFAULT NULL,
   `status` varchar(50) NOT NULL DEFAULT 'Waiting for approval'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `requested_games`
+--
+
+INSERT INTO `requested_games` (`rgid`, `uid`, `name`, `year`, `status`) VALUES
+(1, 2, 'test1', '1111', 'Waiting for approval'),
+(2, 2, 'test3', '1111', 'Waiting for approval');
 
 -- --------------------------------------------------------
 
@@ -197,10 +233,10 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`uid`, `email`, `password`, `username`, `name`, `surname`, `roll`, `status`, `last_login`, `create_at`) VALUES
-(1, 'proqppq123@gmail.com', '6Eb88c@5', 'CloudyTLC', 'บวรวัชร', 'ทองอยู่', 'User', 'Normal', '2023-10-06 08:37:24', '2023-07-23 09:02:18'),
-(2, 'proqppq111@gmail.com', '6eb88cc5', 'Cloud', 'เมฆาคราม', 'เมฆาวงศ์', 'User', 'Normal', NULL, '2023-07-23 09:05:27'),
-(3, 'testtest', 'test', 'Testadsgva', 'test', 'test', 'Uesr', 'Normal', '2023-10-06 09:27:51', '2023-10-06 03:19:51'),
-(4, 'admin@gmail.com', 'admin', 'admin', 'admin', 'admin', 'Admin', 'Normal', '2023-10-06 08:44:22', '2023-10-06 08:43:43'),
+(1, 'proqppq123@gmail.com', '6Eb88c@5', 'CloudyTLC', 'บวรวัชร', 'ทองอยู่', 'User', 'Normal', '2023-10-13 07:17:13', '2023-07-23 09:02:18'),
+(2, 'proqppq111@gmail.com', '6eb88cc5', 'Cloud', 'เมฆาคราม', 'เมฆาวงศ์', 'User', 'Normal', '2023-10-13 08:31:33', '2023-07-23 09:05:27'),
+(3, 'testtest', 'test', 'Testadsgva', 'test', 'test', 'Uesr', 'Normal', '2023-10-07 09:18:06', '2023-10-06 03:19:51'),
+(4, 'admin@gmail.com', 'admin', 'admin', 'admin', 'admin', 'Admin', 'Normal', '2023-10-13 06:30:44', '2023-10-06 08:43:43'),
 (7, 'admin@gmail.co', 'test', 'Testadsgva', 'test', 'test', 'Uesr', 'Normal', NULL, '2023-10-06 09:32:06');
 
 --
@@ -287,49 +323,49 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `cid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `cid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `games`
 --
 ALTER TABLE `games`
-  MODIFY `gid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `gid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `games_of_users`
 --
 ALTER TABLE `games_of_users`
-  MODIFY `guid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `guid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `images`
 --
 ALTER TABLE `images`
-  MODIFY `iid` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `iid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `liked`
 --
 ALTER TABLE `liked`
-  MODIFY `lid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `lid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `pid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `pid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `reported_posts`
 --
 ALTER TABLE `reported_posts`
-  MODIFY `rpid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `rpid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `requested_games`
 --
 ALTER TABLE `requested_games`
-  MODIFY `rgid` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `rgid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `users`

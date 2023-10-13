@@ -1,5 +1,5 @@
 package backend.model;
-// Generated Oct 6, 2023, 8:07:22 PM by Hibernate Tools 6.1.7.Final
+// Generated Oct 13, 2023, 3:35:49 PM by Hibernate Tools 6.1.7.Final
 
 import java.sql.Timestamp;
 import java.util.HashSet;
@@ -35,6 +35,12 @@ public class Comments implements java.io.Serializable {
 	public Comments() {
 	}
 
+	public Comments(Users users, String detail, Timestamp date) {
+		this.users = users;
+		this.detail = detail;
+		this.date = date;
+	}
+
 	public Comments(Posts posts, Users users, String detail, Timestamp date) {
 		this.posts = posts;
 		this.users = users;
@@ -42,9 +48,7 @@ public class Comments implements java.io.Serializable {
 		this.date = date;
 	}
 
-	public Comments(Posts posts, Comments comments, Users users, String detail, Timestamp date) {
-		super();
-		this.posts = posts;
+	public Comments(Comments comments, Users users, String detail, Timestamp date) {
 		this.comments = comments;
 		this.users = users;
 		this.detail = detail;

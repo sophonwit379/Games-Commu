@@ -11,7 +11,6 @@ public class ReportedPostsDRO {
 	private String reason;
 	private String status;
 	private String username;
-	private int like;
 
 	public static List<ReportedPostsDRO> convertToReportedPostsDRO(List<Object> objects) {
 		return objects.stream().map(obj -> {
@@ -40,7 +39,6 @@ public class ReportedPostsDRO {
 		this.reason = reason;
 		this.status = status;
 		this.username = username;
-		this.like = like;
 	}
 
 	public int getRpid() {
@@ -89,14 +87,6 @@ public class ReportedPostsDRO {
 
 	public void setUsername(String username) {
 		this.username = username;
-	}
-
-	public int getLike() {
-		return like;
-	}
-
-	public void setLike(int like) {
-		this.like = like;
 	}
 
 }

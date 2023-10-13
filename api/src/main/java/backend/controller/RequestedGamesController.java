@@ -1,7 +1,5 @@
 package backend.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,13 +30,31 @@ public class RequestedGamesController {
 	private UsersService usersService;
 
 	@GetMapping("/requestedgames")
-	public ResponseEntity<List<RequestedGames>> getAll() {
-		return ResponseEntity.ok(requestedGamesService.getAll());
+	public ResponseEntity<Object> getAll() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentUserEmail = authentication.getName();
+		Users u = usersService.getByEmail(currentUserEmail);
+		if (u.getRoll().equals("Admin")) {
+			return ResponseEntity.ok(requestedGamesService.getAll());
+		} else {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("You is not Admin");
+		}	
+	}
+	
+	@GetMapping("/requestedgames/waiting")
+	public ResponseEntity<Object> getAllWaiting() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentUserEmail = authentication.getName();
+		Users u = usersService.getByEmail(currentUserEmail);
+		if (u.getRoll().equals("Admin")) {
+			return ResponseEntity.ok(requestedGamesService.getAllWaiting());
+		} else {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("You is not Admin");
+		}	
 	}
 
-	@SuppressWarnings("rawtypes")
 	@PostMapping("/requestedgames/create")
-	public ResponseEntity createRequestedGame(@RequestBody GamesDTO g) {
+	public ResponseEntity<String> createRequestedGame(@RequestBody GamesDTO g) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentUserEmail = authentication.getName();
 		Users u = usersService.getByEmail(currentUserEmail);
@@ -51,23 +67,21 @@ public class RequestedGamesController {
 		return ResponseEntity.ok("Request sent successfully");
 	}
 
-	@SuppressWarnings("rawtypes")
 	@PostMapping("/requestedgames/approve")
-	public ResponseEntity approve(@RequestBody RequestedGamesDTO rgf) {
+	public ResponseEntity<Object> approve(@RequestBody RequestedGamesDTO rgf) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentUserEmail = authentication.getName();
 		Users u = usersService.getByEmail(currentUserEmail);
 		if (u.getRoll().equals("Admin")) {
-			requestedGamesService.approve(rgf);
-			return ResponseEntity.ok("Approve successfully");
+			int gid = requestedGamesService.approve(rgf);
+			return ResponseEntity.ok(gid);
 		} else {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("You is not Admin");
 		}
 	}
 
-	@SuppressWarnings("rawtypes")
 	@PostMapping("/requestedgames/reject")
-	public ResponseEntity reject(@RequestBody RequestedGamesDTO rgf) {
+	public ResponseEntity<String> reject(@RequestBody RequestedGamesDTO rgf) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentUserEmail = authentication.getName();
 		Users u = usersService.getByEmail(currentUserEmail);

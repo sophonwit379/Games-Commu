@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -82,5 +83,19 @@ public class PostsController {
 			return ResponseEntity.ok("Update post successfully");
 		}
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User not match");
+	}
+
+	@DeleteMapping("/posts/delete")
+	public ResponseEntity<String> deletePost(@RequestParam int pid) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentUserEmail = authentication.getName();
+		Users u = usersService.getByEmail(currentUserEmail);
+		Posts p = postsService.getByPID(pid);
+		if (u.getRoll().equals("Admin") || u.getUid() == p.getUsers().getUid()) {
+			postsService.deletePost(p);
+			return ResponseEntity.ok("Delete successfully");
+		} else {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("You is not own post");
+		}
 	}
 }

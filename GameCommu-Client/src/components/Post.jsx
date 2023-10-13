@@ -2,7 +2,7 @@
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form  from 'react-bootstrap/Form';
-import { useAddPostMutation,useUploadImgMutation,useFetchGameOfUserQuery } from '../store';
+import { useAddPostMutation,useUploadPostImgMutation,useFetchGameOfUserQuery } from '../store';
 import * as formik from 'formik';
 import * as yup from 'yup';
 import { useState } from 'react';
@@ -10,9 +10,9 @@ import { useState } from 'react';
 function Post({ show,onHide,modalFormRef,gid }) {
     const { data, isFetching } = useFetchGameOfUserQuery();
     const [ post ] = useAddPostMutation();
-    const [ uploadImg ] = useUploadImgMutation();
+    const [ uploadPostImg ] = useUploadPostImgMutation();
     const { Formik } = formik;
-    const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
+    const MAX_FILE_SIZE = 8 * 1024 * 1024; // 8MB
     const ALLOWED_FILE_TYPES = ['image/png','image/jpg','image/jpeg'];
     const [selectedValue, setSelectedValue] = useState(false); 
 
@@ -41,7 +41,7 @@ function Post({ show,onHide,modalFormRef,gid }) {
             .required('Please select an image')
             .test(
             'fileSize',
-            'ขนาดไฟล์ต้องน้อยกว่า 10MB',
+            'ขนาดไฟล์ต้องน้อยกว่า 8MB',
             (value) => value && value.size <= MAX_FILE_SIZE 
             )
             .test(
@@ -70,7 +70,17 @@ function Post({ show,onHide,modalFormRef,gid }) {
                 detail: e.textA
             }
         }   
-        post(postData);
+        const postResult = await post(postData);
+        if(e.images.length > 0){
+            await e.images.forEach( async image => {
+                const images = {
+                    file:image,
+                    pid:postResult.data
+                }
+                await uploadPostImg(images);
+            });
+
+        }
         setSelectedValue(false);
         onHide()
     }

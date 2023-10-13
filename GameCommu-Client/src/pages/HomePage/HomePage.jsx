@@ -20,6 +20,7 @@ function HomePage() {
   const [modalShow, setModalShow] = useState(false);
   const [page,setPage] = useState(0);
   const modalFormRef = useRef(null);
+  const gid =location.pathname.split('/home/')[1];
   const userprofile = <div className='d-flex justify-content-center align-items-center'>
                         <Image src={default_pfp} width={45} className='mr-1' roundedCircle/>
                       </div>
@@ -44,7 +45,7 @@ function HomePage() {
  
   return (
     <div className='min-vh-100'>
-      <Navbar expand="lg" className="nav-bg min-vw-100 d-flex justify-content-between">
+      <Navbar expand="lg" className="nav-bg d-flex justify-content-between">
         <Container className='d-flex'> 
           <div className='d-flex'>
             <Link className='nav-logo mr-4' to='/home'>  
@@ -85,7 +86,7 @@ function HomePage() {
           <Col xl className='p-0'>
             <GamePanel/>
           </Col>
-          <Col xl={7}>
+          <Col xl={7} className='p-0'>
             <Container className='d-flex justify-content-center flex-column align-items-center'>
               <Button className='mt-4 w-75 d-flex justify-content-center align-items-center' variant='outline-secondary' onClick={()=>setModalShow(true)}>
                 <IoCreateOutline size={25}/> สร้างโพสต์
@@ -94,12 +95,12 @@ function HomePage() {
                 show={modalShow}
                 onHide={handleCloseModal}
                 modalFormRef={modalFormRef}
-                gid={location.pathname.split('/home/')[1]}
+                gid={gid}
               />
               <PostItem className='mt-4 w-75' page={page}/>
             </Container>
           </Col>
-          <Col ></Col>
+          <Col className='p-0'></Col>
         </Row>
       </Container>    
     </div>

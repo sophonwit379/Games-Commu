@@ -1,22 +1,51 @@
 /* eslint-disable react/prop-types */
 import { useFetchFollowedGameQuery } from "../store";
-import { Card } from "react-bootstrap";
+import { Container } from "react-bootstrap";
+import PostItemList from "./PostItemList";
+import Skeleton from "react-loading-skeleton";
 
 function PostItem({page,className}) {
     const { data,isFetching } = useFetchFollowedGameQuery(page);
 
     let content;
     if(isFetching){
-        content = <h4>Loading.............</h4>
+        content = 
+            <Container className="p-0" fluid>
+                <Skeleton height={650}/>
+            </Container>
+
+        
     }else{
-        console.log(data);
+        content = data?.map((post)=>{
+            const date = new Date(post.date);
+            const options = {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+                hour: 'numeric',
+                minute: 'numeric',
+            };
+            const thaiDateFormatter = new Intl.DateTimeFormat('th-TH', options);
+            const formattedDate = thaiDateFormatter.format(date);
+            
+            return(
+                <PostItemList 
+                    key={post.pid} 
+                    pid={post.pid}
+                    username={post.username}
+                    date={formattedDate.toString()}
+                    detail={post.detail}
+                />
+            )
+        });
     }
 
-    return (              
-        <Card className={className}>
-            <Card.Header>Test</Card.Header>
-            <Card.Body>Test</Card.Body>
-        </Card>
+    return (        
+        <>
+            <div className={className}>
+                {content}
+            </div>
+        </>
     )
 }
 

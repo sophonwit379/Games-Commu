@@ -10,7 +10,7 @@ import {
 import { toast } from 'react-toastify';
 import { useGetGamesQuery } from "../../store";
 import { useAddSelectGameMutation } from "../../store";
-
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 
 function SelectGamesPage() {
   const [selectedGame,setSelectedGame] = useState([]);
@@ -34,7 +34,18 @@ function SelectGamesPage() {
 
   let content;
   if(gamesIsFetching){
-    content = <div>Loading......</div>
+    content = 
+      <Row>
+        <Container className="m-3 d-flex justify-content-center align-items-center w-100 h-100">
+          <SkeletonTheme baseColor="#F5F5F5" highlightColor="#DDE6ED">
+            <Skeleton className="mr-5" height={186} width={175}/>
+            <Skeleton className="mr-5" height={186} width={175}/>
+            <Skeleton className="mr-5" height={186} width={175}/>
+            <Skeleton className="mr-5" height={186} width={175}/>
+            <Skeleton height={186} width={175}/>
+          </SkeletonTheme>
+        </Container>
+      </Row>
   }else{
     content = gamesData?.map((game,id) => {
       return (
@@ -47,7 +58,7 @@ function SelectGamesPage() {
               <Image src={game.url} rounded height={125} width={175} className="z-1"/>
               <h6 className="z-1">{game.name}</h6>
               <p className="z-1">{game.year}</p>
-              {selectedGame.includes(game) && <div style={{backgroundColor:'#9DB2BF'}} className="position-absolute w-100 h-100 d-flex"></div>}
+              {selectedGame.includes(game) && <div style={{backgroundColor:'#9DB2BF',height:'95%'}} className="position-absolute w-100 d-flex"></div>}
             </div>
            
           </Container>
@@ -97,7 +108,7 @@ function SelectGamesPage() {
             <h4>SELECT GAME</h4>
               <h6>กรุณาเลือกเกมอย่างน้อย 3 เกม</h6>
           </Card.Header>
-          <Card.Body style={{overflowX:"hidden"}} className="d-flex flex-wrap">
+          <Card.Body style={{overflowX:"hidden"}} className="d-flex flex-wrap pb-5">
             {content}
           </Card.Body>
         </Card>

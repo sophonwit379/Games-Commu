@@ -95,7 +95,7 @@ public class ImagesController {
 			}
 			HttpHeaders headers = new HttpHeaders();
 			headers.setContentType(MediaType.IMAGE_JPEG);
-			return new ResponseEntity<>(imageBytes, headers, HttpStatus.OK);
+			  return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(imageBytes);
 		} else
 			return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("Number of pages exceeded");
 	}

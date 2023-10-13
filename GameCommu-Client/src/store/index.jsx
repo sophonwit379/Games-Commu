@@ -7,6 +7,15 @@ import { postApi } from "./apis/postApi";
 import { gamesApi } from "./apis/gamesApi";
 import { imageApi } from "./apis/imageApi";
 import {
+    countImgReducer,
+    clearCommentImg,
+    clearGameImg,
+    clearPostImg,
+    setCommentImg,
+    setGameImg,
+    setPostImg
+} from './slices/countImgSlice';
+import {
     authReducer,
     clearToken,
     setToken,
@@ -17,6 +26,7 @@ import {
 export const store = configureStore({
     reducer:{
         auth:authReducer,
+        countImg:countImgReducer,
         [userApi.reducerPath]: userApi.reducer,
         [authenticationApi.reducerPath]: authenticationApi.reducer,
         [gamesApi.reducerPath]: gamesApi.reducer,
@@ -45,6 +55,15 @@ export {
 }
 
 export {
+    clearCommentImg,
+    clearGameImg,
+    clearPostImg,
+    setCommentImg,
+    setGameImg,
+    setPostImg
+}
+
+export {
     useAddSelectGameMutation,
     useFetchGameOfUserQuery
 } from './apis/selectGamesApi';
@@ -64,7 +83,10 @@ export {
 } from './apis/gamesApi'
 
 export {
-    useUploadImgMutation
+    useCountPostImgQuery,
+    useFetchImgQuery,
+    useCallPostImgQuery,
+    useUploadPostImgMutation
 } from './apis/imageApi'
 
 

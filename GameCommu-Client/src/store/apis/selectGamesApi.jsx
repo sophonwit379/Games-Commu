@@ -1,6 +1,12 @@
 import { createApi,fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
 import { baseUrl } from '../../env/utils';
 
+const pause = (duration) => {
+    return new Promise((resolve) => {
+        setTimeout(resolve, duration);
+    });
+}
+
 const selectGamesApi = createApi({
     reducerPath:'selectGames',
     baseQuery:fetchBaseQuery({
@@ -10,10 +16,16 @@ const selectGamesApi = createApi({
             headers.set('Authorization', `Bearer ${token}`);
             return headers;
         },
+        fetchFn: async (...args) => {
+            await pause(2000);
+            return fetch(...args)
+        }
     }),
     endpoints(builder){
         return{
             addSelectGame: builder.mutation({
+                provideTags: ['Post'],
+                invalidatesTags: ['Post'],
                 query:(game)=> {
                     return{
                         url:'/gamesofuser/create',
@@ -23,6 +35,7 @@ const selectGamesApi = createApi({
                 }
             }),
             fetchGameOfUser: builder.query({
+                provideTags: ['Post'],
                 query:()=>{
                     return {
                         url:'/gamesofuser',

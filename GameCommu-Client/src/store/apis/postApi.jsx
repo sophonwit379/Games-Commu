@@ -1,6 +1,12 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
 import { baseUrl } from '../../env/utils';
 
+const pause = (duration) => {
+    return new Promise((resolve) => {
+        setTimeout(resolve, duration);
+    });
+}
+
 const postApi = createApi({
     reducerPath:'post',
     baseQuery:fetchBaseQuery({
@@ -8,11 +14,17 @@ const postApi = createApi({
         prepareHeaders: ( headers, { getState } )=>{
             headers.set('Authorization', `Bearer ${getState().auth.token}`);
             return headers;
+        },
+        fetchFn: async (...args) => {
+            await pause(2000);
+            return fetch(...args)
         }
     }),
     endpoints(builder){
         return{
             addPost: builder.mutation({
+                provideTags: ['Post'],
+                invalidatesTags: ['Post'],
                 query:(postData) =>{
                     return {
                         url: '/posts/create',
@@ -22,6 +34,8 @@ const postApi = createApi({
                 } 
             }),
             editPost: builder.mutation({
+                provideTags: ['Post'],
+                invalidatesTags: ['Post'],
                 query:(postData) =>{
                     return {
                         url: '/posts/create',
@@ -31,6 +45,7 @@ const postApi = createApi({
                 } 
             }),
             fetchFollowedGame: builder.query({
+                providesTags: ['Post'],
                 query:(page) => {
                     return {
                         url:`/posts/user?page=${page}`,

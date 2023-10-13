@@ -79,7 +79,8 @@ export {
 } from './apis/userApi';
 
 export {
-    useGetGamesQuery
+    useGetGamesQuery,
+    useFetchNotSelectedGamesQuery
 } from './apis/gamesApi'
 
 export {
@@ -93,5 +94,6 @@ export {
 export {
     useAddPostMutation,
     useEditPostMutation,
+    useFetchAllFollowedGameQuery,
     useFetchFollowedGameQuery
 } from './apis/postApi'

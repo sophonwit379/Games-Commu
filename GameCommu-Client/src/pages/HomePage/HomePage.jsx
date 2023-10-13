@@ -12,6 +12,7 @@ import Nav from 'react-bootstrap/Nav';
 import default_pfp from '../../assets/Default_pfp.svg'
 import { useFetchUserQuery } from '../../store';
 import PostItem from '../../components/PostItem';
+import PostByGame from '../../components/PostByGame';
 
 function HomePage() {
   const location = useLocation()
@@ -24,7 +25,7 @@ function HomePage() {
   const userprofile = <div className='d-flex justify-content-center align-items-center'>
                         <Image src={default_pfp} width={45} className='mr-1' roundedCircle/>
                       </div>
-
+  console.log(gid);
   const handleLogout = () => {
     navigate('/');
     toast.success('ออกจากระบบสำเร็จ', {
@@ -97,7 +98,10 @@ function HomePage() {
                 modalFormRef={modalFormRef}
                 gid={gid}
               />
-              <PostItem className='mt-4 w-75' page={page}/>
+              {gid===undefined?
+                <PostItem className='mt-4 w-75' page={page}/>:
+                <PostByGame className='mt-4 w-75' postData={{page,gid}}/>
+              }
             </Container>
           </Col>
           <Col className='p-0'></Col>

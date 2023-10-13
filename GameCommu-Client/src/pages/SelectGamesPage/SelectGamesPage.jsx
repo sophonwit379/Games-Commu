@@ -11,6 +11,7 @@ import { toast } from 'react-toastify';
 import { useGetGamesQuery } from "../../store";
 import { useAddSelectGameMutation } from "../../store";
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
+import noImg from '../../assets/no-image.svg'
 
 function SelectGamesPage() {
   const [selectedGame,setSelectedGame] = useState([]);
@@ -55,7 +56,7 @@ function SelectGamesPage() {
               onClick={() => handleSelectGame(game)}
           >
             <div style={{width:'95%',height:'95%'}} className="position-relative justify-content-center d-flex align-items-center flex-column">
-              <Image src={game.url} rounded height={125} width={175} className="z-1"/>
+              <Image src={noImg} rounded height={125} width={175} className="z-1"/>
               <h6 className="z-1">{game.name}</h6>
               <p className="z-1">{game.year}</p>
               {selectedGame.includes(game) && <div style={{backgroundColor:'#9DB2BF',height:'95%'}} className="position-absolute w-100 d-flex"></div>}

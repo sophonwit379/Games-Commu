@@ -1,12 +1,11 @@
 /* eslint-disable react/prop-types */
-import { useFetchAllFollowedGameQuery } from "../store";
+import { useFetchFollowedGameQuery } from "../store";
 import { Container } from "react-bootstrap";
 import PostItemList from "./PostItemList";
 import Skeleton from "react-loading-skeleton";
 
-function PostItem({page,className}) {
-    console.log(page);
-    const { data,isFetching } = useFetchAllFollowedGameQuery(page);
+function PostByGame({postData,className}) {
+    const { data,isFetching } = useFetchFollowedGameQuery(postData);
 
     let content;
     if(isFetching){
@@ -17,6 +16,7 @@ function PostItem({page,className}) {
 
         
     }else{
+        console.log(data);
         content = data?.map((post)=>{
             const date = new Date(post.date);
             const options = {
@@ -50,4 +50,4 @@ function PostItem({page,className}) {
     )
 }
 
-export default PostItem;
+export default PostByGame;

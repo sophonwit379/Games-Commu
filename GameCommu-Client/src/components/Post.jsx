@@ -6,6 +6,9 @@ import { useAddPostMutation,useUploadPostImgMutation,useFetchGameOfUserQuery } f
 import * as formik from 'formik';
 import * as yup from 'yup';
 import { useState } from 'react';
+import Spinner from 'react-bootstrap/Spinner';
+import Skeleton from 'react-loading-skeleton';
+
 
 function Post({ show,onHide,modalFormRef,gid }) {
     const { data, isFetching } = useFetchGameOfUserQuery();
@@ -15,16 +18,20 @@ function Post({ show,onHide,modalFormRef,gid }) {
     const MAX_FILE_SIZE = 8 * 1024 * 1024; // 8MB
     const ALLOWED_FILE_TYPES = ['image/png','image/jpg','image/jpeg'];
     const [selectedValue, setSelectedValue] = useState(false); 
+    const [spin, setSpin] = useState(false); 
 
     let optionGame;
     let dataGame = [];
 
     if(isFetching){
-        optionGame = <option>Loading.........</option>
+        optionGame = 
+            <option>
+                loading.............
+            </option>
     }else{
         optionGame = data?.map( (data) => {
-            dataGame.push(data.games);
-            return <option value={data.games.gid} key={data.games.gid} >{`${data.games.name} (${data.games.year})`}</option>
+            dataGame.push(data);
+            return <option value={data.gid} key={data.gid} >{`${data.name} (${data.year})`}</option>
         })
     }
 
@@ -57,13 +64,16 @@ function Post({ show,onHide,modalFormRef,gid }) {
     const handleSubmit = async (e) => {
         let postData;
         if(gid){
+            console.log(dataGame);
             const selectedGameData  = dataGame.find( item =>  item.gid === parseInt(gid))
+            console.log(selectedGameData);
             postData = {
                 gameName: selectedGameData.name,
                 gameYear: selectedGameData.year,
                 detail: e.textA
             }
         }else{
+            
             postData = {
                 gameName: e.game.name,
                 gameYear: e.game.year,
@@ -81,6 +91,7 @@ function Post({ show,onHide,modalFormRef,gid }) {
             });
 
         }
+        setSpin(false);
         setSelectedValue(false);
         onHide()
     }
@@ -99,9 +110,11 @@ function Post({ show,onHide,modalFormRef,gid }) {
             validationSchema={imageSchema}
             onSubmit={(values)=>{
                 if(values.game.gid > -1){
+                    setSpin(true)
                     handleSubmit(values)
                 }
                 if(gid){
+                    setSpin(true)
                     handleSubmit(values)
                 }
             }}
@@ -113,6 +126,7 @@ function Post({ show,onHide,modalFormRef,gid }) {
                 show={show}
                 onHide={()=>{
                     setSelectedValue(false);
+                    setSpin(false);
                     onHide();
                 }}
                 size="lg"
@@ -180,7 +194,13 @@ function Post({ show,onHide,modalFormRef,gid }) {
                                     {errors.images}
                                 </Form.Control.Feedback>
                             </Form.Group> 
-                            <Button className='w-25 mt-2 mb-2 align-self-end' variant='outline-secondary' type='submit'>โพสต์</Button>
+                            <Button style={{width:'20%'}} className='mt-2 mb-2 align-self-end' variant='outline-secondary' type='submit'>
+                                {!spin? "โพสต์":                                    
+                                    <Spinner style={{height:'1.4rem',width:'1.4rem'}} animation="border" role="status">
+                                        <span className="visually-hidden">Loading...</span>
+                                    </Spinner>
+                                }
+                            </Button>
                         </Form>                                   
                     </Modal.Body>               
                 </Modal>

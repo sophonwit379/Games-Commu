@@ -44,11 +44,21 @@ const postApi = createApi({
                     }
                 } 
             }),
-            fetchFollowedGame: builder.query({
+            fetchAllFollowedGame: builder.query({
                 providesTags: ['Post'],
                 query:(page) => {
                     return {
                         url:`/posts/user?page=${page}`,
+                        method:'GET',
+                    }
+                }
+            }),
+            fetchFollowedGame: builder.query({
+                providesTags: ['Post'],
+                query:(postData) => {
+                    console.log(parseInt(postData.gid),postData.page);
+                    return {
+                        url:`/posts/user?gid=${parseInt(postData.gid)}&page=${postData.page}`,
                         method:'GET',
                     }
                 }
@@ -63,5 +73,6 @@ export { postApi };
 export const {
     useAddPostMutation,
     useEditPostMutation,
+    useFetchAllFollowedGameQuery,
     useFetchFollowedGameQuery
 } = postApi;

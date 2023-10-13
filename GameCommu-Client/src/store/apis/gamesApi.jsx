@@ -26,16 +26,25 @@ const gamesApi = createApi({
             getGames: builder.query({
                 query:() => {
                     return {
-                        url:'/games',
+                        url:'/games/all',
                         method:'GET',
                     }
                 }
-            })
+            }),
+            fetchNotSelectedGames: builder.query({
+                query:()=>{
+                    return {
+                        url:'/games/notintag',
+                        method:'GET',
+                    }
+                }
+            }),
         }
     }
 })
 
 export { gamesApi };
 export const {
-    useGetGamesQuery
+    useGetGamesQuery,
+    useFetchNotSelectedGamesQuery
 } = gamesApi;

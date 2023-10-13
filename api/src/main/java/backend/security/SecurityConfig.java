@@ -51,7 +51,8 @@ public class SecurityConfig {
 				.requestMatchers(new AntPathRequestMatcher("/api/authtoken/**")).permitAll()
 				.requestMatchers(new AntPathRequestMatcher("/api-docs/**"), new AntPathRequestMatcher("/swagger-ui/**"))
 				.permitAll().requestMatchers(new AntPathRequestMatcher("/api/users/create/**")).permitAll()
-				.requestMatchers(new AntPathRequestMatcher("/api/posts/notlogin/**")).permitAll().anyRequest()
+				.requestMatchers(new AntPathRequestMatcher("/api/posts/notlogin/**")).permitAll()
+				.requestMatchers(new AntPathRequestMatcher("/api/games/all/**")).permitAll().anyRequest()
 				.authenticated()).formLogin().disable() // Disable form-based login
 				.httpBasic().disable() // Disable HTTP Basic authentication
 				.addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class)

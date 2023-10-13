@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import backend.dro.GamesOfUsersDRO;
 import backend.dto.GamesDTO;
 import backend.model.Games;
 import backend.model.GamesOfUsers;
@@ -23,13 +24,11 @@ public class GamesOfUsersService {
 	@Autowired
 	private UsersRepository usersRepository;
 
-	public List<GamesOfUsers> getAll() {
-		return (List<GamesOfUsers>) gamesOfUsersRepository.findAll();
-	}
-
-	public List<GamesOfUsers> getByUser(String email) {
+	public List<GamesOfUsersDRO> getByUser(String email) {
 		Users u = usersRepository.findByEmail(email);
-		return (List<GamesOfUsers>) gamesOfUsersRepository.findByUser(u);
+		List<Object> o = gamesOfUsersRepository.getByUser(u.getUid());
+		List<GamesOfUsersDRO> gou = GamesOfUsersDRO.convertToGamesOfUsersDRO(o);
+		return gou;
 	}
 
 	public void createTag(String email, GamesDTO gf) {

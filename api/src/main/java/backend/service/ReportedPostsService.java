@@ -28,6 +28,16 @@ public class ReportedPostsService {
 		List<ReportedPostsDRO> rp = ReportedPostsDRO.convertToReportedPostsDRO(o);
 		return rp;
 	}
+	
+	public List<ReportedPostsDRO> getAllWaiting() {
+		List<Object> o = reportedPostsRepository.getAllWaiting();
+		List<ReportedPostsDRO> rp = ReportedPostsDRO.convertToReportedPostsDRO(o);
+		return rp;
+	}
+	
+	public ReportedPosts getByID(int rpid) {
+		return reportedPostsRepository.findById(rpid).get();
+	}
 
 	public void report(String email, int pid, String reason) {
 		Users u = usersRepository.findByEmail(email);

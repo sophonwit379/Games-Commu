@@ -13,12 +13,17 @@ import backend.model.ReportedPosts;
 public interface ReportedPostsRepository extends CrudRepository<ReportedPosts, Integer> {
 
 	@Query(value = "SELECT rp.rpid, rp.pid, rp.uid, rp.reason, rp.status, u.username "
-			+ "FROM reported_posts AS rp INNER JOIN users AS u ON rp.uid = u.uid;", nativeQuery = true)
+			+ "FROM reported_posts AS rp INNER JOIN users AS u ON rp.uid = u.uid ORDER BY rp.rpid DESC", nativeQuery = true)
 	public List<Object> getAll();
+	
+	@Query(value = "SELECT rp.rpid, rp.pid, rp.uid, rp.reason, rp.status, u.username "
+			+ "FROM reported_posts AS rp INNER JOIN users AS u ON rp.uid = u.uid "
+			+ "WHERE rp.status = 'Waiting for process' ORDER BY rp.rpid DESC", nativeQuery = true)
+	public List<Object> getAllWaiting();
 
 	@Query(value = "SELECT rp.rpid, rp.pid, rp.uid, rp.reason, rp.status, u.username "
 			+ "FROM reported_posts AS rp INNER JOIN users AS u ON rp.uid = u.uid "
-			+ "WHERE rp.rpid = :rpid;", nativeQuery = true)
+			+ "WHERE rp.rpid = :rpid", nativeQuery = true)
 	public List<Object> getByID(@Param("rpid") int rpid);
 
 }

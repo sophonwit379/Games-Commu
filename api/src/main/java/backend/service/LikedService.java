@@ -1,7 +1,5 @@
 package backend.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,8 +24,12 @@ public class LikedService {
 	@Autowired
 	private CommentsRepository commentsRepository;
 
-	public List<Liked> getAll() {
-		return (List<Liked>) likedRepository.findAll();
+	public int countLikeInPost(int pid) {
+		return likedRepository.countLikeInPost(pid);
+	}
+	
+	public int countLikeInComment(int cid) {
+		return likedRepository.countLikeInComment(cid);
 	}
 
 	public void likePost(int pid, String email) {

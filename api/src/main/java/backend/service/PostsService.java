@@ -20,10 +20,6 @@ public class PostsService {
 	@Autowired
 	private UsersRepository usersRepository;
 
-	public List<Posts> getAll() {
-		return (List<Posts>) postsRepository.findAll();
-	}
-
 	public Posts getByPID(int pid) {
 		return postsRepository.findById(pid).get();
 	}
@@ -90,5 +86,9 @@ public class PostsService {
 
 	public void updatePost(Posts p) {
 		postsRepository.save(p);
+	}
+
+	public void deletePost(Posts p) {
+		postsRepository.delete(p);
 	}
 }

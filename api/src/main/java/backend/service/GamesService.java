@@ -38,8 +38,9 @@ public class GamesService {
 		return gamesRepository.findByNameAndYear(name, year);
 	}
 
-	public void createGame(Games g) {
+	public Games createGame(Games g) {
 		gamesRepository.save(g);
+		return g;
 	}
 
 }

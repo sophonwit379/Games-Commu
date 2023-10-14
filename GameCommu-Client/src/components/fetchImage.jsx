@@ -18,6 +18,6 @@ export async function fetchImgPost(pid,page) {
     return imageUrl;
   } catch (error) {
     console.error('Error fetching image:', error);
-    throw error; // Optional: Rethrow the error to handle it in the calling code
+    throw error; 
   }
 }

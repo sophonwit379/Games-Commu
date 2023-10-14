@@ -1,12 +1,14 @@
 import { Container,Accordion, Button,Modal } from "react-bootstrap";
 import './GamePanel.css'
-import { IoAddCircleOutline } from "react-icons/io5";
+import { IoAddCircleOutline,IoRemoveCircleOutline } from "react-icons/io5";
 import { useState } from "react";
 import AddGamePanel from './AddGamePannel';
+import DeleteGamePanel from './DeleteGamePanel';
 import GameItems from "./GameItems";
 
 function GamePanel() {
-    const [modalShow, setModalShow] = useState(false);
+    const [addGame, setAddGame] = useState(false);
+    const [deleteGame, setDeleteGame] = useState(false);
 
     return (
         <Container fluid className="p-0 pb-2 rounded" id='main'>
@@ -22,14 +24,27 @@ function GamePanel() {
                 id="add-bt" 
                 variant="outline-secondary" 
                 className="w-100 d-flex flex-row align-items-center"
-                onClick={()=>setModalShow(true)}
+                onClick={()=>setAddGame(true)}
             >
                 <IoAddCircleOutline size={25} className="mr-1"/>เพิ่มกลุ่ม
             </Button>
+            <Button 
+                id="add-bt" 
+                variant="outline-secondary" 
+                className="w-100 d-flex flex-row align-items-center"
+                onClick={()=>setDeleteGame(true)}
+            >
+                <IoRemoveCircleOutline size={25} className="mr-1"/>ลบกลุ่ม
+            </Button>
             <AddGamePanel 
                 size='xl'
-                show={modalShow}
-                onHide={()=>setModalShow(false)}
+                show={addGame}
+                onHide={()=>setAddGame(false)}
+            />
+            <DeleteGamePanel
+                size='xl'
+                show={deleteGame}
+                onHide={()=>setDeleteGame(false)}
             />
         </Container>
     )

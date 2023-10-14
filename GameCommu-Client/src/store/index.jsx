@@ -71,7 +71,8 @@ export {
 
 export {
     useAddSelectGameMutation,
-    useFetchGameOfUserQuery
+    useFetchGameOfUserQuery,
+    useRemoveGameOfUserMutation
 } from './apis/selectGamesApi';
 
 export {

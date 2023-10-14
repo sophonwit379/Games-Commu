@@ -1,20 +1,19 @@
 import { Modal,Container,Image,Button } from "react-bootstrap";
-import { useFetchNotSelectedGamesQuery,useAddSelectGameMutation } from "../../store";
+import { useRemoveGameOfUserMutation,useFetchGameOfUserQuery } from "../../store";
 import Skeleton from "react-loading-skeleton";
 import { useState } from "react";
 import { toast } from 'react-toastify';
 import noImg from '../../assets/no-image.svg'
 import Spinner from 'react-bootstrap/Spinner';
-import { gamesApi } from "../../store/apis/gamesApi";
+import { postApi } from "../../store/apis/postApi"; 
 import { useDispatch } from "react-redux";
 import { selectGamesApi } from "../../store/apis/selectGamesApi";
-import { postApi } from "../../store/apis/postApi";
 
 
-function AddGame(props) {
+function DeleteGamePanel(props) {
   const dispatch = useDispatch();
-  const { data,isFetching } = useFetchNotSelectedGamesQuery();
-  const [addSelectGames] = useAddSelectGameMutation();
+  const { data,isFetching } = useFetchGameOfUserQuery();
+  const [ removeSelectedGame ] = useRemoveGameOfUserMutation();
   const [spin, setSpin] = useState(false); 
   const [selectedGame,setSelectedGame] = useState([]);
   const handleSelectGame = (game) => {
@@ -69,13 +68,12 @@ function AddGame(props) {
     if(selectedGame.length >= 1 ){
       setSpin(true);
       for (const game of selectedGame) {
-        await addSelectGames(game);
+        await removeSelectedGame(game);
       }
       dispatch(postApi.util.resetApiState());
-      dispatch(gamesApi.util.invalidateTags(['followed']));
       dispatch(selectGamesApi.util.resetApiState());
       setSpin(false)
-      toast.success('เพิ่มเกมสำเร็จ', {
+      toast.success('ลบเกมสำเร็จ', {
         position: "bottom-right",
         autoClose: 2000,
         hideProgressBar: false,
@@ -131,4 +129,4 @@ function AddGame(props) {
   )
 }
 
-export default AddGame;
+export default DeleteGamePanel;

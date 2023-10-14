@@ -43,6 +43,16 @@ const selectGamesApi = createApi({
                     }
                 }
             }),
+            removeGameOfUser: builder.mutation({
+                invalidatesTags: ['selected'],
+                query:(game)=>{
+                    return {
+                        url:'/gamesofuser/delete',
+                        method:'DELETE',
+                        body:game
+                    }
+                }
+            }),
             
         }
     }
@@ -50,6 +60,7 @@ const selectGamesApi = createApi({
 
 export { selectGamesApi };
 export const {
-     useFetchGameOfUserQuery,
-    useAddSelectGameMutation
+    useFetchGameOfUserQuery,
+    useAddSelectGameMutation,
+    useRemoveGameOfUserMutation
 } = selectGamesApi;

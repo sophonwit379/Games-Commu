@@ -107,8 +107,26 @@ function RegisterPage() {
                     <Form noValidate onSubmit={handleSubmit} >
                       <Row>
                         <Col lg>
+                          <FloatingLabel controlId="email" label="อีเมล์" className="mb-3">
+                              <Form.Control 
+                                disabled={spin}
+                                autoComplete="email"
+                                type="email" 
+                                placeholder="Email"
+                                name="email"
+                                value={values.email}
+                                onChange={handleChange}
+                                isInvalid={!!errors.email} 
+                              />
+                              <Form.Control.Feedback type="invalid">
+                                {errors.email}
+                              </Form.Control.Feedback>                        
+                          </FloatingLabel>
+                        </Col>
+                        <Col>
                           <FloatingLabel controlId="username" label="ชื่อผู้ใช้งาน" className="mb-3">
                             <Form.Control 
+                              disabled={spin}
                               autoComplete="username"
                               placeholder="username007"
                               name="username"
@@ -121,27 +139,12 @@ function RegisterPage() {
                             </Form.Control.Feedback>
                           </FloatingLabel>
                         </Col>
-                        <Col>
-                          <FloatingLabel controlId="email" label="อีเมล์" className="mb-3">
-                              <Form.Control 
-                                autoComplete="email"
-                                type="email" 
-                                placeholder="Email"
-                                name="email"
-                                value={values.email}
-                                onChange={handleChange}
-                                isInvalid={!!errors.email} 
-                              />
-                            <Form.Control.Feedback type="invalid">
-                              {errors.email}
-                            </Form.Control.Feedback>                        
-                          </FloatingLabel>
-                        </Col>
                       </Row>
                       <Row>
                         <Col lg>
                           <FloatingLabel controlId="name" label="ชื่อ" className="mb-3">
-                            <Form.Control 
+                            <Form.Control
+                              disabled={spin} 
                               autoComplete='name'
                               placeholder="name"
                               name="name"
@@ -156,7 +159,8 @@ function RegisterPage() {
                         </Col>
                         <Col>
                           <FloatingLabel controlId="surname" label="นามสกุล" className="mb-3">
-                            <Form.Control 
+                            <Form.Control
+                              disabled={spin} 
                               placeholder="surname"
                               name="surname"
                               value={values.surname}
@@ -173,7 +177,8 @@ function RegisterPage() {
                         <Col lg>
                           <InputGroup className="mb-5">
                             <FloatingLabel controlId="floatingPassword" label="รหัสผ่าน">
-                              <Form.Control 
+                              <Form.Control
+                                disabled={spin} 
                                 type={showPwd ? 'text' : 'password'} 
                                 placeholder="Password"
                                 name="password"
@@ -185,7 +190,8 @@ function RegisterPage() {
                               {errors.password}
                             </Form.Control.Feedback>
                             </FloatingLabel>
-                            <Button 
+                            <Button
+                              disabled={spin} 
                               id='bt'
                               variant="outline-secondary"
                               onClick={togglePwd}
@@ -197,7 +203,8 @@ function RegisterPage() {
                         <Col>
                           <InputGroup className="mb-4">
                             <FloatingLabel controlId="confirmPassword" label="รหัสผ่านอีกครั้ง">
-                                <Form.Control 
+                                <Form.Control
+                                  disabled={spin} 
                                   type={showPwd ? 'text' : 'password'} 
                                   placeholder="confirmPassword"
                                   name="confirmPassword"
@@ -218,6 +225,7 @@ function RegisterPage() {
                         className="w-100 d-flex flex-row justify-content-center align-items-center" 
                         variant="secondary"
                         type="submit"
+                        disabled={spin}
                         >
                           {!spin? <> ถัดไป <GrFormNextLink size={25} id='next-icon' /></>:                                    
                               <Spinner style={{height:'1.4rem',width:'1.4rem'}} animation="border" role="status">

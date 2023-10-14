@@ -24,11 +24,11 @@ function PostAnonymous({page}) {
             };
             const thaiDateFormatter = new Intl.DateTimeFormat('th-TH', options);
             const formattedDate = thaiDateFormatter.format(date);
-            console.log(post);
             return(
                 <PostItemList 
                     key={post.pid} 
                     pid={post.pid}
+                    gid={post.gid}
                     username={post.username}
                     date={formattedDate.toString()}
                     detail={post.detail}

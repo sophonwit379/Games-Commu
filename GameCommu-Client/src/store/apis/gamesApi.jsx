@@ -13,7 +13,9 @@ const gamesApi = createApi({
         baseUrl: baseUrl,
         prepareHeaders:(headers, { getState }) => {
             const token = getState().auth.token;
-            headers.set('Authorization', `Bearer ${token}`);
+            if(token){
+                headers.set('Authorization', `Bearer ${token}`);
+            }
             return headers;
         },
         fetchFn: async (...args) => {
@@ -24,7 +26,7 @@ const gamesApi = createApi({
     endpoints(builder){
         return {
             getGames: builder.query({
-                providesTags:['followed'],
+                providesTags:['all'],
                 query:() => {
                     return {
                         url:'/games/all',
@@ -41,6 +43,15 @@ const gamesApi = createApi({
                     }
                 }
             }),
+            fetchGameById: builder.query({
+                providesTags:['gid'],
+                query:(gid)=>{
+                    return {
+                        url:`/games/game/?gid=${gid}`,
+                        method:'GET',
+                    }
+                }
+            })
         }
     }
 })
@@ -48,5 +59,6 @@ const gamesApi = createApi({
 export { gamesApi };
 export const {
     useGetGamesQuery,
-    useFetchNotSelectedGamesQuery
+    useFetchNotSelectedGamesQuery,
+    useFetchGameByIdQuery
 } = gamesApi;

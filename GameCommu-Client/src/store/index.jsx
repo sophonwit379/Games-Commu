@@ -86,7 +86,8 @@ export {
 
 export {
     useGetGamesQuery,
-    useFetchNotSelectedGamesQuery
+    useFetchNotSelectedGamesQuery,
+    useFetchGameByIdQuery
 } from './apis/gamesApi'
 
 export {

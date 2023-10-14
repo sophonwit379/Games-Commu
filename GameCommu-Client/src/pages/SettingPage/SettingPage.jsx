@@ -115,6 +115,7 @@ function SettingPage() {
                                             resetForm();
                                         }
                                     }}
+                                    disabled={spin}
                                 >
                                     {edit?'ย้อนกลับ':'ยกเลิก'}
                                 </Button>
@@ -125,6 +126,7 @@ function SettingPage() {
                                         event.preventDefault();
                                         setEdit(false);
                                     }}
+                                    disabled={spin}
                                 >
                                     {!spin? "แก้ไข":                                    
                                         <Spinner style={{height:'1.4rem',width:'1.4rem'}} animation="border" role="status">
@@ -137,6 +139,7 @@ function SettingPage() {
                                     className="w-25 bt" 
                                     variant="outline-secondary" 
                                     type='submit'
+                                    disabled={spin}
                                 >
                                     ยืนยัน
                                 </Button>}

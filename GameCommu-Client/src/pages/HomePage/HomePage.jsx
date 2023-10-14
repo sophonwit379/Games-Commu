@@ -56,6 +56,7 @@ function HomePage() {
           <Nav className="w-100 d-flex justify-content-between">
             <Form className="d-flex align-items-center nav-search">
               <Form.Control
+                name='search'
                 type="search"
                 placeholder="Search"
                 className="me-2"

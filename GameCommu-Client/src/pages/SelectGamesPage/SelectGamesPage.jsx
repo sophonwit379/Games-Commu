@@ -54,7 +54,11 @@ function SelectGamesPage() {
         <Container key={game.gid}
           id="con-width"
           className="p-0 m-0 d-flex flex-column justify-content-center align-items-center h-100"
-          onClick={() => handleSelectGame(game)}
+          onClick={() => {
+            if(!spin){
+              handleSelectGame(game)
+            }
+          }}
         >
             <div style={{width:'95%',height:'95%'}} className="position-relative justify-content-center d-flex align-items-center flex-column">
               <Image src={noImg} rounded height={125} width={175} className="z-1"/>
@@ -120,6 +124,7 @@ function SelectGamesPage() {
             className="w-25 mr-3" 
             variant="secondary"
             onClick={handleSubmit}
+            disabled={spin}
           >
             {!spin? "ตกลง":                                    
                 <Spinner style={{height:'1.4rem',width:'1.4rem'}} animation="border" role="status">

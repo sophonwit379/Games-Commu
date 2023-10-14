@@ -32,6 +32,7 @@ function PostItem({page,className}) {
                 <PostItemList 
                     key={post.pid} 
                     pid={post.pid}
+                    gid={post.gid}
                     username={post.username}
                     date={formattedDate.toString()}
                     detail={post.detail}

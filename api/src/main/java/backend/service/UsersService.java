@@ -31,9 +31,15 @@ public class UsersService implements UserDetailsService {
 		return usersRepository.findByEmail(email);
 	}
 
-	public Users createAccount(Users u) {
+	public int createAccount(Users u) {
+		List<Users> userList = (List<Users>) usersRepository.findAll();
+		boolean emailExists = userList.stream()
+	            .anyMatch(existingUser -> existingUser.getEmail().equalsIgnoreCase(u.getEmail()));
+		if (emailExists) {
+			return 0;
+	    }
 		usersRepository.save(u);
-		return u;
+		return u.getUid();
 	}
 
 	public void updateAccount(String email, UserInfoDTO uf) {

@@ -36,7 +36,7 @@ public class GamesController {
 		return ResponseEntity.ok(gamesService.getAll());
 	}
 	
-	@GetMapping("/games/all")
+	@GetMapping("/games/game")
 	public ResponseEntity<Games> getByGID(@RequestParam int gid) {
 		return ResponseEntity.ok(gamesService.getByGID(gid));
 	}

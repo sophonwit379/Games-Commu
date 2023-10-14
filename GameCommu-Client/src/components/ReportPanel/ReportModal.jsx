@@ -1,7 +1,8 @@
+/* eslint-disable react/prop-types */
 import React from 'react'
 import Modal from 'react-bootstrap/Modal';
 import { Button } from 'react-bootstrap';
-import {HomePage} from '../../pages/HomePage/HomePage'
+import  HomePage  from '../../pages/HomePage/HomePage'
 
 function ReportModal(props) {
   return (

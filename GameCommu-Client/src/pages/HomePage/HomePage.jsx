@@ -25,7 +25,6 @@ function HomePage() {
   const userprofile = <div className='d-flex justify-content-center align-items-center'>
                         <Image src={default_pfp} width={45} className='mr-1' roundedCircle/>
                       </div>
-  console.log(gid);
   const handleLogout = () => {
     navigate('/');
     toast.success('ออกจากระบบสำเร็จ', {

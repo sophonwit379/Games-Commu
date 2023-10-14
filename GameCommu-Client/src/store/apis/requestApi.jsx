@@ -1,0 +1,64 @@
+import { createApi,fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
+import { baseUrl } from "./Utils/baseApi";
+
+const requestApi = createApi({
+    reducerPath: 'request',
+    baseQuery:fetchBaseQuery({
+        baseUrl: baseUrl,
+        prepareHeaders:(headers, { getState }) => {
+            const token = getState().auth.token;
+            if(token){
+                headers.set('Authorization', `Bearer ${token}`);
+            }
+            return headers;
+        },
+    }),
+    endpoints(builder){
+        return {
+            fetchRequest: builder.query({
+                providesTags:'FetchRequest',
+                query:()=> {
+                    return{
+                        url:'/requestedgames',
+                        method:'GET',
+                    }
+                }
+            }),
+            addRequest: builder.mutation({
+                query: (request) => {
+                    return{
+                        url:'/requestedgames/create',
+                        method: 'POST',
+                        body: request,
+                    }
+                },
+            }),
+            approveRequest: builder.mutation({
+                query: (request) => {
+                    return{
+                        url:'/requestedgames/approve',
+                        method: 'POST',
+                        body: request,
+                    }
+                },
+            }),
+            rejectRequest: builder.mutation({
+                query: (request) => {
+                    return{
+                        url:'/requestedgames/reject',
+                        method: 'POST',
+                        body: request,
+                    }
+                },
+            }),
+        }
+    }
+});
+
+export { requestApi };
+export const {
+    useAddRequestMutation,
+    useFetchRequestQuery,
+    useApproveRequestMutation,
+    useRejectRequestMutation,
+} = requestApi;

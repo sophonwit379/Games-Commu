@@ -7,7 +7,7 @@ import { GrFormNextLink } from "react-icons/gr";
 import { setToken, useAddUserMutation, useLoginMutation } from '../../store';
 import { useDispatch } from 'react-redux';
 import useClearUserToken from '../../hooks/use-clear-user-token';
-import { useEffect } from 'react';
+import { useEffect,useState } from 'react';
 import { 
   FloatingLabel,
   Form,
@@ -19,6 +19,7 @@ import {
   InputGroup
 } from "react-bootstrap";
 import './RegisterPage.css'
+import Spinner from 'react-bootstrap/Spinner';
 
 function RegisterPage() {
   const { clear } = useClearUserToken();
@@ -28,6 +29,8 @@ function RegisterPage() {
   const navigate = useNavigate();
   const { Formik } = formik;
   const [addUser] = useAddUserMutation();
+  const [spin, setSpin] = useState(false); 
+  
 
   useEffect(()=>{
     clear();
@@ -62,6 +65,7 @@ function RegisterPage() {
   };
 
   const onSubmit = async (values) => {
+    setSpin(true)
     await addUser(values);
     const user = {
       username: values.email,
@@ -81,6 +85,7 @@ function RegisterPage() {
           error = rejected.data;
         }
       });
+      setSpin(false)
       navigate('/select-game');
   };
 
@@ -214,8 +219,11 @@ function RegisterPage() {
                         variant="secondary"
                         type="submit"
                         >
-                          ถัดไป 
-                          <GrFormNextLink size={25} id='next-icon' />
+                          {!spin? <> ถัดไป <GrFormNextLink size={25} id='next-icon' /></>:                                    
+                              <Spinner style={{height:'1.4rem',width:'1.4rem'}} animation="border" role="status">
+                                  <span className="visually-hidden">Loading...</span>
+                              </Spinner>
+                          }
                       </Button>
                     </Form>
                   </Card.Body>

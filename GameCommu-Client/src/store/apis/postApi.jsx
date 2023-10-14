@@ -23,7 +23,6 @@ const postApi = createApi({
     endpoints(builder){
         return{
             addPost: builder.mutation({
-                provideTags: ['Post'],
                 invalidatesTags: ['Post'],
                 query:(postData) =>{
                     return {
@@ -34,7 +33,6 @@ const postApi = createApi({
                 } 
             }),
             editPost: builder.mutation({
-                provideTags: ['Post'],
                 invalidatesTags: ['Post'],
                 query:(postData) =>{
                     return {
@@ -58,7 +56,7 @@ const postApi = createApi({
                 query:(postData) => {
                     console.log(parseInt(postData.gid),postData.page);
                     return {
-                        url:`/posts/user?gid=${parseInt(postData.gid)}&page=${postData.page}`,
+                        url:`/posts/game?gid=${parseInt(postData.gid)}&page=${postData.page}`,
                         method:'GET',
                     }
                 }

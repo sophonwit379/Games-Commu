@@ -24,18 +24,18 @@ const selectGamesApi = createApi({
     endpoints(builder){
         return{
             addSelectGame: builder.mutation({
-                provideTags: ['Post'],
-                invalidatesTags: ['Post'],
+                invalidatesTags: ['selected'],
                 query:(game)=> {
                     return{
                         url:'/gamesofuser/create',
                         method:'POST',
-                        body: game
+                        body: game,
+                        responseHandler:'text'
                     }
                 }
             }),
             fetchGameOfUser: builder.query({
-                provideTags: ['Post'],
+                provideTags: ['selected'],
                 query:()=>{
                     return {
                         url:'/gamesofuser',
@@ -50,6 +50,6 @@ const selectGamesApi = createApi({
 
 export { selectGamesApi };
 export const {
-    useFetchGameOfUserQuery,
+     useFetchGameOfUserQuery,
     useAddSelectGameMutation
 } = selectGamesApi;

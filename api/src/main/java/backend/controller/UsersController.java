@@ -53,7 +53,7 @@ public class UsersController {
 	@PostMapping("/users/create")
 	public ResponseEntity<Object> createAccount(@RequestBody UsersDTO udto) {
 		int uid = usersService.createAccount(new Users(udto.getEmail(), udto.getPassword(), udto.getUsername(),
-				udto.getName(), udto.getSurname(), "Uesr", "Normal", Timestamp.from(Instant.now())));
+				udto.getName(), udto.getSurname(), "User", "Normal", Timestamp.from(Instant.now())));
 		if(uid==0) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email already exists");
 		}

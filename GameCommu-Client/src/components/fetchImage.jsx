@@ -3,11 +3,13 @@ import axios from 'axios';
 export async function fetchImgPost(pid,page) {
   try {
     const jwtToken = localStorage.getItem('Token');
+    let header 
+    if(jwtToken){
+      header =  {'Authorization': `Bearer ${jwtToken}`}
+    }
     const response = await axios.get(`http://localhost:8080/api/images/call?pid=${pid}&page=${page}`, {
       responseType: 'arraybuffer',
-      headers: {
-        'Authorization': `Bearer ${jwtToken}`
-      }
+      headers: header
     });
 
     const blob = new Blob([response.data], { type: 'image/jpeg' });

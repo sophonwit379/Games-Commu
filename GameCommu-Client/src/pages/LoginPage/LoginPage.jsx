@@ -4,6 +4,7 @@ import * as formik from 'formik';
 import * as yup from 'yup';
 import { AiFillEye,AiFillEyeInvisible } from "react-icons/ai";
 import { setToken, useLoginMutation } from "../../store";
+import axios from "axios";
 import { 
   FloatingLabel,
   Form,
@@ -45,6 +46,14 @@ function LoginPage() {
       password: '',
   };
 
+  const checkUser = async (token) => {
+    const response = await axios.get(`http://localhost:8080/api/user`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    return response;
+  }
 
   const onSubmit = async (user) => {
     await login(user)
@@ -52,7 +61,25 @@ function LoginPage() {
       .then(response =>{
         localStorage.setItem("Token", response);
         dispatch(setToken(response));
-        navigate("/home");
+        checkUser(response).then((res)=>{
+          console.log(res.data.roll);
+          if(res.data.roll === 'User'){
+            navigate('/home')
+          }else if(res.data.roll === 'Admin'){
+            navigate('/admin')
+          }else{
+            toast.error("Something went wrong", {
+              position: "bottom-right",
+              autoClose: 1000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              progress: undefined,
+              theme: "light",
+            });
+          }
+        })
+        // navigate("/home");
         toast.success('เข้าสู่ระบบสำเร็จ', {
           position: "bottom-right",
           autoClose: 2000,

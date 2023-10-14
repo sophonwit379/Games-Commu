@@ -6,7 +6,10 @@ const imageApi = createApi({
     baseQuery:fetchBaseQuery({
         baseUrl:baseUrl,
         prepareHeaders:( headers,{ getState })=>{
-            headers.set('Authorization', `Bearer ${getState().auth.token}`);
+            const token = getState().auth.token;
+            if(token){
+                headers.set('Authorization', `Bearer ${token}`);
+            }
             return headers;
         }
     }),

@@ -37,7 +37,6 @@ function HomePage() {
       theme: "light",
     });
   };
-
   const handleCloseModal = () => {
     setModalShow(false);
     modalFormRef.current.resetForm();

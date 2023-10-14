@@ -69,12 +69,12 @@ function SelectGamesPage() {
     });
   }
   
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if(selectedGame.length >= 1 ){
       setSpin(true);
-      selectedGame.forEach(async game => {
-        await addSelectGames(game)
-      });
+      for (const game of selectedGame) {
+        await addSelectGames(game);
+      }
       setSpin(false);
       navigate('/home')
       toast.success('สมัครสมาชิกสำเร็จ', {

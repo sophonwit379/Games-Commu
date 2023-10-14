@@ -65,9 +65,7 @@ function AddGame(props) {
       setSpin(true);
       for (const game of selectedGame) {
         await addSelectGames(game);
-        console.log('yes');
       }
-      console.log('d');
       dispatch(gamesApi.util.invalidateTags(['followed']));
       dispatch(selectGamesApi.util.resetApiState());
       setSpin(false)

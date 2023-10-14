@@ -22,6 +22,8 @@ import {
     setUserData,
     clearUserData
 } from "./slices/authSlice";
+import {reportApi} from "./apis/reportApi";
+import { requestApi } from "./apis/requestApi";
 
 export const store = configureStore({
     reducer:{
@@ -33,6 +35,8 @@ export const store = configureStore({
         [selectGamesApi.reducerPath]: selectGamesApi.reducer,
         [imageApi.reducerPath]: imageApi.reducer,
         [postApi.reducerPath]: postApi.reducer,
+        [reportApi.reducerPath]: reportApi.reducer,
+        [requestApi.reducerPath]: requestApi.reducer
     },
     middleware: (getDefaultMiddleware) => {
         return getDefaultMiddleware()
@@ -41,7 +45,9 @@ export const store = configureStore({
             .concat(gamesApi.middleware)
             .concat(postApi.middleware)
             .concat(imageApi.middleware)
-            .concat(authenticationApi.middleware);
+            .concat(authenticationApi.middleware)
+            .concat(reportApi.middleware)
+            .concat(requestApi.middleware)
     }
 });
 
@@ -97,3 +103,15 @@ export {
     useFetchAllFollowedGameQuery,
     useFetchFollowedGameQuery
 } from './apis/postApi'
+
+export {
+    useAddReportMutation,
+    useFetchReportQuery
+} from './apis/reportApi'
+
+export{
+    useAddRequestMutation,
+    useFetchRequestQuery,
+    useApproveRequestMutation,
+    useRejectRequestMutation
+}from './apis/requestApi'

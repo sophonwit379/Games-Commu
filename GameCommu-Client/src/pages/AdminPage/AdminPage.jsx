@@ -1,19 +1,20 @@
 import React from "react";
-import "./AdminPage.css";
-import SideBarMenu from "./SideBarMenu";
-import TablePages from "./TablePages";
-import HomePage from "../HomePage/HomePage";
 import { Routes, Route } from "react-router-dom";
+import {TablePages} from "../AdminTablePage/TablePages"
+import {SideBarMenu} from "./SideBarMenu"
+import "./SideBarMenu.css"
+import "./AdminPage.css"
 
 function AdminPage() {
   return (
     <div className="AdminPageAll-con">
       <div className="AdminPageSide-con">
-        <SideBarMenu />
+        <SideBarMenu/>
       </div>
       <div className="AdminPageContent">
         <Routes>
-          <Route path="/table" element={<TablePages />} />
+          <Route path="/ReportTable" element={<TablePages props="report"/>} />
+          <Route path="/RequestTable" element={<TablePages props="request"/>} />
         </Routes>
       </div>
     </div>

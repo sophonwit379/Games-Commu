@@ -15,11 +15,8 @@ const PrivateRoute = ({  children }) => {
     useEffect(() => {
         console.log(`token:${token}`);
         if(token){
-            // console.log(`"decode:"${jwtDecode(token).data}`);
             let tokenExpiration = jwtDecode(token).exp;
             let dateNow = new Date();
-            // console.log(tokenExpiration);
-            // console.log(dateNow.getTime()/1000);
             if(tokenExpiration < dateNow.getTime()/1000){
                 dispatch(clearToken());
                 setIsAuthenticated(false)

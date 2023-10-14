@@ -9,10 +9,11 @@ import { useFetchUserQuery } from '../../store';
 import { useEditUserMutation } from "../../store";
 import { useDispatch } from "react-redux";
 import { userApi } from "../../store/apis/userApi";
-import { useEffect } from "react";
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
+import Spinner from 'react-bootstrap/Spinner';
 
 function SettingPage() {
+    const [spin, setSpin] = useState(false); 
     const dispatch = useDispatch();
     const [ update ] = useEditUserMutation();
     const { data,isFetching } = useFetchUserQuery();
@@ -36,10 +37,11 @@ function SettingPage() {
             </div>
     }else{
         const onSubmit = async (user) => {
-            console.log(user);
+            setEdit(!edit)
+            setSpin(true);
             await update(user);
             dispatch(userApi.util.resetApiState());
-            setEdit(!edit)
+            setSpin(false);
         };
     
         content =
@@ -124,7 +126,11 @@ function SettingPage() {
                                         setEdit(false);
                                     }}
                                 >
-                                    แก้ไข
+                                    {!spin? "แก้ไข":                                    
+                                        <Spinner style={{height:'1.4rem',width:'1.4rem'}} animation="border" role="status">
+                                            <span className="visually-hidden">Loading...</span>
+                                        </Spinner>
+                                    }
                                 </Button>
                                 :
                                 <Button  

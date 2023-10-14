@@ -5,7 +5,6 @@ import PostItemList from "./PostItemList";
 import Skeleton from "react-loading-skeleton";
 
 function PostItem({page,className}) {
-    console.log(page);
     const { data,isFetching } = useFetchAllFollowedGameQuery(page);
 
     let content;

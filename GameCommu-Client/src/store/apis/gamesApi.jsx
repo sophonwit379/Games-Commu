@@ -24,6 +24,7 @@ const gamesApi = createApi({
     endpoints(builder){
         return {
             getGames: builder.query({
+                providesTags:['followed'],
                 query:() => {
                     return {
                         url:'/games/all',
@@ -32,6 +33,7 @@ const gamesApi = createApi({
                 }
             }),
             fetchNotSelectedGames: builder.query({
+                providesTags:['followed'],
                 query:()=>{
                     return {
                         url:'/games/notintag',

@@ -27,6 +27,7 @@ function GamePanel() {
                 <IoAddCircleOutline size={25} className="mr-1"/>เพิ่มกลุ่ม
             </Button>
             <AddGamePanel 
+                size='xl'
                 show={modalShow}
                 onHide={()=>setModalShow(false)}
             />

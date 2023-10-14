@@ -8,16 +8,19 @@ import {
   Row
 } from "react-bootstrap";
 import { toast } from 'react-toastify';
-import { useGetGamesQuery } from "../../store";
-import { useAddSelectGameMutation } from "../../store";
+import { useFetchNotSelectedGamesQuery,useAddSelectGameMutation } from "../../store";
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import noImg from '../../assets/no-image.svg'
+import './SelectGamesPage.css'
+import Spinner from 'react-bootstrap/Spinner';
 
 function SelectGamesPage() {
   const [selectedGame,setSelectedGame] = useState([]);
   const navigate = useNavigate();
   const [addSelectGames] = useAddSelectGameMutation();
-  const { data: gamesData, isFetching: gamesIsFetching } = useGetGamesQuery();
+  const { data: gamesData, isFetching: gamesIsFetching } = useFetchNotSelectedGamesQuery();
+  const [spin, setSpin] = useState(false); 
+
 
   const handleSelectGame = (game) => {
     const check = selectedGame.includes(game);
@@ -36,44 +39,43 @@ function SelectGamesPage() {
   let content;
   if(gamesIsFetching){
     content = 
-      <Row>
-        <Container className="m-3 d-flex justify-content-center align-items-center w-100 h-100">
+        <Container className="m-3 p-0 d-flex w-100 h-100" fluid>
           <SkeletonTheme baseColor="#F5F5F5" highlightColor="#DDE6ED">
-            <Skeleton className="mr-5" height={186} width={175}/>
-            <Skeleton className="mr-5" height={186} width={175}/>
-            <Skeleton className="mr-5" height={186} width={175}/>
-            <Skeleton className="mr-5" height={186} width={175}/>
-            <Skeleton height={186} width={175}/>
+            <Skeleton className="mr-5 mt-0" height={165} width={225}/>
+            <Skeleton className="mr-5 mt-0" height={165} width={225}/>
+            <Skeleton className="mr-5 mt-0" height={165} width={225}/>
+            <Skeleton className="mr-5 mt-0" height={165} width={225}/>
+            <Skeleton className="mr-5 mt-0" height={165} width={225}/>
           </SkeletonTheme>
         </Container>
-      </Row>
   }else{
-    content = gamesData?.map((game,id) => {
+    content = gamesData?.map((game) => {
       return (
-        <Row key={id}>
-          <Container 
-              className="m-3 d-flex flex-column justify-content-center align-items-center w-100 h-100"
-              onClick={() => handleSelectGame(game)}
-          >
+        <Container key={game.gid}
+          id="con-width"
+          className="p-0 m-0 d-flex flex-column justify-content-center align-items-center h-100"
+          onClick={() => handleSelectGame(game)}
+        >
             <div style={{width:'95%',height:'95%'}} className="position-relative justify-content-center d-flex align-items-center flex-column">
               <Image src={noImg} rounded height={125} width={175} className="z-1"/>
-              <h6 className="z-1">{game.name}</h6>
-              <p className="z-1">{game.year}</p>
+              <div className="z-1 d-flex flex-column align-items-center">
+                <h6 className="text-break text-center">{game.name}</h6>
+                <p>{game.year}</p>
+              </div>
               {selectedGame.includes(game) && <div style={{backgroundColor:'#9DB2BF',height:'95%'}} className="position-absolute w-100 d-flex"></div>}
             </div>
-           
-          </Container>
-        </Row>
+        </Container>
       );
     });
   }
   
   const handleSubmit = () => {
-    if(selectedGame.length >= 3 ){
+    if(selectedGame.length >= 1 ){
+      setSpin(true);
       selectedGame.forEach(async game => {
-        console.log(game);
         await addSelectGames(game)
       });
+      setSpin(false);
       navigate('/home')
       toast.success('สมัครสมาชิกสำเร็จ', {
         position: "bottom-right",
@@ -85,7 +87,7 @@ function SelectGamesPage() {
         theme: "light",
       });
     }else{
-      toast.error('กรุณาเลือกเกมอย่างน้อย 3 เกม', {
+      toast.error('กรุณาเลือกเกมอย่างน้อย 1 เกม', {
         position: "bottom-right",
         autoClose: 1000,
         hideProgressBar: false,
@@ -107,9 +109,9 @@ function SelectGamesPage() {
         <Card style={{maxHeight:'70vh',backgroundColor:'#DDE6ED'}}>
           <Card.Header>
             <h4>SELECT GAME</h4>
-              <h6>กรุณาเลือกเกมอย่างน้อย 3 เกม</h6>
+              <h6>กรุณาเลือกเกมอย่างน้อย 1 เกม</h6>
           </Card.Header>
-          <Card.Body style={{overflowX:"hidden"}} className="d-flex flex-wrap pb-5">
+          <Card.Body className="d-flex flex-wrap p-3 p-0 overflow-x-hidden">
             {content}
           </Card.Body>
         </Card>
@@ -119,7 +121,11 @@ function SelectGamesPage() {
             variant="secondary"
             onClick={handleSubmit}
           >
-            ตกลง
+            {!spin? "ตกลง":                                    
+                <Spinner style={{height:'1.4rem',width:'1.4rem'}} animation="border" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                </Spinner>
+            }
           </Button>
         </div>
         

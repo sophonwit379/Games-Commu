@@ -7,8 +7,6 @@ import * as formik from 'formik';
 import * as yup from 'yup';
 import { useState } from 'react';
 import Spinner from 'react-bootstrap/Spinner';
-import Skeleton from 'react-loading-skeleton';
-
 
 function Post({ show,onHide,modalFormRef,gid }) {
     const { data, isFetching } = useFetchGameOfUserQuery();
@@ -64,9 +62,7 @@ function Post({ show,onHide,modalFormRef,gid }) {
     const handleSubmit = async (e) => {
         let postData;
         if(gid){
-            console.log(dataGame);
             const selectedGameData  = dataGame.find( item =>  item.gid === parseInt(gid))
-            console.log(selectedGameData);
             postData = {
                 gameName: selectedGameData.name,
                 gameYear: selectedGameData.year,

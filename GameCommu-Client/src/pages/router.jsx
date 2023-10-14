@@ -51,7 +51,9 @@ export  const router  = createBrowserRouter([
     },
     {
       path: "select-game",
-      element: <SelectGamesPage/>,
+      element: <PrivateRoute>
+        <SelectGamesPage/>
+      </PrivateRoute>,
       errorElement: <ErrorPage />
     },
     {

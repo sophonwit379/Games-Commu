@@ -6,7 +6,6 @@ import RegisterPage from "./RegisterPage/RegisterPage";
 import HomePage from "./HomePage/HomePage";
 import SelectGamesPage from "./SelectGamesPage/SelectGamesPage";
 import AdminPage from "./AdminPage/AdminPage"
-import TablePages from "./AdminPage/TablePages";
 import SettingPage from "./SettingPage/SettingPage";
 import PrivateRoute from "./Util/PrivateRoute";
 import AnonymousPage from "./AnonymousPage/AnonymousPage";
@@ -64,13 +63,11 @@ export const router  = createBrowserRouter([
     },
     {
       path: "/admin/*",
-      element: <AdminPage/>,
-      children: [
-        {
-          path: "table",
-          element: <TablePages/>,
-        },
-      ],
+      element: (
+        <AdminRoute>
+          <AdminPage />
+        </AdminRoute>
+      ),
     },
 
   ]);

@@ -23,6 +23,30 @@ public class PostsService {
 	public Posts getByPID(int pid) {
 		return postsRepository.findById(pid).get();
 	}
+	
+	public int getMaxPageOfAll() {
+		int count = postsRepository.countAll();
+		System.out.println(count);
+		int maxPage = count/5 + 1;
+		System.out.println(maxPage);
+		return maxPage;
+	}
+	
+	public int getMaxPageOfTagOfUser(int uid) {
+		int count = postsRepository.countByTagOfUser(uid);
+		System.out.println(count);
+		int maxPage = count/5 + 1;
+		System.out.println(maxPage);
+		return maxPage;
+	}
+	
+	public int getMaxPageOfGame(int gid) {
+		int count = postsRepository.countByGame(gid);
+		System.out.println(count);
+		int maxPage = count/5 + 1;
+		System.out.println(maxPage);
+		return maxPage;
+	}
 
 	public List<PostsDRO> getAllWithPage(int page) {
 		List<Object> o = postsRepository.getAll();

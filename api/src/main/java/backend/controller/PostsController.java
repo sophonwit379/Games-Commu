@@ -40,6 +40,24 @@ public class PostsController {
 	private UsersService usersService;
 	@Autowired
 	private GamesService gamesService;
+	
+	@GetMapping("/posts/notlogin/count")
+	public ResponseEntity<Integer> getMaxPageOfAll() {
+		return ResponseEntity.ok(postsService.getMaxPageOfAll());
+	}
+	
+	@GetMapping("/posts/user/count")
+	public ResponseEntity<Integer> getMaxPageOfTagOfUser() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentUserEmail = authentication.getName();
+		Users u = usersService.getByEmail(currentUserEmail);
+		return ResponseEntity.ok(postsService.getMaxPageOfTagOfUser(u.getUid()));
+	}
+	
+	@GetMapping("/posts/game/count")
+	public ResponseEntity<Integer> getMaxPageOfGam(@RequestParam int gid) {
+		return ResponseEntity.ok(postsService.getMaxPageOfGame(gid));
+	}
 
 	@GetMapping("/posts/notlogin")
 	public ResponseEntity<List<PostsDRO>> getAllByPage(@RequestParam int page) {

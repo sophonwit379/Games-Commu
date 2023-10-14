@@ -1,5 +1,6 @@
 import { useFetchGameOfUserQuery } from "../../store";
 import { Link } from "react-router-dom";
+import Skeleton from "react-loading-skeleton";
 import './GameItem.css'
 
 export default function GameItems (){
@@ -7,12 +8,12 @@ export default function GameItems (){
 
     let content;
     if(isFetching){
-        content = <h6>Loading.......</h6>
+        content = <Skeleton height={25} count={5}/>
     }else{
         content = data?.map((item,id)=>{
             return <h6 className="text-break" key={id}>
-                    <Link to={item.games.gid.toString()} className="text-decoration-none link-g">
-                        {item.games.name}
+                    <Link to={item.gid.toString()} className="text-decoration-none link-g">
+                        {item.name}
                     </Link>
                 </h6>
         })

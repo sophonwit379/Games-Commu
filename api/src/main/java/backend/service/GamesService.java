@@ -23,6 +23,10 @@ public class GamesService {
 	public List<Games> getAll() {
 		return (List<Games>) gamesRepository.findAll();
 	}
+	
+	public Games getByGID(int gid) {
+		return gamesRepository.findById(gid).get();
+	}
 
 	public List<Games> getNotGamesTagByUser(Users u) {
 		List<Games> g = (List<Games>) gamesRepository.findAll();

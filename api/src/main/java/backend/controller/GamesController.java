@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import backend.dto.GamesDTO;
@@ -33,6 +34,11 @@ public class GamesController {
 	@GetMapping("/games/all")
 	public ResponseEntity<List<Games>> getAll() {
 		return ResponseEntity.ok(gamesService.getAll());
+	}
+	
+	@GetMapping("/games/all")
+	public ResponseEntity<Games> getByGID(@RequestParam int gid) {
+		return ResponseEntity.ok(gamesService.getByGID(gid));
 	}
 
 	@GetMapping("/games/notintag")

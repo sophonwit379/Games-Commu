@@ -36,9 +36,6 @@ function LoginPage() {
     username: yup.string().email('กรุณากรอกอีเมล์ให่้ถูกต้อง').required('กรุณากรอกอีเมล์'),
     password: yup
       .string()
-      .min(8, 'รหัสผ่านต้องมีอย่างน้อย 8 ตัว')
-      .matches(/[0-9]/, 'รหัสผ่านต้องมีตัวเลขอย่างน้อย 1 ตัว')
-      .matches(/[A-Za-z]/, 'รหัสผ่านต้องมีตัวอักษรภาษาอังกฤษอย่างน้อย 1 ตัว')
       .required('กรุณากรอกรหัสผ่าน'),
   });
   const dispatch = useDispatch();

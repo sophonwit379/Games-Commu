@@ -95,5 +95,6 @@ export {
     useAddPostMutation,
     useEditPostMutation,
     useFetchAllFollowedGameQuery,
-    useFetchFollowedGameQuery
+    useFetchFollowedGameQuery,
+    useFetchNotLoginQuery
 } from './apis/postApi'

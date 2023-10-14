@@ -1,20 +1,17 @@
 /* eslint-disable react/prop-types */
-import { useFetchFollowedGameQuery } from "../store";
+import { useFetchNotLoginQuery } from "../store"
 import { Container } from "react-bootstrap";
-import PostItemList from "./PostItemList";
 import Skeleton from "react-loading-skeleton";
+import PostItemList from "./PostItemList";
 
-function PostByGame({postData,className}) {
-    const { data,isFetching } = useFetchFollowedGameQuery(postData);
-
+function PostAnonymous({page}) {
+    const {data,isFetching} = useFetchNotLoginQuery(page);
     let content;
     if(isFetching){
-        content = 
+        content =             
             <Container className="p-0" fluid>
                 <Skeleton height={650}/>
             </Container>
-
-        
     }else{
         content = data?.map((post)=>{
             const date = new Date(post.date);
@@ -27,7 +24,7 @@ function PostByGame({postData,className}) {
             };
             const thaiDateFormatter = new Intl.DateTimeFormat('th-TH', options);
             const formattedDate = thaiDateFormatter.format(date);
-            
+            console.log(post);
             return(
                 <PostItemList 
                     key={post.pid} 
@@ -40,13 +37,12 @@ function PostByGame({postData,className}) {
         });
     }
 
-    return (        
-        <>
-            <div className={className}>
-                {content}
-            </div>
-        </>
+
+    return (
+        <div className="w-75">
+            {content}
+        </div>
     )
 }
 
-export default PostByGame;
+export default PostAnonymous

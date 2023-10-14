@@ -12,7 +12,10 @@ const postApi = createApi({
     baseQuery:fetchBaseQuery({
         baseUrl:baseUrl,
         prepareHeaders: ( headers, { getState } )=>{
-            headers.set('Authorization', `Bearer ${getState().auth.token}`);
+            const token = getState().auth.token;
+            if(token){
+                headers.set('Authorization', `Bearer ${token}`);
+            }
             return headers;
         },
         fetchFn: async (...args) => {
@@ -54,9 +57,17 @@ const postApi = createApi({
             fetchFollowedGame: builder.query({
                 providesTags: ['Post'],
                 query:(postData) => {
-                    console.log(parseInt(postData.gid),postData.page);
                     return {
                         url:`/posts/game?gid=${parseInt(postData.gid)}&page=${postData.page}`,
+                        method:'GET',
+                    }
+                }
+            }),
+            fetchNotLogin: builder.query({
+                providesTags: ['Post'],
+                query:(page) => {
+                    return {
+                        url:`/posts/notlogin?page=${page}`,
                         method:'GET',
                     }
                 }
@@ -72,5 +83,6 @@ export const {
     useAddPostMutation,
     useEditPostMutation,
     useFetchAllFollowedGameQuery,
-    useFetchFollowedGameQuery
+    useFetchFollowedGameQuery,
+    useFetchNotLoginQuery
 } = postApi;

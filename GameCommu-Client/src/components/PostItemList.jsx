@@ -35,7 +35,7 @@ function PostItemList({pid,gid,username,date,detail}) {
                                 </div>
                             </div>
                             <div>
-                                <h6 className="mt-1">{game.name}</h6>
+                                <h6 className="mt-1 mr-2">{game.name}</h6>
                             </div>
                         </div>
                     </Container>

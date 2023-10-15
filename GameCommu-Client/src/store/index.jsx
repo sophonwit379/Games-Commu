@@ -6,15 +6,16 @@ import { selectGamesApi } from "./apis/selectGamesApi";
 import { postApi } from "./apis/postApi";
 import { gamesApi } from "./apis/gamesApi";
 import { imageApi } from "./apis/imageApi";
+import { postByGameApi } from './apis/postByGameApi';
 import {
-    countImgReducer,
-    clearCommentImg,
-    clearGameImg,
-    clearPostImg,
+    callImgReducer,
     setCommentImg,
     setGameImg,
+    selectCommentImg,
+    selectGameImg,
+    selectPostImg,
     setPostImg
-} from './slices/countImgSlice';
+} from './slices/callImgSlice';
 import {
     authReducer,
     clearToken,
@@ -22,13 +23,22 @@ import {
     setUserData,
     clearUserData
 } from "./slices/authSlice";
+import {
+    selectCurrentPage,
+    selectData,
+    selectPreviousPage,
+    setCurrentPage,
+    setData,
+    paginationReducer
+} from './slices/paginationSlice';
 import {reportApi} from "./apis/reportApi";
 import { requestApi } from "./apis/requestApi";
 
 export const store = configureStore({
     reducer:{
         auth:authReducer,
-        countImg:countImgReducer,
+        callImg:callImgReducer,
+        pagination:paginationReducer,
         [userApi.reducerPath]: userApi.reducer,
         [authenticationApi.reducerPath]: authenticationApi.reducer,
         [gamesApi.reducerPath]: gamesApi.reducer,
@@ -36,6 +46,7 @@ export const store = configureStore({
         [imageApi.reducerPath]: imageApi.reducer,
         [postApi.reducerPath]: postApi.reducer,
         [reportApi.reducerPath]: reportApi.reducer,
+        [postByGameApi.reducerPath]: postByGameApi.reducer,
         [requestApi.reducerPath]: requestApi.reducer
     },
     middleware: (getDefaultMiddleware) => {
@@ -47,6 +58,7 @@ export const store = configureStore({
             .concat(imageApi.middleware)
             .concat(authenticationApi.middleware)
             .concat(reportApi.middleware)
+            .concat(postByGameApi.middleware)
             .concat(requestApi.middleware)
     }
 });
@@ -57,17 +69,23 @@ export {
     clearToken,
     setToken,
     setUserData,
-    clearUserData
+    clearUserData,
+    setCommentImg,
+    setGameImg,
+    setPostImg,
+    setCurrentPage,
+    setData,
+    selectCurrentPage,
+    selectData,
+    selectPreviousPage,
+    selectCommentImg,
+    selectPostImg,
+    selectGameImg
 }
 
 export {
-    clearCommentImg,
-    clearGameImg,
-    clearPostImg,
-    setCommentImg,
-    setGameImg,
-    setPostImg
-}
+    useFetchFollowedGameQuery
+} from './apis/postByGameApi'
 
 export {
     useAddSelectGameMutation,
@@ -103,8 +121,7 @@ export {
     useAddPostMutation,
     useEditPostMutation,
     useFetchAllFollowedGameQuery,
-    useFetchFollowedGameQuery,
-    useFetchNotLoginQuery
+    useFetchNotLoginQuery,
 } from './apis/postApi'
 
 export {

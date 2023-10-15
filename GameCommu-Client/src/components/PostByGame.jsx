@@ -1,22 +1,31 @@
 /* eslint-disable react/prop-types */
-import { useFetchFollowedGameQuery } from "../store";
+import { setPostImg, useFetchFollowedGameQuery } from "../store";
 import { Container } from "react-bootstrap";
 import PostItemList from "./PostItemList";
 import Skeleton from "react-loading-skeleton";
+import { setData,selectData } from '../store/index';
+import { useDispatch,useSelector } from "react-redux";
+import { useEffect } from "react";
 
 function PostByGame({postData,className}) {
-    const { data,isFetching } = useFetchFollowedGameQuery(postData);
+    const dispatch = useDispatch();
+    const storeData = useSelector(selectData);
+    const { data,isFetching} = useFetchFollowedGameQuery(postData);
+
+    useEffect(()=>{
+        if(!isFetching){ 
+            dispatch(setData(data));
+        }
+    },[isFetching, dispatch])
 
     let content;
-    if(isFetching){
+    if(isFetching && storeData.length===0){
         content = 
             <Container className="p-0" fluid>
                 <Skeleton height={650}/>
             </Container>
-
-        
     }else{
-        content = data?.map((post)=>{
+        content = storeData?.map((post)=>{
             const date = new Date(post.date);
             const options = {
                 year: 'numeric',
@@ -39,6 +48,13 @@ function PostByGame({postData,className}) {
                 />
             )
         });
+        if(content?.length === 0){
+            return(
+                <Container className="m-0 d-flex justify-content-center align-items-center pt-4" fluid>
+                    <h4>ไม่มีโพสต์</h4>
+                </Container>
+            )
+        }
     }
 
     return (        

@@ -35,7 +35,7 @@ const gamesApi = createApi({
                 }
             }),
             fetchNotSelectedGames: builder.query({
-                providesTags:['followed'],
+                providesTags:['Followed'],
                 query:()=>{
                     return {
                         url:'/games/notintag',

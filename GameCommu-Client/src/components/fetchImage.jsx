@@ -21,3 +21,22 @@ export async function fetchImgPost(pid,page) {
     throw error; 
   }
 }
+
+export async function fetchCountPost(pid) {
+  try {
+    const jwtToken = localStorage.getItem('Token');
+    let header 
+    if(jwtToken){
+      header =  {'Authorization': `Bearer ${jwtToken}`}
+    }
+    const response = await axios.get(`http://localhost:8080/api/images/count?pid=${pid}`, {
+      headers: header
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching image:', error);
+    throw error; 
+  }
+}
+

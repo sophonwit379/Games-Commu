@@ -1,38 +1,51 @@
+/* eslint-disable react/no-unknown-property */
 /* eslint-disable react/prop-types */
+import React, { useEffect, useState } from "react";
+import ImagesItemList from "./ImagesItemList"; // Make sure to import the ImagesItemList component
 import { fetchImgPost } from './fetchImage'
-import ReactImageGallery from 'react-image-gallery';
 
 function ImagesCount({ callData }) {
-  const imageList =(page) => {
+  const [img, setImg] = useState([]); // Initialize img state
+
+  const imageList = async (page) => {
     const data = [];
     for (let i = 0; i < page; i++) {
-      fetchImgPost(callData.pid,i).then((res)=>{
-        data.push({original:res})
-      });
+      const res = await fetchImgPost(callData.pid, i);
+      data.push({original:res});
     }
     return data;
-  }
+  };
 
-  const img = callData.page ? imageList(callData.page) : 0;
+  useEffect(() => {
+    // Fetch and set the image data when callData changes
+    if (callData.page) {
+      const fetchData = async () => {
+        const imageData = await imageList(callData.page);
+        setImg(imageData);
+      };
+      fetchData();
+    }
+  }, [callData]);
+
   return (
     <>
-      {img ?(
-        <ReactImageGallery
-          showPlayButton={false}
-          autoPlay={false}
-          infinite={false}
-          items={img}
-          showThumbnails={false}
-          showIndex
-          loading="lazy"
-        />
-      ):(
+      {callData.page > 0?  
+        <ImagesItemList images={img} />:
         null
-      )}
-      
+      }
     </>
   );
 }
 
-
 export default ImagesCount;
+
+
+
+{/* <ReactImageGallery
+  showPlayButton={false}
+  autoPlay={false}
+  infinite={false}
+  items={img}
+  showThumbnails={false}
+  showIndex
+/> */}

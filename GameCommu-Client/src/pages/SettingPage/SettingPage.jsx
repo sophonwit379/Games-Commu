@@ -11,6 +11,8 @@ import { useDispatch } from "react-redux";
 import { userApi } from "../../store/apis/userApi";
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import Spinner from 'react-bootstrap/Spinner';
+import edit_Img from '../../assets/edit-svgrepo-com.svg'
+import CropImg from '../../components/CropImg';
 
 function SettingPage() {
     const [spin, setSpin] = useState(false); 
@@ -18,8 +20,13 @@ function SettingPage() {
     const [ update ] = useEditUserMutation();
     const { data,isFetching } = useFetchUserQuery();
     const [edit,setEdit] = useState(true);
+    const [editImg,SetEditImg] = useState(false);
     const { Formik } = formik;
     const navigate = useNavigate();
+
+    const uploadImg = () => {
+        
+    }
 
     const validationSchema = yup.object().shape({
         username: yup.string().max(18, 'ชื่อผู้ใช้งานมีได้สูงสุด 18 ตัว').required('กรุณากรอกชื่อผู้ใช้งาน'),
@@ -43,11 +50,21 @@ function SettingPage() {
             dispatch(userApi.util.resetApiState());
             setSpin(false);
         };
-    
+
+
+
         content =
         <Card className="mb-5 p-3 width">
             <Container className="d-flex flex-row justify-content-center align-items-center mt-3">
-                <Image src={default_pfp} width={200} alt="profile-image" roundedCircle/>
+                <div id="pf-img">
+                    <Image  onClick={uploadImg} src={default_pfp} width={200} alt="profile-image" roundedCircle/>
+                    <Image onClick={uploadImg} id="edit-img" src={edit_Img} width={200}  alt="edit-image" roundedCircle/>
+                </div>
+                <CropImg
+                    size='xl'
+                    show={editImg}
+                    onHide={()=>SetEditImg(false)}
+                />
             </Container>
             <Card.Body className="p-4 w-100">                     
                 <Formik

@@ -30,7 +30,6 @@ const imageApi = createApi({
             }),
             callPostImg: builder.query({
                 query: (callData) =>{
-                    console.log(callData);
                     return {
                         url:`/images/call?pid=${callData.pid}&page=${callData.page}`,
                         method:'GET',
@@ -51,8 +50,14 @@ const imageApi = createApi({
                     return {
                         url:'/images',
                         method:'GET',
+                        responseHandler: ((response) => {
+                            console.log(response.arrayBuffer());
+                            const blob = new Blob([response.arrayBuffer()], { type: 'image/jpeg' });
+                            const imageUrl = URL.createObjectURL(blob);
+                            return imageUrl;
+                        })
                     }
-                }
+                },
             }),
         }
     }

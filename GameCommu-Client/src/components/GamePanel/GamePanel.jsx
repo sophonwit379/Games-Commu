@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { Container,Accordion, Button,Modal } from "react-bootstrap";
 import './GamePanel.css'
 import { IoAddCircleOutline,IoRemoveCircleOutline } from "react-icons/io5";
@@ -6,7 +7,7 @@ import AddGamePanel from './AddGamePannel';
 import DeleteGamePanel from './DeleteGamePanel';
 import GameItems from "./GameItems";
 
-function GamePanel() {
+function GamePanel({setPage}) {
     const [addGame, setAddGame] = useState(false);
     const [deleteGame, setDeleteGame] = useState(false);
 
@@ -16,7 +17,7 @@ function GamePanel() {
                 <Accordion.Item eventKey="0">
                     <Accordion.Header>กลุ่มของคุณ</Accordion.Header>
                     <Accordion.Body>
-                        <GameItems/>
+                        <GameItems setPage={setPage}/>
                     </Accordion.Body>
                 </Accordion.Item>
             </Accordion>

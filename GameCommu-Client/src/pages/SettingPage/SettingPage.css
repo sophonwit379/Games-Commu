@@ -6,6 +6,24 @@
     width: 40rem;
 }
 
+#pf-img {
+    position: relative;
+}
+
+#edit-img {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    opacity: 0.2; /* You can adjust the opacity as needed */
+}
+  
+#pf-img:hover #edit-img {
+    display: block;
+    cursor: pointer;
+}
+
 #con-bt .bt{
     box-shadow: none;
 }

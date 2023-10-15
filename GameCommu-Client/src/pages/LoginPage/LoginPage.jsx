@@ -3,7 +3,7 @@ import useTogglePassword from "../../hooks/use-toggle-password";
 import * as formik from 'formik';
 import * as yup from 'yup';
 import { AiFillEye,AiFillEyeInvisible } from "react-icons/ai";
-import { setToken, useLoginMutation } from "../../store";
+import { setToken, useLoginMutation,setData } from "../../store";
 import axios from "axios";
 import { 
   FloatingLabel,
@@ -15,6 +15,8 @@ import {
   Button,
   InputGroup,
 } from "react-bootstrap";
+import { postByGameApi } from "../../store/apis/postByGameApi";
+import { postApi } from "../../store/apis/postApi";
 import { useDispatch } from "react-redux";
 import { toast } from 'react-toastify';
 import useClearUserToken from '../../hooks/use-clear-user-token';
@@ -26,7 +28,6 @@ function LoginPage() {
   const navigate = useNavigate();
   const { Formik } = formik;
   const [login] = useLoginMutation();
-
   const { clear } = useClearUserToken();
 
   useEffect(()=>{
@@ -62,8 +63,10 @@ function LoginPage() {
         localStorage.setItem("Token", response);
         dispatch(setToken(response));
         checkUser(response).then((res)=>{
-          console.log(res.data.roll);
           if(res.data.roll === 'User'){
+            dispatch(setData([]));
+            dispatch(postByGameApi.util.resetApiState());
+            dispatch(postApi.util.resetApiState());
             navigate('/home')
           }else if(res.data.roll === 'Admin'){
             navigate('/admin')

@@ -26,7 +26,7 @@ const postApi = createApi({
     endpoints(builder){
         return{
             addPost: builder.mutation({
-                invalidatesTags: ['Post'],
+                invalidatesTags: ['Post','Followed','Anonymous'],
                 query:(postData) =>{
                     return {
                         url: '/posts/create',
@@ -36,7 +36,7 @@ const postApi = createApi({
                 } 
             }),
             editPost: builder.mutation({
-                invalidatesTags: ['Post'],
+                invalidatesTags: ['Post','Followed','Anonymous'],
                 query:(postData) =>{
                     return {
                         url: '/posts/create',
@@ -52,25 +52,38 @@ const postApi = createApi({
                         url:`/posts/user?page=${page}`,
                         method:'GET',
                     }
-                }
-            }),
-            fetchFollowedGame: builder.query({
-                providesTags: ['Post'],
-                query:(postData) => {
-                    return {
-                        url:`/posts/game?gid=${parseInt(postData.gid)}&page=${postData.page}`,
-                        method:'GET',
-                    }
-                }
+                },
+                serializeQueryArgs: ({queryArgs,endpointName}) => {
+                    return endpointName
+                },
+                merge: (currentCache, newItems) => {
+                    currentCache.push(...newItems)
+                },
+                forceRefetch({ currentArg, previousArg }) {
+                    return currentArg !== previousArg
+                }, 
             }),
             fetchNotLogin: builder.query({
-                providesTags: ['Post'],
+                providesTags: ['Anonymous'],
                 query:(page) => {
                     return {
                         url:`/posts/notlogin?page=${page}`,
                         method:'GET',
                     }
-                }
+                },
+                serializeQueryArgs: ({endpointName}) => {
+                    return endpointName
+                },
+                merge: (currentCache, newItems) => {
+                    if(newItems.length > 0){
+                        currentCache.push(...newItems)
+                    }else{
+                        return;
+                    }
+                },
+                forceRefetch({ currentArg, previousArg }) {
+                    return currentArg !== previousArg
+                },
             })
 
 
@@ -84,5 +97,5 @@ export const {
     useEditPostMutation,
     useFetchAllFollowedGameQuery,
     useFetchFollowedGameQuery,
-    useFetchNotLoginQuery
+    useFetchNotLoginQuery,
 } = postApi;

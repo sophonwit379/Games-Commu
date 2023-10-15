@@ -1,5 +1,6 @@
+/* eslint-disable react/prop-types */
 import { Modal,Container,Image,Button } from "react-bootstrap";
-import { useRemoveGameOfUserMutation,useFetchGameOfUserQuery } from "../../store";
+import { useRemoveGameOfUserMutation,useFetchGameOfUserQuery,setData } from "../../store";
 import Skeleton from "react-loading-skeleton";
 import { useState } from "react";
 import { toast } from 'react-toastify';
@@ -8,6 +9,8 @@ import Spinner from 'react-bootstrap/Spinner';
 import { postApi } from "../../store/apis/postApi"; 
 import { useDispatch } from "react-redux";
 import { selectGamesApi } from "../../store/apis/selectGamesApi";
+import { gamesApi } from "../../store/apis/gamesApi";
+import { postByGameApi } from "../../store/apis/postByGameApi";
 
 
 function DeleteGamePanel(props) {
@@ -40,7 +43,7 @@ function DeleteGamePanel(props) {
             <Skeleton className="mr-5 mt-0" height={165} width={225}/>
       </Container>
   }else{
-    content = data.map((game)=>{
+    content = data?.map((game)=>{
       return (
         <Container key={game.gid}
           id="con-width"
@@ -70,9 +73,13 @@ function DeleteGamePanel(props) {
       for (const game of selectedGame) {
         await removeSelectedGame(game);
       }
+      dispatch(setData([]));
       dispatch(postApi.util.resetApiState());
+      dispatch(postByGameApi.util.resetApiState());
+      dispatch(gamesApi.util.invalidateTags(['Followed']));
       dispatch(selectGamesApi.util.resetApiState());
       setSpin(false)
+      props.onHide();
       toast.success('ลบเกมสำเร็จ', {
         position: "bottom-right",
         autoClose: 2000,

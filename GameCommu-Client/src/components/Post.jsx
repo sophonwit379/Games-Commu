@@ -2,13 +2,19 @@
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form  from 'react-bootstrap/Form';
-import { useAddPostMutation,useUploadPostImgMutation,useFetchGameOfUserQuery } from '../store';
+import { useAddPostMutation,useUploadPostImgMutation,useFetchGameOfUserQuery,setData } from '../store';
 import * as formik from 'formik';
 import * as yup from 'yup';
 import { useState } from 'react';
 import Spinner from 'react-bootstrap/Spinner';
+import { useDispatch } from 'react-redux';
+import { postByGameApi } from '../store/apis/postByGameApi';
+import { postApi } from '../store/apis/postApi';
+import { useNavigate } from 'react-router-dom';
 
 function Post({ show,onHide,modalFormRef,gid }) {
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
     const { data, isFetching } = useFetchGameOfUserQuery();
     const [ post ] = useAddPostMutation();
     const [ uploadPostImg ] = useUploadPostImgMutation();
@@ -87,6 +93,9 @@ function Post({ show,onHide,modalFormRef,gid }) {
             });
 
         }
+        dispatch(setData([]));
+        dispatch(postByGameApi.util.resetApiState());
+        dispatch(postApi.util.resetApiState());
         setSpin(false);
         setSelectedValue(false);
         onHide()

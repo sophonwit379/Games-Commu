@@ -11,6 +11,7 @@ import { useDispatch } from "react-redux";
 import { selectGamesApi } from "../../store/apis/selectGamesApi";
 import { gamesApi } from "../../store/apis/gamesApi";
 import { postByGameApi } from "../../store/apis/postByGameApi";
+import { imageApi } from "../../store/apis/imageApi";
 
 
 function DeleteGamePanel(props) {
@@ -78,6 +79,7 @@ function DeleteGamePanel(props) {
       dispatch(postByGameApi.util.resetApiState());
       dispatch(gamesApi.util.invalidateTags(['Followed']));
       dispatch(selectGamesApi.util.resetApiState());
+      dispatch(imageApi.util.resetApiState());
       setSpin(false)
       props.onHide();
       toast.success('ลบเกมสำเร็จ', {

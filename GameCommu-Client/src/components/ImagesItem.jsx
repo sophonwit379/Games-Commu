@@ -1,30 +1,34 @@
 /* eslint-disable react/no-unknown-property */
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from "react";
-import ImagesItemList from "./ImagesItemList"; // Make sure to import the ImagesItemList component
+import ImagesItemList from "./ImagesItemList";
 import { fetchImgPost } from './fetchImage'
 
 function ImagesCount({ callData }) {
-  const [img, setImg] = useState([]); // Initialize img state
+  const [img, setImg] = useState([]);
 
-  const imageList = async (page) => {
+  const imageList = async (page,pid) => {
     const data = [];
     for (let i = 0; i < page; i++) {
-      const res = await fetchImgPost(callData.pid, i);
+      const res = await fetchImgPost(pid, i);
       data.push({original:res});
     }
     return data;
   };
 
   useEffect(() => {
-    // Fetch and set the image data when callData changes
-    if (callData.page) {
+    if (callData.page > 0) {
       const fetchData = async () => {
-        const imageData = await imageList(callData.page);
+        const imageData = await imageList(callData.page,callData.pid);
         setImg(imageData);
       };
       fetchData();
     }
+    return () => {
+      img.forEach((imageData) => {
+        URL.revokeObjectURL(imageData.original);
+      });
+    };
   }, [callData]);
 
   return (

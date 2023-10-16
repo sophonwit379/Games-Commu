@@ -64,4 +64,4 @@ function PostAnonymous({page}) {
     )
 }
 
-export default PostAnonymous
+export default PostAnonymous;

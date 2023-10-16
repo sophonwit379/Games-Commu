@@ -17,6 +17,7 @@ import { setData } from '../../store';
 import { useDispatch } from 'react-redux';
 import { postApi } from '../../store/apis/postApi';
 import { postByGameApi } from '../../store/apis/postByGameApi';
+import { imageApi } from '../../store/apis/imageApi';
 
 function HomePage() {
   const dispatch = useDispatch();
@@ -36,6 +37,7 @@ function HomePage() {
     dispatch(setData([]));
     dispatch(postByGameApi.util.resetApiState());
     dispatch(postApi.util.resetApiState());
+    dispatch(imageApi.util.resetApiState());
     navigate('/');
     toast.success('ออกจากระบบสำเร็จ', {
       position: "bottom-right",
@@ -63,6 +65,8 @@ function HomePage() {
   const handleClick = ()=>{
     dispatch(setData([]));
     dispatch(postApi.util.resetApiState());
+    dispatch(postByGameApi.util.resetApiState());
+    dispatch(imageApi.util.resetApiState());
     setPage(0);
   }
 
@@ -120,10 +124,11 @@ function HomePage() {
                 onHide={handleCloseModal}
                 modalFormRef={modalFormRef}
                 gid={gid}
+                setPage={setPage}
               />
               {gid===undefined?
-                <PostItem className='mt-4 w-75' page={page}/>:
-                <PostByGame className='mt-4 w-75' postData={{page,gid}}/>
+                <PostItem className='mt-4 w-75' setPage={setPage} page={page} username={user?.username}/>:
+                <PostByGame className='mt-4 w-75' setPage={setPage} postData={{page,gid}} username={user?.username}/>
               }
               <Button className='mt-4 w-75 d-flex justify-content-center align-items-center mb-5 shadow-none' variant='outline-secondary' onClick={loadPost}>
                 {!spin? "เพิ่มเติม":                                    

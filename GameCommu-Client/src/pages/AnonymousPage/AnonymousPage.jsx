@@ -21,7 +21,7 @@ function AnonymousPage() {
         <Col xl className='p-0'>
         </Col>
         <Col xl={7} className='p-0'>
-          <Container className='d-flex justify-content-center flex-column align-items-center mt-4'>
+          <Container className='d-flex justify-content-center flex-column align-items-center mt-5'>
               <PostAnonymous page={page}/>
               <Button className='mt-4 w-75 d-flex justify-content-center align-items-center mb-5 shadow-none' variant='outline-secondary' onClick={loadPost}>
               {!spin? "เพิ่มเติม":                                    

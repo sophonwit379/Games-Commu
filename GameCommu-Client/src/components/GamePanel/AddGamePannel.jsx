@@ -11,6 +11,7 @@ import { useDispatch } from "react-redux";
 import { selectGamesApi } from "../../store/apis/selectGamesApi";
 import { postApi } from "../../store/apis/postApi";
 import { postByGameApi } from "../../store/apis/postByGameApi";
+import { imageApi } from "../../store/apis/imageApi";
 
 
 function AddGame(props) {
@@ -78,6 +79,7 @@ function AddGame(props) {
       dispatch(postByGameApi.util.resetApiState());
       dispatch(gamesApi.util.invalidateTags(['Followed']));
       dispatch(selectGamesApi.util.resetApiState());
+      dispatch(imageApi.util.resetApiState());
       setSpin(false)
       props.onHide();
       toast.success('เพิ่มเกมสำเร็จ', {

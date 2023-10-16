@@ -39,11 +39,11 @@ const postByGameApi = createApi({
                 merge: (currentCache, newItems, _meta) => {
                     const gid = parseInt(_meta.arg.gid);
                     if(newItems.length > 0 && _meta.arg.page > 0 && newItems[0].gid === gid){
+                        console.log(1);
                         currentCache.push(...newItems)
                     }else if(_meta.arg.page === 0 && newItems.length === 0){
+                        console.log(2);
                         return newItems;
-                    }else{
-                        return [];
                     }
                 },
                 forceRefetch({ currentArg, previousArg }) {

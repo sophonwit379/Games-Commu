@@ -7,6 +7,8 @@ import { postApi } from "./apis/postApi";
 import { gamesApi } from "./apis/gamesApi";
 import { imageApi } from "./apis/imageApi";
 import { postByGameApi } from './apis/postByGameApi';
+import { likeApi } from "./apis/likeApi";
+import { commentApi } from "./apis/commentApi";
 import {
     callImgReducer,
     setCommentImg,
@@ -29,6 +31,7 @@ import {
     selectPreviousPage,
     setCurrentPage,
     setData,
+    removeData,
     paginationReducer
 } from './slices/paginationSlice';
 import {reportApi} from "./apis/reportApi";
@@ -47,6 +50,8 @@ export const store = configureStore({
         [postApi.reducerPath]: postApi.reducer,
         [reportApi.reducerPath]: reportApi.reducer,
         [postByGameApi.reducerPath]: postByGameApi.reducer,
+        [likeApi.reducerPath]: likeApi.reducer,
+        [commentApi.reducerPath]: commentApi.reducer,
         [requestApi.reducerPath]: requestApi.reducer
     },
     middleware: (getDefaultMiddleware) => {
@@ -59,6 +64,8 @@ export const store = configureStore({
             .concat(authenticationApi.middleware)
             .concat(reportApi.middleware)
             .concat(postByGameApi.middleware)
+            .concat(likeApi.middleware)
+            .concat(commentApi.middleware)
             .concat(requestApi.middleware)
     }
 });
@@ -75,17 +82,27 @@ export {
     setPostImg,
     setCurrentPage,
     setData,
+    removeData,
     selectCurrentPage,
     selectData,
     selectPreviousPage,
     selectCommentImg,
     selectPostImg,
     selectGameImg
-}
+};
+
+export {
+    useAddLikeCommentMutation,
+    useAddLikePostMutation,
+    useFetchLikeCommentQuery,
+    useFetchLikePostQuery,
+    useRemoveLikeCommentMutation,
+    useRemoveLikePostMutation
+} from './apis/likeApi';
 
 export {
     useFetchFollowedGameQuery
-} from './apis/postByGameApi'
+} from './apis/postByGameApi';
 
 export {
     useAddSelectGameMutation,
@@ -107,14 +124,14 @@ export {
     useGetGamesQuery,
     useFetchNotSelectedGamesQuery,
     useFetchGameByIdQuery
-} from './apis/gamesApi'
+} from './apis/gamesApi';
 
 export {
     useCountPostImgQuery,
     useFetchImgQuery,
     useCallPostImgQuery,
     useUploadPostImgMutation
-} from './apis/imageApi'
+} from './apis/imageApi';
 
 
 export {
@@ -122,16 +139,25 @@ export {
     useEditPostMutation,
     useFetchAllFollowedGameQuery,
     useFetchNotLoginQuery,
-} from './apis/postApi'
+    useRemovePostMutation,
+} from './apis/postApi';
 
 export {
     useAddReportMutation,
     useFetchReportQuery
-} from './apis/reportApi'
+} from './apis/reportApi';
 
 export{
     useAddRequestMutation,
     useFetchRequestQuery,
     useApproveRequestMutation,
     useRejectRequestMutation
-}from './apis/requestApi'
+} from './apis/requestApi';
+
+export {
+    useAddCommentMutation,
+    useAddReplyMutation,
+    useFetchCommentQuery,
+    useFetchReplyQuery,
+    useRemoveCommentMutation
+} from './apis/commentApi';

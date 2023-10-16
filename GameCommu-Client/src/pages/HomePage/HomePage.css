@@ -22,7 +22,7 @@
 
 .custom-nav-dropdown .dropdown-item{
     padding: 0.75rem;
-    background-color: #27374D;
+    background-color: #27374D !important;
 }
 
 .custom-nav-dropdown .dropdown-item .txt-wrap {

@@ -39,9 +39,18 @@ const postApi = createApi({
                 invalidatesTags: ['Post','Followed','Anonymous'],
                 query:(postData) =>{
                     return {
-                        url: '/posts/create',
+                        url: '/posts/update',
                         method:'PUT',
                         body:postData
+                    }
+                } 
+            }),
+            removePost: builder.mutation({
+                invalidatesTags: ['Post','Followed','Anonymous'],
+                query:(pid) =>{
+                    return {
+                        url: `/posts/delete?pid=${pid}`,
+                        method:'DELETE',
                     }
                 } 
             }),
@@ -96,6 +105,6 @@ export const {
     useAddPostMutation,
     useEditPostMutation,
     useFetchAllFollowedGameQuery,
-    useFetchFollowedGameQuery,
+    useRemovePostMutation,
     useFetchNotLoginQuery,
 } = postApi;

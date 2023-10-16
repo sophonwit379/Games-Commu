@@ -11,8 +11,8 @@ export default function GameItems ({setPage}){
     const dispatch = useDispatch();
     const { data,isFetching } = useFetchGameOfUserQuery();
 
-    const handleClick = async () => {
-        await setPage(0);
+    const handleClick = () => {
+        setPage(0);
         dispatch(setData([]));
         dispatch(postByGameApi.util.resetApiState());
         dispatch(postApi.util.resetApiState());

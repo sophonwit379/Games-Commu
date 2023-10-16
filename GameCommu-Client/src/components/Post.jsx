@@ -11,8 +11,9 @@ import { useDispatch } from 'react-redux';
 import { postByGameApi } from '../store/apis/postByGameApi';
 import { postApi } from '../store/apis/postApi';
 import { useNavigate } from 'react-router-dom';
+import { imageApi } from '../store/apis/imageApi';
 
-function Post({ show,onHide,modalFormRef,gid }) {
+function Post({ show,onHide,modalFormRef,gid,setPage }) {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { data, isFetching } = useFetchGameOfUserQuery();
@@ -66,6 +67,7 @@ function Post({ show,onHide,modalFormRef,gid }) {
     });
 
     const handleSubmit = async (e) => {
+        setPage(0);
         let postData;
         if(gid){
             const selectedGameData  = dataGame.find( item =>  item.gid === parseInt(gid))
@@ -96,9 +98,10 @@ function Post({ show,onHide,modalFormRef,gid }) {
         dispatch(setData([]));
         dispatch(postByGameApi.util.resetApiState());
         dispatch(postApi.util.resetApiState());
+        dispatch(imageApi.util.resetApiState());
         setSpin(false);
         setSelectedValue(false);
-        onHide()
+        onHide();
     }
 
     return (

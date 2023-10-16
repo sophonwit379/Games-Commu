@@ -6,7 +6,7 @@ import PostItemList from "./PostItemList";
 import Skeleton from "react-loading-skeleton";
 import { useEffect } from "react";
 
-function PostItem({page,className}) {
+function PostItem({page,className,username,setPage}) {
     const dispatch = useDispatch();
     const storeData = useSelector(selectData);
     const { data,isFetching } = useFetchAllFollowedGameQuery(page);
@@ -42,9 +42,12 @@ function PostItem({page,className}) {
                     key={post.pid} 
                     pid={post.pid}
                     gid={post.gid}
+                    isOwner={username}
                     username={post.username}
+                    page={page}
                     date={formattedDate.toString()}
                     detail={post.detail}
+                    setPage={setPage}
                 />
             )
         });

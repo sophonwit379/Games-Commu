@@ -16,10 +16,14 @@ const paginationSlice = createSlice({
       state.previousData = state.data;
       state.data = action.payload;
     },
+    removeData: (state, action) => {
+      const pid = action.payload;
+      state.data = state.data.filter(item => item.pid !== pid);
+    },
   },
 });
 
-export const { setCurrentPage, setData } = paginationSlice.actions;
+export const { setCurrentPage, setData,removeData } = paginationSlice.actions;
 export const selectCurrentPage = (state) => state.pagination.currentPage;
 export const selectPreviousPage = (state) => state.pagination.previousPage;
 export const selectData = (state) => state.pagination.data;

@@ -1,0 +1,13 @@
+#foot .hover:hover{
+    color: #526D82;
+    cursor: pointer;
+}
+#edit-hover:hover{
+    color: #526D82;
+    cursor: pointer;
+}
+
+#remove-hover:hover{
+    color: red;
+    cursor: pointer;
+}

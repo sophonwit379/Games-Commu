@@ -10,6 +10,7 @@ import useClearUserToken from './hooks/use-clear-user-token';
 import { postApi } from './store/apis/postApi';
 import { useDispatch } from 'react-redux';
 import { setData } from './store';
+import { imageApi } from './store/apis/imageApi';
 
 function App() {
   const { clear } = useClearUserToken();
@@ -22,6 +23,7 @@ function App() {
   const handleClick = ()=>{
     dispatch(setData([]));
     dispatch(postApi.util.resetApiState());
+    dispatch(imageApi.util.resetApiState());
   }
   return (
     <div className='min-vh-100'>

@@ -6,17 +6,18 @@ import Skeleton from "react-loading-skeleton";
 import { setData,selectData } from '../store/index';
 import { useDispatch,useSelector } from "react-redux";
 import { useEffect } from "react";
+import Comment from './Comment';
 
-function PostByGame({postData,className}) {
+function PostByGame({postData,className,username,setPage}) {
     const dispatch = useDispatch();
     const storeData = useSelector(selectData);
-    const { data,isFetching} = useFetchFollowedGameQuery(postData);
+    const { data,isFetching } = useFetchFollowedGameQuery(postData);
 
     useEffect(()=>{
         if(!isFetching){ 
             dispatch(setData(data));
         }
-    },[isFetching, dispatch])
+    },[dispatch, isFetching])
 
     let content;
     if(isFetching && storeData.length===0){
@@ -43,8 +44,11 @@ function PostByGame({postData,className}) {
                     pid={post.pid}
                     gid={post.gid}
                     username={post.username}
+                    isOwner={username}
                     date={formattedDate.toString()}
+                    page={postData.page}
                     detail={post.detail}
+                    setPage={setPage}
                 />
             )
         });

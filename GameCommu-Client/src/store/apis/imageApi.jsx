@@ -17,7 +17,6 @@ const imageApi = createApi({
         return{
             uploadPostImg: builder.mutation({
                 query: (images) =>{
-                    console.log(images);
                     const file = new FormData();
                     file.append('file', images.file)
                     return {
@@ -44,20 +43,6 @@ const imageApi = createApi({
                         method:'GET',
                     }
                 }
-            }),
-            fetchImg: builder.query({
-                query: (images) =>{
-                    return {
-                        url:'/images',
-                        method:'GET',
-                        responseHandler: ((response) => {
-                            console.log(response.arrayBuffer());
-                            const blob = new Blob([response.arrayBuffer()], { type: 'image/jpeg' });
-                            const imageUrl = URL.createObjectURL(blob);
-                            return imageUrl;
-                        })
-                    }
-                },
             }),
         }
     }

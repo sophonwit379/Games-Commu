@@ -55,6 +55,7 @@ public class SecurityConfig {
 				.requestMatchers(new AntPathRequestMatcher("/api/games/all/**")).permitAll()
 				.requestMatchers(new AntPathRequestMatcher("/api/games/game/**")).permitAll()
 				.requestMatchers(new AntPathRequestMatcher("/api/images/count/**")).permitAll()
+				.requestMatchers(new AntPathRequestMatcher("/api/likes/count/**")).permitAll()
 				.requestMatchers(new AntPathRequestMatcher("/api/images/call/**")).permitAll().anyRequest()
 				.authenticated()).formLogin().disable() // Disable form-based login
 				.httpBasic().disable() // Disable HTTP Basic authentication

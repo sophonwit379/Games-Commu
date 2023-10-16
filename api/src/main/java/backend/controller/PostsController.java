@@ -46,7 +46,7 @@ public class PostsController {
 		return ResponseEntity.ok(postsService.getMaxPageOfAll());
 	}
 	
-	@GetMapping("/posts/user/count")
+	@GetMapping("/posts/tag/count")
 	public ResponseEntity<Integer> getMaxPageOfTagOfUser() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentUserEmail = authentication.getName();
@@ -55,8 +55,29 @@ public class PostsController {
 	}
 	
 	@GetMapping("/posts/game/count")
-	public ResponseEntity<Integer> getMaxPageOfGam(@RequestParam int gid) {
+	public ResponseEntity<Integer> getMaxPageOfGame(@RequestParam int gid) {
 		return ResponseEntity.ok(postsService.getMaxPageOfGame(gid));
+	}
+	
+	@GetMapping("/posts/search/count")
+	public ResponseEntity<Integer> getMaxPageOfSearch(@RequestParam String search) {
+		return ResponseEntity.ok(postsService.getMaxPageOfSearch(search));
+	}
+	
+	@GetMapping("/posts/user/count")
+	public ResponseEntity<Integer> getMaxPageOfUser() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentUserEmail = authentication.getName();
+		Users u = usersService.getByEmail(currentUserEmail);
+		return ResponseEntity.ok(postsService.getMaxPageOfUser(u.getUid()));
+	}
+	
+	@GetMapping("/posts/comment/count")
+	public ResponseEntity<Integer> getMaxPageOfComment() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentUserEmail = authentication.getName();
+		Users u = usersService.getByEmail(currentUserEmail);
+		return ResponseEntity.ok(postsService.getMaxPageOfComment(u.getUid()));
 	}
 
 	@GetMapping("/posts/notlogin")
@@ -65,7 +86,7 @@ public class PostsController {
 		return ResponseEntity.ok(p);
 	}
 
-	@GetMapping("/posts/user")
+	@GetMapping("/posts/tag")
 	public ResponseEntity<List<PostsDRO>> getByTagOfUser(@RequestParam int page) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentUserEmail = authentication.getName();
@@ -76,6 +97,28 @@ public class PostsController {
 	@GetMapping("/posts/game")
 	public ResponseEntity<List<PostsDRO>> getByGame(@RequestParam int gid, @RequestParam int page) {
 		List<PostsDRO> p = postsService.getByGame(gid, page);
+		return ResponseEntity.ok(p);
+	}
+	
+	@GetMapping("/posts/search")
+	public ResponseEntity<List<PostsDRO>> getBySearch(@RequestParam String search, @RequestParam int page) {
+		List<PostsDRO> p = postsService.getBySearch(search, page);
+		return ResponseEntity.ok(p);
+	}
+	
+	@GetMapping("/posts/user")
+	public ResponseEntity<List<PostsDRO>> getByUser(@RequestParam int page) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentUserEmail = authentication.getName();
+		List<PostsDRO> p = postsService.getByUser(currentUserEmail, page);
+		return ResponseEntity.ok(p);
+	}
+	
+	@GetMapping("/posts/comment")
+	public ResponseEntity<List<PostsDRO>> getByComment(@RequestParam int page) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentUserEmail = authentication.getName();
+		List<PostsDRO> p = postsService.getByComment(currentUserEmail, page);
 		return ResponseEntity.ok(p);
 	}
 
@@ -97,6 +140,7 @@ public class PostsController {
 		Posts p = postsService.getByPID(pf.getPid());
 		if (p.getUsers() == u) {
 			p.setDetail(pf.getDetail());
+			p.setDate(Timestamp.from(Instant.now()));
 			postsService.updatePost(p);
 			return ResponseEntity.ok("Update post successfully");
 		}

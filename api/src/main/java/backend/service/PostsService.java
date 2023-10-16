@@ -47,6 +47,30 @@ public class PostsService {
 		System.out.println(maxPage);
 		return maxPage;
 	}
+	
+	public int getMaxPageOfSearch(String search) {
+		int count = postsRepository.countBySearch(search);
+		System.out.println(count);
+		int maxPage = count/5 + 1;
+		System.out.println(maxPage);
+		return maxPage;
+	}
+	
+	public int getMaxPageOfUser(int uid) {
+		int count = postsRepository.countByUser(uid);
+		System.out.println(count);
+		int maxPage = count/5 + 1;
+		System.out.println(maxPage);
+		return maxPage;
+	}
+	
+	public int getMaxPageOfComment(int uid) {
+		int count = postsRepository.countByComment(uid);
+		System.out.println(count);
+		int maxPage = count/5 + 1;
+		System.out.println(maxPage);
+		return maxPage;
+	}
 
 	public List<PostsDRO> getAllWithPage(int page) {
 		List<Object> o = postsRepository.getAll();
@@ -87,6 +111,62 @@ public class PostsService {
 
 	public List<PostsDRO> getByGame(int gid, int page) {
 		List<Object> o = postsRepository.getByGame(gid);
+		List<PostsDRO> p = PostsDRO.convertToPostsDRO(o);
+		List<PostsDRO> pp = new ArrayList<>();
+		if (((page + 1) * 5) - 5 < p.size()) {
+			for (int i = ((page + 1) * 5) - 5; i < (page + 1) * 5; i++) {
+				if (i < p.size()) {
+					pp.add(p.get(i));
+				} else {
+					return pp;
+				}
+			}
+		} else {
+			return pp;
+		}
+		return pp;
+	}
+	
+	public List<PostsDRO> getBySearch(String search, int page) {
+		List<Object> o = postsRepository.getBySearch(search);
+		List<PostsDRO> p = PostsDRO.convertToPostsDRO(o);
+		List<PostsDRO> pp = new ArrayList<>();
+		if (((page + 1) * 5) - 5 < p.size()) {
+			for (int i = ((page + 1) * 5) - 5; i < (page + 1) * 5; i++) {
+				if (i < p.size()) {
+					pp.add(p.get(i));
+				} else {
+					return pp;
+				}
+			}
+		} else {
+			return pp;
+		}
+		return pp;
+	}
+	
+	public List<PostsDRO> getByUser(String email, int page) {
+		Users u = usersRepository.findByEmail(email);
+		List<Object> o = postsRepository.getByUser(u.getUid());
+		List<PostsDRO> p = PostsDRO.convertToPostsDRO(o);
+		List<PostsDRO> pp = new ArrayList<>();
+		if (((page + 1) * 5) - 5 < p.size()) {
+			for (int i = ((page + 1) * 5) - 5; i < (page + 1) * 5; i++) {
+				if (i < p.size()) {
+					pp.add(p.get(i));
+				} else {
+					return pp;
+				}
+			}
+		} else {
+			return pp;
+		}
+		return pp;
+	}
+	
+	public List<PostsDRO> getByComment(String email, int page) {
+		Users u = usersRepository.findByEmail(email);
+		List<Object> o = postsRepository.getByComment(u.getUid());
 		List<PostsDRO> p = PostsDRO.convertToPostsDRO(o);
 		List<PostsDRO> pp = new ArrayList<>();
 		if (((page + 1) * 5) - 5 < p.size()) {

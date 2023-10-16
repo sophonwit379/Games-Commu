@@ -127,8 +127,8 @@ function HomePage() {
                 setPage={setPage}
               />
               {gid===undefined?
-                <PostItem className='mt-4 w-75' setPage={setPage} page={page} username={user?.username}/>:
-                <PostByGame className='mt-4 w-75' setPage={setPage} postData={{page,gid}} username={user?.username}/>
+                <PostItem className='mt-4 w-75' setPage={setPage} page={page} uid={user?.uid}/>:
+                <PostByGame className='mt-4 w-75' setPage={setPage} postData={{page,gid}} uid={user?.uid}/>
               }
               <Button className='mt-4 w-75 d-flex justify-content-center align-items-center mb-5 shadow-none' variant='outline-secondary' onClick={loadPost}>
                 {!spin? "เพิ่มเติม":                                    

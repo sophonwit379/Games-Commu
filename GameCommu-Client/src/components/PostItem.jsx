@@ -6,7 +6,7 @@ import PostItemList from "./PostItemList";
 import Skeleton from "react-loading-skeleton";
 import { useEffect } from "react";
 
-function PostItem({page,className,username,setPage}) {
+function PostItem({page,className,uid,setPage}) {
     const dispatch = useDispatch();
     const storeData = useSelector(selectData);
     const { data,isFetching } = useFetchAllFollowedGameQuery(page);
@@ -26,6 +26,7 @@ function PostItem({page,className,username,setPage}) {
             </Container>
     }else{
         content = storeData?.map((post)=>{
+            const isOwner = post.uid === uid;
             const date = new Date(post.date);
             const options = {
                 year: 'numeric',
@@ -42,8 +43,9 @@ function PostItem({page,className,username,setPage}) {
                     key={post.pid} 
                     pid={post.pid}
                     gid={post.gid}
-                    isOwner={username}
+                    uid={uid}
                     username={post.username}
+                    isOwner={isOwner}
                     page={page}
                     date={formattedDate.toString()}
                     detail={post.detail}

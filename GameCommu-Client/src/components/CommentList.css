@@ -1,0 +1,7 @@
+#remove-hover{
+    margin-right: 0.25rem;
+}
+#remove-hover:hover{
+    color: red;
+    cursor: pointer;
+}

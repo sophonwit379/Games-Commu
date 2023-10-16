@@ -24,7 +24,7 @@ function ConfirmRemovePost({show,onHide,pid,setPage}) {
         setSpin(false);
         toast.success('ลบโพสต์สำเร็จ', {
             position: "bottom-right",
-            autoClose: 2000,
+            autoClose: 1000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
@@ -48,6 +48,7 @@ function ConfirmRemovePost({show,onHide,pid,setPage}) {
                     <Button 
                         className="w-25 mr-3" 
                         variant="secondary"
+                        disabled={spin}
                         onClick={()=>onHide()}
                     >
                         ยกเลิก

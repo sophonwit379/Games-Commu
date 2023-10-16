@@ -84,7 +84,7 @@ function AddGame(props) {
       props.onHide();
       toast.success('เพิ่มเกมสำเร็จ', {
         position: "bottom-right",
-        autoClose: 2000,
+        autoClose: 1000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,

@@ -58,6 +58,24 @@ const postApi = createApi({
                 providesTags: ['Post'],
                 query:(page) => {
                     return {
+                        url:`/posts/tag?page=${page}`,
+                        method:'GET',
+                    }
+                },
+                serializeQueryArgs: ({queryArgs,endpointName}) => {
+                    return endpointName
+                },
+                merge: (currentCache, newItems) => {
+                    currentCache.push(...newItems)
+                },
+                forceRefetch({ currentArg, previousArg }) {
+                    return currentArg !== previousArg
+                }, 
+            }),
+            fetchAllPosted: builder.query({
+                providesTags: ['Post'],
+                query:(page) => {
+                    return {
                         url:`/posts/user?page=${page}`,
                         method:'GET',
                     }
@@ -107,4 +125,5 @@ export const {
     useFetchAllFollowedGameQuery,
     useRemovePostMutation,
     useFetchNotLoginQuery,
+    useFetchAllPostedQuery
 } = postApi;

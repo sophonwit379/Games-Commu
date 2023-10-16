@@ -1,6 +1,12 @@
 import { createApi,fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
 import { baseUrl } from "../../env/utils";
 
+const pause = (duration) => {
+    return new Promise((resolve) => {
+        setTimeout(resolve, duration);
+    });
+}
+
 const commentApi = createApi({
     reducerPath: 'comment',
     baseQuery:fetchBaseQuery({
@@ -12,10 +18,15 @@ const commentApi = createApi({
             }
             return headers;
         },
+        fetchFn: async (...args) => {
+            await pause(2000);
+            return fetch(...args)
+        }
     }),
     endpoints(builder){
         return {
             addComment: builder.mutation({
+                invalidatesTags:['Comment'],
                 query:(comment)=> {
                     return{
                         url:'/comments/create',
@@ -34,9 +45,10 @@ const commentApi = createApi({
                 },
             }),
             fetchComment: builder.query({
+                providesTags:['Comment'],
                 query: (data) => {
                     return{
-                        url:`'/comments/post?pid=${data.pid}&page=${data.page}`,
+                        url:`/comments/post?pid=${data.pid}&page=${data.page}`,
                         method: 'GET',
                     }
                 },
@@ -44,12 +56,13 @@ const commentApi = createApi({
             fetchReply: builder.query({
                 query: (data) => {
                     return{
-                        url:`'/comments/post?pid=${data.rid}&page=${data.page}`,
+                        url:`/comments/post?pid=${data.rid}&page=${data.page}`,
                         method: 'GET',
                     }
                 },
             }),
             removeComment: builder.mutation({
+                invalidatesTags:['Comment'],
                 query: (cid) => {
                     return{
                         url:`/comments/delete?cid=${cid}`,

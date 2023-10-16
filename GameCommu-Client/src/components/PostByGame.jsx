@@ -8,7 +8,7 @@ import { useDispatch,useSelector } from "react-redux";
 import { useEffect } from "react";
 import Comment from './Comment';
 
-function PostByGame({postData,className,username,setPage}) {
+function PostByGame({postData,className,uid,setPage}) {
     const dispatch = useDispatch();
     const storeData = useSelector(selectData);
     const { data,isFetching } = useFetchFollowedGameQuery(postData);
@@ -27,6 +27,7 @@ function PostByGame({postData,className,username,setPage}) {
             </Container>
     }else{
         content = storeData?.map((post)=>{
+            const isOwner = post.uid === uid;
             const date = new Date(post.date);
             const options = {
                 year: 'numeric',
@@ -37,14 +38,15 @@ function PostByGame({postData,className,username,setPage}) {
             };
             const thaiDateFormatter = new Intl.DateTimeFormat('th-TH', options);
             const formattedDate = thaiDateFormatter.format(date);
-            
+            console.log(post);
             return(
                 <PostItemList 
                     key={post.pid} 
                     pid={post.pid}
                     gid={post.gid}
+                    uid={uid}
                     username={post.username}
-                    isOwner={username}
+                    isOwner={isOwner}
                     date={formattedDate.toString()}
                     page={postData.page}
                     detail={post.detail}

@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { Button,Modal,Spinner,Form,FloatingLabel } from "react-bootstrap";
 import { useState } from "react";
-import { useEditPostMutation,setData } from "../store";
+import { useEditPostMutation,setData,useAddReportMutation } from "../store";
 import { useDispatch } from "react-redux";
 import { toast } from 'react-toastify';
 import { postApi } from "../store/apis/postApi";
@@ -10,31 +10,25 @@ import { imageApi } from "../store/apis/imageApi";
 import * as formik from 'formik';
 import * as yup from 'yup';
 
-function ConfirmEditPost({show,onHide,pid,pageNumber,setPage,detail}) {
+function ReportPost({show,onHide,pid,reportFormRef}) {
     const dispatch = useDispatch();
-    const [ editPost ] = useEditPostMutation();
     const [spin,setSpin] = useState();
     const { Formik } = formik;
-
+    const [ addReport ] = useAddReportMutation();
 
     const imageSchema = yup.object().shape({
-        detail: yup.string().required('กรุณาพิมพ์ข้อความ'),
+        reason: yup.string().required('กรุณาพิมพ์ข้อความ'),
     });
 
     const handleEdit = async (value) => {
-        const postData = {
+        const report = {
             pid,
-            detail:value.detail
+            reason:value.reason
         }
-        setPage(0);
         setSpin(true);
-        await editPost(postData);
-        dispatch(setData([]));
-        dispatch(postApi.util.resetApiState());
-        dispatch(postByGameApi.util.resetApiState());
-        dispatch(imageApi.util.resetApiState());
+        await addReport(report);
         setSpin(false);
-        toast.success('แก้ไขโพสต์สำเร็จ', {
+        toast.success('รายงานสำเร็จ', {
             position: "bottom-right",
             autoClose: 1000,
             hideProgressBar: false,
@@ -48,9 +42,10 @@ function ConfirmEditPost({show,onHide,pid,pageNumber,setPage,detail}) {
 
     return (
         <Formik
-            initialValues = {{detail:detail}}
+            initialValues = {{reason:''}}
             validationSchema={imageSchema}
             onSubmit={handleEdit}
+            innerRef={reportFormRef}
         >
         {({handleSubmit,resetForm, handleChange,values, errors}) => (
             <Modal  
@@ -60,19 +55,19 @@ function ConfirmEditPost({show,onHide,pid,pageNumber,setPage,detail}) {
             >
                 <Modal.Body>
                     <Form noValidate onSubmit={handleSubmit} className='d-flex flex-column'>
-                        <Form.Group controlId="floatingTextarea2" label="ข้อความที่จะแก้ไข" className="m-3">
+                        <Form.Group controlId="floatingTextarea2" label="ข้อความที่จะรายงาน" className="m-3">
                             <Form.Control
                                 disabled={spin}
                                 as="textarea" 
-                                name="detail" 
-                                placeholder='พิมข้อความ' 
-                                value={values.detail}
+                                name="reason" 
+                                placeholder='พิมพ์ข้อความ' 
+                                value={values.reason}
                                 onChange={handleChange}
-                                isInvalid={!!errors.detail} 
+                                isInvalid={!!errors.reason} 
                                 style={{ height: '150px' }}
                             />
                             <Form.Control.Feedback type="invalid">
-                                {errors.detail}
+                                {errors.reason}
                             </Form.Control.Feedback>
                         </Form.Group>
                         <div className="d-flex justify-content-center mt-3 w-100 pb-3">
@@ -80,10 +75,7 @@ function ConfirmEditPost({show,onHide,pid,pageNumber,setPage,detail}) {
                                 className="w-25 mr-3" 
                                 variant="secondary"
                                 disabled={spin}
-                                onClick={()=>{
-                                    onHide();
-                                    resetForm();
-                                }}
+                                onClick={()=>onHide()}
                             >
                                 ยกเลิก
                             </Button>
@@ -108,4 +100,4 @@ function ConfirmEditPost({show,onHide,pid,pageNumber,setPage,detail}) {
     )
 }
 
-export default ConfirmEditPost;
+export default ReportPost;

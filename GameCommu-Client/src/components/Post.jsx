@@ -10,11 +10,10 @@ import Spinner from 'react-bootstrap/Spinner';
 import { useDispatch } from 'react-redux';
 import { postByGameApi } from '../store/apis/postByGameApi';
 import { postApi } from '../store/apis/postApi';
-import { useNavigate } from 'react-router-dom';
 import { imageApi } from '../store/apis/imageApi';
+import { toast } from 'react-toastify';
 
 function Post({ show,onHide,modalFormRef,gid,setPage }) {
-    const navigate = useNavigate();
     const dispatch = useDispatch();
     const { data, isFetching } = useFetchGameOfUserQuery();
     const [ post ] = useAddPostMutation();
@@ -58,7 +57,7 @@ function Post({ show,onHide,modalFormRef,gid,setPage }) {
             )
             .test(
             'fileType',
-            'รองรับไฟล์ JPEG , PNG, JPG, หรือ GIF เท่านั้น',
+            'รองรับไฟล์ PNG, JPG, หรือ JPEG เท่านั้น',
             (value) =>
                 value &&
                 ALLOWED_FILE_TYPES.includes(value.type)
@@ -101,6 +100,15 @@ function Post({ show,onHide,modalFormRef,gid,setPage }) {
         dispatch(imageApi.util.resetApiState());
         setSpin(false);
         setSelectedValue(false);
+        toast.success('โพสต์สำเร็จ', {
+            position: "bottom-right",
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            progress: undefined,
+            theme: "light",
+        });
         onHide();
     }
 

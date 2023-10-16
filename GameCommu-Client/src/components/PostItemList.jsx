@@ -3,13 +3,17 @@ import default_pfp from '../assets/Default_pfp.svg'
 import { Card, Container,Image } from "react-bootstrap";
 import ImagesItem from './ImagesItem';
 import Skeleton from "react-loading-skeleton";
+import Comment from './Comment';
 import { AiOutlineLike,AiOutlineComment,AiOutlineDislike,AiOutlineEdit,AiOutlineDelete } from "react-icons/ai";
+import { GoReport } from "react-icons/go";
 import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
 import './PostItemList.css';
 import ConfirmRemovePost from './ConfirmRemovePost';
 import ConfirmEditPost from './ConfirmEditPost';
 import { useState } from "react";
+import ReportPost from './ReportPost';
+import { useRef } from 'react';
 import { 
     useCountPostImgQuery,
     useFetchGameByIdQuery,
@@ -18,7 +22,10 @@ import {
     useRemoveLikePostMutation,
 } from "../store";
 
-function PostItemList({pid,gid,username,date,detail,isOwner,page,setPage}) {
+function PostItemList({pid,gid,username,date,detail,uid,isOwner,page,setPage}) {
+    const reportFormRef = useRef(null);
+    const [openComment,setOpenComment] = useState(false);
+    const [openReport,setOpenReport] = useState(false);
     const [openRemove,setOpenRemove] = useState(false);
     const [openEdit,setOpenEdit] = useState(false);
     const [loadLike,setLoadLike] = useState(false);
@@ -71,6 +78,11 @@ function PostItemList({pid,gid,username,date,detail,isOwner,page,setPage}) {
         }
     }
 
+    const handleCloseModal = () => {
+        setOpenReport(false);
+        reportFormRef.current.resetForm();
+    }
+
     if (isLike || loadLike){
         LikeContent = <Skeleton height={20} width={60}/>
     }else{
@@ -105,7 +117,7 @@ function PostItemList({pid,gid,username,date,detail,isOwner,page,setPage}) {
                                 <div className="align-self-center">
                                     <h6 className="m-0">{username}</h6>
                                     <p style={{fontSize:'0.80rem',margin:0}}>
-                                        โพสต์เมื่อ {date}
+                                        เวลา {date}
                                     </p>
                                 </div>
                             </div>
@@ -117,7 +129,7 @@ function PostItemList({pid,gid,username,date,detail,isOwner,page,setPage}) {
                 </Card.Header>
                 <Card.Body>
                     <div className="d-flex justify-content-end">
-                        {isOwner === username && 
+                        {isOwner && 
                             <div>
                                 <AiOutlineEdit onClick={()=>setOpenEdit(true)} id="edit-hover" size={25}/>
                                 <AiOutlineDelete onClick={()=>setOpenRemove(true)} id="remove-hover" size={25}/>
@@ -145,9 +157,27 @@ function PostItemList({pid,gid,username,date,detail,isOwner,page,setPage}) {
                 </Card.Body>
                 <Card.Footer id="foot" className="d-flex justify-content-between align-items-center p-3">
                     {LikeContent}
-                    <h6 className="m-0 hover">
-                        <AiOutlineComment className="mr-1" size={25}/>
-                    </h6>
+                    <div className='d-flex'>
+                        <h6 className="m-0 hover">
+                            <AiOutlineComment onClick={()=>setOpenComment(true)} className="mr-1" size={25}/>
+                        </h6>
+                        <h6 className="m-0 hover">
+                            <GoReport onClick={()=>setOpenReport(true)} className="mr-1" size={25}/>
+                        </h6>
+                    </div>
+                    <Comment
+                        show={openComment}
+                        onHide={()=>setOpenComment(false)}
+                        pid={pid}
+                        page={page}
+                        uid={uid}
+                    />
+                    <ReportPost
+                        show={openReport}
+                        onHide={handleCloseModal}
+                        pid={pid}
+                        reportFormRef={reportFormRef}
+                    />
                 </Card.Footer>
                 
             </Card>

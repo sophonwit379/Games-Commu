@@ -60,7 +60,7 @@ function ReportPost({show,onHide,pid,reportFormRef}) {
                                 disabled={spin}
                                 as="textarea" 
                                 name="reason" 
-                                placeholder='พิมพ์ข้อความ' 
+                                placeholder='ข้อความที่จะรายงาน' 
                                 value={values.reason}
                                 onChange={handleChange}
                                 isInvalid={!!errors.reason} 
@@ -73,7 +73,7 @@ function ReportPost({show,onHide,pid,reportFormRef}) {
                         <div className="d-flex justify-content-center mt-3 w-100 pb-3">
                             <Button 
                                 className="w-25 mr-3" 
-                                variant="secondary"
+                                variant="outline-secondary"
                                 disabled={spin}
                                 onClick={()=>onHide()}
                             >
@@ -81,7 +81,7 @@ function ReportPost({show,onHide,pid,reportFormRef}) {
                             </Button>
                             <Button 
                                 className="w-25 mr-3" 
-                                variant="danger"
+                                variant="outline-secondary"
                                 disabled={spin}
                                 type="submit"
                             >

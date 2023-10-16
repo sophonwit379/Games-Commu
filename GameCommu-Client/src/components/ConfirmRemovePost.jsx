@@ -41,13 +41,13 @@ function ConfirmRemovePost({show,onHide,pid,setPage}) {
             scrollable
         >
             <Modal.Body>
-                <h6 className="p-4 d-flex justify-content-center">
+                <h5 className="p-4 d-flex justify-content-center">
                     คุณแน่ใจใช่ไหมว่าต้องการลบโพสต์นี้
-                </h6>
+                </h5>
                 <div className="d-flex justify-content-center mt-3 w-100 pb-3">
                     <Button 
                         className="w-25 mr-3" 
-                        variant="secondary"
+                        variant="outline-secondary"
                         disabled={spin}
                         onClick={()=>onHide()}
                     >
@@ -55,7 +55,7 @@ function ConfirmRemovePost({show,onHide,pid,setPage}) {
                     </Button>
                     <Button 
                         className="w-25 mr-3" 
-                        variant="danger"
+                        variant="outline-danger"
                         disabled={spin}
                         onClick={handleRemove}
                     >

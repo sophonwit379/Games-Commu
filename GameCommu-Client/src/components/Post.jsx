@@ -158,7 +158,8 @@ function Post({ show,onHide,modalFormRef,gid,setPage }) {
                     <Modal.Body>
                         <Form noValidate onSubmit={handleSubmit} className='d-flex flex-column'>
                             <Form.Group className="mb-3" controlId="textArea">
-                                <Form.Control 
+                                <Form.Control
+                                    disabled={spin}  
                                     as="textarea" 
                                     name="textA" 
                                     placeholder='พิมข้อความ' 
@@ -174,7 +175,8 @@ function Post({ show,onHide,modalFormRef,gid,setPage }) {
                                 </Form.Control.Feedback>
                            </Form.Group>
                            {!gid? <Form.Group className="mb-3" controlId="game">
-                                    <Form.Select 
+                                    <Form.Select
+                                        disabled={spin} 
                                         name="game" 
                                         value={values.game?.gid}
                                         onChange={(event) => {
@@ -196,6 +198,7 @@ function Post({ show,onHide,modalFormRef,gid,setPage }) {
                             <Form.Group controlId="formFileMultiple" className="mb-3">
                                 <Form.Label>Upload รูปภาพ</Form.Label>
                                 <Form.Control 
+                                    disabled={spin}
                                     as="input"
                                     type="file"
                                     name="images"
@@ -210,7 +213,13 @@ function Post({ show,onHide,modalFormRef,gid,setPage }) {
                                     {errors.images}
                                 </Form.Control.Feedback>
                             </Form.Group> 
-                            <Button style={{width:'20%'}} className='mt-2 mb-2 align-self-end' variant='outline-secondary' type='submit'>
+                            <Button 
+                                style={{width:'20%'}} 
+                                className='mt-2 mb-2 align-self-end' 
+                                variant='outline-secondary' 
+                                type='submit'
+                                disabled={spin}
+                            >
                                 {!spin? "โพสต์":                                    
                                     <Spinner style={{height:'1.4rem',width:'1.4rem'}} animation="border" role="status">
                                         <span className="visually-hidden">Loading...</span>

@@ -17,7 +17,7 @@ const selectGamesApi = createApi({
             return headers;
         },
         fetchFn: async (...args) => {
-            await pause(2000);
+            await pause(1000);
             return fetch(...args)
         }
     }),

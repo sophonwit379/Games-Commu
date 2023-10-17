@@ -24,7 +24,6 @@ function Post({ show,onHide,modalFormRef,gid,setPage }) {
     const ALLOWED_FILE_TYPES = ['image/png','image/jpg','image/jpeg'];
     const [selectedValue, setSelectedValue] = useState(false); 
     const [spin, setSpin] = useState(false); 
-
     let optionGame;
     let dataGame = [];
 

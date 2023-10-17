@@ -44,6 +44,7 @@ function PostItem({page,className,uid,setPage}) {
                     pid={post.pid}
                     gid={post.gid}
                     uid={uid}
+                    postUid={post.uid}
                     username={post.username}
                     isOwner={isOwner}
                     page={page}

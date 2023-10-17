@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { setPostImg, useFetchFollowedGameQuery } from "../store";
+import { useFetchFollowedGameQuery } from "../store";
 import { Container } from "react-bootstrap";
 import PostItemList from "./PostItemList";
 import Skeleton from "react-loading-skeleton";
@@ -38,13 +38,13 @@ function PostByGame({postData,className,uid,setPage}) {
             };
             const thaiDateFormatter = new Intl.DateTimeFormat('th-TH', options);
             const formattedDate = thaiDateFormatter.format(date);
-            console.log(post);
             return(
                 <PostItemList 
                     key={post.pid} 
                     pid={post.pid}
                     gid={post.gid}
                     uid={uid}
+                    postUid={post.uid}
                     username={post.username}
                     isOwner={isOwner}
                     date={formattedDate.toString()}

@@ -1,10 +1,8 @@
 /* eslint-disable react/prop-types */
-import default_pfp from '../assets/Default_pfp.svg'
 import { Card, Container,Image } from "react-bootstrap";
 import ImagesItem from './ImagesItem';
 import Skeleton from "react-loading-skeleton";
 import Comment from './Comment';
-import { AiOutlineLike,AiOutlineComment,AiOutlineDislike,AiOutlineEdit,AiOutlineDelete } from "react-icons/ai";
 import { GoReport } from "react-icons/go";
 import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
@@ -14,6 +12,14 @@ import ConfirmEditPost from './ConfirmEditPost';
 import { useState } from "react";
 import ReportPost from './ReportPost';
 import { useRef } from 'react';
+import ImageProfile from './ImageProfile';
+import { 
+    AiOutlineLike,
+    AiOutlineComment,
+    AiOutlineDislike,
+    AiOutlineEdit,
+    AiOutlineDelete 
+} from "react-icons/ai";
 import { 
     useCountPostImgQuery,
     useFetchGameByIdQuery,
@@ -23,7 +29,7 @@ import {
 } from "../store";
 
 
-function PostItemList({pid,gid,username,date,detail,uid,isOwner,page,setPage}) {
+function PostItemList({pid,gid,username,date,detail,uid,isOwner,page,setPage,postUid}) {
     const reportFormRef = useRef(null);
     const [openComment,setOpenComment] = useState(false);
     const [openReport,setOpenReport] = useState(false);
@@ -148,7 +154,7 @@ function PostItemList({pid,gid,username,date,detail,uid,isOwner,page,setPage}) {
                     <Container className="p-0 pt-2 pb-2 d-flex align-items-center" fluid>
                         <div className="d-flex justify-content-between w-100">
                             <div className='d-flex align-items-center'>
-                                <Image src={default_pfp} width={45} height={45} className="mr-2" roundedCircle/>
+                                <ImageProfile uid={postUid} height={45} className="mr-2" roundedCircle/>
                                 <div className="align-self-center">
                                     <h6 className="m-0">{username}</h6>
                                     <p style={{fontSize:'0.80rem',margin:0}}>
@@ -157,7 +163,7 @@ function PostItemList({pid,gid,username,date,detail,uid,isOwner,page,setPage}) {
                                 </div>
                             </div>
                             <div>
-                                <h6 className="mt-1 mr-2">{game.name}</h6>
+                                <h6 className="mt-1 mr-2">{game?.name}</h6>
                             </div>
                         </div>
                     </Container>

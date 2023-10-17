@@ -1,31 +1,32 @@
 /* eslint-disable react/prop-types */
-import { useFetchNotLoginQuery,selectData,setData} from "../store"
-import { useDispatch,useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useFetchAllCommentPostedQuery,setData,selectData, } from "../store";
 import { Container } from "react-bootstrap";
-import Skeleton from "react-loading-skeleton";
+import { useSelector,useDispatch } from "react-redux";
 import PostItemList from "./PostItemList";
+import Skeleton from "react-loading-skeleton";
+import { useEffect } from "react";
 
-
-function PostAnonymous({page}) {
-    const {data,isFetching} = useFetchNotLoginQuery(page);
-    const storeData = useSelector(selectData);
+function FetchAllCommented({page,className,uid,setPage}) {
     const dispatch = useDispatch();
+    const storeData = useSelector(selectData);
+    const { data,isFetching } = useFetchAllCommentPostedQuery(page);
 
     useEffect(()=>{
         if(!isFetching){ 
             dispatch(setData(data));
         }
-    },[dispatch, isFetching])
+    },[isFetching, dispatch])
+
 
     let content;
-    if(isFetching && page === 0){
-        content =             
+    if(isFetching && storeData.length === 0){
+        content = 
             <Container className="p-0" fluid>
                 <Skeleton height={650}/>
             </Container>
     }else{
         content = storeData?.map((post)=>{
+            const isOwner = post.uid === uid;
             const date = new Date(post.date);
             const options = {
                 year: 'numeric',
@@ -36,15 +37,20 @@ function PostAnonymous({page}) {
             };
             const thaiDateFormatter = new Intl.DateTimeFormat('th-TH', options);
             const formattedDate = thaiDateFormatter.format(date);
+            
             return(
                 <PostItemList 
                     key={post.pid} 
                     pid={post.pid}
                     gid={post.gid}
+                    uid={uid}
                     postUid={post.uid}
                     username={post.username}
+                    isOwner={isOwner}
+                    page={page}
                     date={formattedDate.toString()}
                     detail={post.detail}
+                    setPage={setPage}
                 />
             )
         });
@@ -55,14 +61,16 @@ function PostAnonymous({page}) {
                 </Container>
             )
         }
+
     }
 
-
-    return (
-        <div className="w-75">
-            {content}
-        </div>
+    return (        
+        <>
+            <div className={className}>
+                {content}
+            </div>
+        </>
     )
 }
 
-export default PostAnonymous;
+export default FetchAllCommented;

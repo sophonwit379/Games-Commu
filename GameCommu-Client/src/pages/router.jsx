@@ -44,7 +44,13 @@ export const router  = createBrowserRouter([
           path: ":id",
           element: <HomePage />,
           errorElement: <ErrorPage />,
-        }
+        },
+        {
+          path: "posted/:id",
+          element: <HomePage />,
+          errorElement: <ErrorPage />,
+        },
+
       ],
     },
     {

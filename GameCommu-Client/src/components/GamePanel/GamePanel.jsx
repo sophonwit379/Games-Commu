@@ -6,6 +6,7 @@ import { useState } from "react";
 import AddGamePanel from './AddGamePannel';
 import DeleteGamePanel from './DeleteGamePanel';
 import GameItems from "./GameItems";
+import PostedItems from './PostedItems';
 
 function GamePanel({setPage}) {
     const [addGame, setAddGame] = useState(false);
@@ -18,6 +19,14 @@ function GamePanel({setPage}) {
                     <Accordion.Header>กลุ่มของคุณ</Accordion.Header>
                     <Accordion.Body>
                         <GameItems setPage={setPage}/>
+                    </Accordion.Body>
+                </Accordion.Item>
+            </Accordion>
+            <Accordion className="p-0">
+                <Accordion.Item eventKey="0">
+                    <Accordion.Header>แสดงโพส</Accordion.Header>
+                    <Accordion.Body>
+                        <PostedItems setPage={setPage}/>
                     </Accordion.Body>
                 </Accordion.Item>
             </Accordion>

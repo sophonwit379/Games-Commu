@@ -74,6 +74,36 @@ const imageApi = createApi({
                     }
                 }
             }),
+            uploadProfileImg:builder.mutation({
+                query: (file) => {
+                    const img = new FormData();
+                    img.append('file', file)
+                    return {
+                        url:`/images/upload/`,
+                        method:'POST',
+                        body:img,
+                    }
+                }
+            }),
+            countProfileImg: builder.query({
+                query: (uid) => {
+                    return {
+                        url:`/images/count?uid=${uid}`,
+                        method:'GET',
+                    }
+                }
+            }),
+            editProfileImg:builder.mutation({
+                query: (file) => {
+                    const img = new FormData();
+                    img.append('file', file)
+                    return {
+                        url:`/images/update`,
+                        method:'PUT',
+                        body:img,
+                    }
+                }
+            }),
         }
     }
 });
@@ -84,5 +114,8 @@ export const {
     useCountPostImgQuery,
     useCallPostImgQuery,
     useUploadCommentImgMutation,
-    useCountCommentImgQuery
+    useCountCommentImgQuery,
+    useCountProfileImgQuery,
+    useUploadProfileImgMutation,
+    useEditProfileImgMutation
 } = imageApi;

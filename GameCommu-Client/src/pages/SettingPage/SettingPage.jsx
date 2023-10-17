@@ -1,5 +1,4 @@
 import { Card, Container,Image,Form,FloatingLabel,Button } from "react-bootstrap";
-import default_pfp from '../../assets/default_pfp.svg'
 import * as formik from 'formik';
 import * as yup from 'yup';
 import { useNavigate } from "react-router-dom";
@@ -13,6 +12,7 @@ import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import Spinner from 'react-bootstrap/Spinner';
 import edit_Img from '../../assets/edit-svgrepo-com.svg'
 import CropImg from '../../components/CropImg';
+import ImageProfile from "../../components/ImageProfile";
 
 function SettingPage() {
     const [spin, setSpin] = useState(false); 
@@ -27,7 +27,6 @@ function SettingPage() {
     const uploadImg = () => {
         SetEditImg(true);
     }
-
     const validationSchema = yup.object().shape({
         username: yup.string().max(18, 'ชื่อผู้ใช้งานมีได้สูงสุด 18 ตัว').required('กรุณากรอกชื่อผู้ใช้งาน'),
         name: yup.string() .required('กรุณากรอกชื่อ'),
@@ -57,12 +56,17 @@ function SettingPage() {
         <Card className="mb-5 p-3 width">
             <Container className="d-flex flex-row justify-content-center align-items-center mt-3">
                 <div id="pf-img">
-                    <Image  onClick={uploadImg} src={default_pfp} width={200} alt="profile-image" roundedCircle/>
+                    <ImageProfile 
+                        className='mb-2'
+                        height={200}
+                        uid={data.uid}
+                    />
                     <Image onClick={uploadImg} id="edit-img" src={edit_Img} width={200}  alt="edit-image" roundedCircle/>
                 </div>
                 <CropImg
                     size='xl'
                     show={editImg}
+                    uid={data.uid}
                     onHide={()=>SetEditImg(false)}
                 />
             </Container>

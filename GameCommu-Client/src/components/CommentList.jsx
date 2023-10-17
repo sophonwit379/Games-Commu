@@ -65,7 +65,7 @@ function CommentList({cid,username,date,isOwner,page,detail}) {
                 คอมเม้นต์
                 {isOwner &&<>
                     {!spinRemove? <AiOutlineDelete className="ml-1" onClick={()=>handleRemove(cid)} id="remove-hover" size={20}/>:                                    
-                        <Spinner className="mr-1" style={{height:'1.4rem',width:'1.4rem'}} animation="border" role="status">
+                        <Spinner className="mr-1" style={{height:'1.2rem',width:'1.2rem',marginLeft:'0.75rem'}} animation="border" role="status">
                             <span className="visually-hidden">Loading...</span>
                         </Spinner>
                     }
@@ -73,11 +73,11 @@ function CommentList({cid,username,date,isOwner,page,detail}) {
             </div>
             <div>
             </div>
-            <p className="px-1 pt-2  text-break w-100">
+            <p className="m-0 py-2 text-break w-100">
                 {detail}
             </p>
             {data > 0 && <ImageComment cid={cid}/>}
-            {!reply&&<div className="d-flex w-100 mt-2 my-2">
+            {!reply&&<div className="d-flex w-100 mb-2">
                 ตอบกลับ <BsReply className="ml-1" size={25} onClick={()=>setReply(true)} id="reply-hover"/> 
             </div>}
             <Reply
@@ -137,7 +137,7 @@ function CommentList({cid,username,date,isOwner,page,detail}) {
         </Container>
     }
     return(
-       <div className="">
+       <div className="m-0 p-0">
         {content}
        </div>
     )

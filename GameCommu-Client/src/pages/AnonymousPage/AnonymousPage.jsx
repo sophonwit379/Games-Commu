@@ -23,7 +23,12 @@ function AnonymousPage() {
         <Col xl={7} className='p-0'>
           <Container className='d-flex justify-content-center flex-column align-items-center mt-5'>
               <PostAnonymous page={page}/>
-              <Button className='mt-4 w-75 d-flex justify-content-center align-items-center mb-5 shadow-none' variant='outline-secondary' onClick={loadPost}>
+              <Button 
+                className='mt-4 w-75 d-flex justify-content-center align-items-center mb-5 shadow-none' 
+                variant='outline-secondary' 
+                onClick={loadPost}
+                disabled={spin}
+              >
               {!spin? "เพิ่มเติม":                                    
                 <Spinner style={{height:'1.4rem',width:'1.4rem'}} animation="border" role="status">
                     <span className="visually-hidden">Loading...</span>

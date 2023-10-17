@@ -19,7 +19,7 @@ const postApi = createApi({
             return headers;
         },
         fetchFn: async (...args) => {
-            await pause(2000);
+            await pause(1000);
             return fetch(...args)
         }
     }),
@@ -73,7 +73,7 @@ const postApi = createApi({
                 }, 
             }),
             fetchAllPosted: builder.query({
-                providesTags: ['Post'],
+                providesTags: ['Posted'],
                 query:(page) => {
                     return {
                         url:`/posts/user?page=${page}`,
@@ -111,6 +111,28 @@ const postApi = createApi({
                 forceRefetch({ currentArg, previousArg }) {
                     return currentArg !== previousArg
                 },
+            }),
+            fetchAllCommentPosted: builder.query({
+                providesTags: ['UserPosted'],
+                query:(page) => {
+                    return {
+                        url:`/posts/comment?page=${page}`,
+                        method:'GET',
+                    }
+                },
+                serializeQueryArgs: ({endpointName}) => {
+                    return endpointName
+                },
+                merge: (currentCache, newItems) => {
+                    if(newItems.length > 0){
+                        currentCache.push(...newItems)
+                    }else{
+                        return;
+                    }
+                },
+                forceRefetch({ currentArg, previousArg }) {
+                    return currentArg !== previousArg
+                },
             })
 
 
@@ -125,5 +147,6 @@ export const {
     useFetchAllFollowedGameQuery,
     useRemovePostMutation,
     useFetchNotLoginQuery,
-    useFetchAllPostedQuery
+    useFetchAllPostedQuery,
+    useFetchAllCommentPostedQuery,
 } = postApi;

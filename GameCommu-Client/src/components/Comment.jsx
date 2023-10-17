@@ -109,13 +109,10 @@ function Comment({show,onHide,page,rid,pid,uid}) {
             size="xl"
         >
         <Modal.Body>
-        <Modal.Header>
-            <h5 >Comment</h5>
-        </Modal.Header>
-            <Container className="p-1 position-sticky" fluid>
-                <br/>
-                {content}
-            </Container>
+        <Container className="p-1" fluid>
+            <h5 className="py-2 pl-2">Comment</h5>
+            {content}
+        </Container>
         </Modal.Body>
         <Modal.Footer className="d-flex justify-content-start align-items-start flex-column p-3">
             {!postComment&&

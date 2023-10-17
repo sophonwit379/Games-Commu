@@ -11,7 +11,6 @@ function Reply({rid,page}) {
     if(isFetching){
         content =  <Skeleton width={400} height={25}/>
     }else if(data?.length > 0){
-        console.log(data);
         content = data.map((reply,id)=>{    
             const date = new Date(reply.date);
             const options = {
@@ -24,7 +23,8 @@ function Reply({rid,page}) {
             const thaiDateFormatter = new Intl.DateTimeFormat('th-TH', options);
             const formattedDate = thaiDateFormatter.format(date);
             return(
-                <div key={id}>
+                <Container key={id} className="ml-5 border-top p-2 w-75" fluid>
+
                     <div className="d-flex">
                         <Image src={default_pfp} width={45} height={45} className="mr-2" roundedCircle/>
                         <div className="align-self-center">
@@ -37,16 +37,16 @@ function Reply({rid,page}) {
                     <p className="px-1 pt-2  text-break w-75">
                         {reply.detail}
                     </p>
-                </div>
+                </Container>
             )
         })
             
     }   
 
     return (
-        <Container className="ml-5 border-top p-2 w-75">
+        <>
             {content}
-        </Container>
+        </>
     )
 }
 

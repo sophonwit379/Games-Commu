@@ -15,8 +15,7 @@
     position: absolute;
     top: 0;
     left: 0;
-
-    opacity: 0.2; /* You can adjust the opacity as needed */
+    opacity: 0.7; 
 }
   
 #pf-img:hover #edit-img {

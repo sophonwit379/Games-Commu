@@ -9,7 +9,6 @@ import { IoCreateOutline,IoSearchCircleOutline,IoLogOutOutline,IoSettingsOutline
 import { toast } from 'react-toastify';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Nav from 'react-bootstrap/Nav';
-import default_pfp from '../../assets/Default_pfp.svg'
 import { useFetchUserQuery } from '../../store';
 import PostItem from '../../components/PostItem';
 import PostByGame from '../../components/PostByGame';
@@ -19,50 +18,125 @@ import { postApi } from '../../store/apis/postApi';
 import { postByGameApi } from '../../store/apis/postByGameApi';
 import { imageApi } from '../../store/apis/imageApi';
 import { likeApi } from '../../store/apis/likeApi';
+import FetchAllPosted from '../../components/FetchAllPosted';
+import FetchAllCommented from '../../components/FetchAllCommented';
+import ImageProfile from '../../components/ImageProfile';
+import Skeleton from 'react-loading-skeleton';
 
 function HomePage() {
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
-  const { data:user } = useFetchUserQuery();
+  const { data:user,isFetching } = useFetchUserQuery();
   const [modalShow, setModalShow] = useState(false);
   const [page,setPage] = useState(0);
   const [spin,setSpin] = useState(false);
   const modalFormRef = useRef(null);
   const gid = location.pathname.split('/home/')[1];
-  const userprofile = <div className='d-flex justify-content-center align-items-center'>
-                        <Image src={default_pfp} width={45} className='mr-1' roundedCircle/>
-                      </div>
+  const posted = location.pathname.split('/home/posted/')[1];
 
-  const handleLogout = () => {
-    dispatch(setData([]));
-    dispatch(postByGameApi.util.resetApiState());
-    dispatch(postApi.util.resetApiState());
-    dispatch(imageApi.util.resetApiState());
-    dispatch(likeApi.util.resetApiState());
-    navigate('/');
-    toast.success('ออกจากระบบสำเร็จ', {
-      position: "bottom-right",
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      progress: undefined,
-      theme: "light",
-    });
-  };
-  const handleCloseModal = () => {
-    setModalShow(false);
-    modalFormRef.current.resetForm();
+  let userDropdown;
+  let content;
+  if(isFetching){
+    userDropdown = <Skeleton width={55} height={55}/>
+    content = <Skeleton height={800}/>
+  }else{
+    const handleCloseModal = () => {
+      setModalShow(false);
+      modalFormRef.current.resetForm();
+    }
+  
+    const loadPost = async () =>{
+      setSpin(true);
+      setPage(page + 1);
+      setTimeout(() => {
+        setSpin(false);
+      }, 2000);
+    }
+    const handleLogout = () => {
+      dispatch(setData([]));
+      dispatch(postByGameApi.util.resetApiState());
+      dispatch(postApi.util.resetApiState());
+      dispatch(imageApi.util.resetApiState());
+      dispatch(likeApi.util.resetApiState());
+      navigate('/');
+      toast.success('ออกจากระบบสำเร็จ', {
+        position: "bottom-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        progress: undefined,
+        theme: "light",
+      });
+    };
+    userDropdown = 
+      <NavDropdown 
+        title={    
+          <div className='d-flex justify-content-center align-items-center'>
+            <ImageProfile cla uid={user.uid} height={55} className='mr-1 border border-2' roundedCircle/>
+          </div>
+        } 
+        className='custom-nav-dropdown'>
+      <NavDropdown.Item >
+        <h5 className='txt-wrap'>{user?.username}</h5>
+        <Button onClick={()=> navigate(`/setting`)} className='bt-link'>
+          <IoSettingsOutline size={25} className='icon-m'/> ตั้งค่า
+        </Button>
+        <Button className='bt-link' onClick={handleLogout}>
+          <IoLogOutOutline size={25} className='icon-m'/> ออกจากระบบ
+        </Button>
+      </NavDropdown.Item>
+    </NavDropdown>
+    let gidCheck 
+    if(gid === undefined || posted !== undefined){
+      gidCheck = false;
+    }else{
+      gidCheck = gid;
+    }
+    content = 
+      <Container className='d-flex justify-content-center flex-column align-items-center'>
+        <Button 
+          className='mt-4 w-75 d-flex justify-content-center align-items-center shadow-none' 
+          variant='outline-secondary' 
+          onClick={()=>setModalShow(true)}
+        >
+          <IoCreateOutline size={25}/> สร้างโพสต์
+        </Button>
+        <Post
+          show={modalShow}
+          onHide={handleCloseModal}
+          modalFormRef={modalFormRef}
+          gid={gidCheck}
+          setPage={setPage}
+        />
+
+        {gid===undefined &&posted===undefined &&
+          <PostItem className='mt-4 w-75' setPage={setPage} page={page} uid={user?.uid}/>
+        }
+        {gid &&posted===undefined &&
+          <PostByGame className='mt-4 w-75' setPage={setPage} postData={{page,gid}} uid={user?.uid}/>
+        }
+        {gid==='posted/0' &&
+          <FetchAllPosted className='mt-4 w-75' setPage={setPage} page={page} uid={user?.uid}/>
+        }
+        {gid==='posted/1' &&
+          <FetchAllCommented className='mt-4 w-75' setPage={setPage} page={page} uid={user?.uid}/>
+        }
+        <Button 
+          className='mt-4 w-75 d-flex justify-content-center align-items-center mb-5 shadow-none' variant='outline-secondary' 
+          onClick={loadPost}
+          disabled={spin}
+        >
+          {!spin? "เพิ่มเติม":                                    
+            <Spinner style={{height:'1.4rem',width:'1.4rem'}} animation="border" role="status">
+                <span className="visually-hidden">Loading...</span>
+            </Spinner>
+          }
+        </Button>
+      </Container>
   }
 
-  const loadPost = async () =>{
-    setSpin(true);
-    setPage(page + 1);
-    setTimeout(() => {
-      setSpin(false);
-    }, 2000);
-  }
   
   const handleClick = ()=>{
     dispatch(setData([]));
@@ -97,17 +171,7 @@ function HomePage() {
                 <IoSearchCircleOutline size={25}/> Search
               </Button>
             </Form>
-            <NavDropdown title={userprofile} className='custom-nav-dropdown'>
-              <NavDropdown.Item >
-                <h5 className='txt-wrap'>{user?.username}</h5>
-                <Button onClick={()=> navigate(`/setting`)} className='bt-link'>
-                  <IoSettingsOutline size={25} className='icon-m'/> ตั้งค่า
-                </Button>
-                <Button className='bt-link' onClick={handleLogout}>
-                  <IoLogOutOutline size={25} className='icon-m'/> ออกจากระบบ
-                </Button>
-              </NavDropdown.Item>
-            </NavDropdown>
+              {userDropdown}
           </Nav>
           </Navbar.Collapse>
         </Container>
@@ -118,29 +182,7 @@ function HomePage() {
             <GamePanel setPage={setPage}/>
           </Col>
           <Col xl={7} className='p-0'>
-            <Container className='d-flex justify-content-center flex-column align-items-center'>
-              <Button className='mt-4 w-75 d-flex justify-content-center align-items-center shadow-none' variant='outline-secondary' onClick={()=>setModalShow(true)}>
-                <IoCreateOutline size={25}/> สร้างโพสต์
-              </Button>
-              <Post
-                show={modalShow}
-                onHide={handleCloseModal}
-                modalFormRef={modalFormRef}
-                gid={gid}
-                setPage={setPage}
-              />
-              {gid===undefined?
-                <PostItem className='mt-4 w-75' setPage={setPage} page={page} uid={user?.uid}/>:
-                <PostByGame className='mt-4 w-75' setPage={setPage} postData={{page,gid}} uid={user?.uid}/>
-              }
-              <Button className='mt-4 w-75 d-flex justify-content-center align-items-center mb-5 shadow-none' variant='outline-secondary' onClick={loadPost}>
-                {!spin? "เพิ่มเติม":                                    
-                  <Spinner style={{height:'1.4rem',width:'1.4rem'}} animation="border" role="status">
-                      <span className="visually-hidden">Loading...</span>
-                  </Spinner>
-                }
-              </Button>
-            </Container>
+            {content}
           </Col>
           <Col className='p-0'></Col>
         </Row>

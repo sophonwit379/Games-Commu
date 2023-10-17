@@ -7,7 +7,7 @@ import ReactImageGallery from "react-image-gallery";
 function ImagesItemList({ images }) {
 
     if (!images || images.length === 0) {
-        return <Skeleton width={250} height={250} />;
+        return;
     }
 
     return <div>

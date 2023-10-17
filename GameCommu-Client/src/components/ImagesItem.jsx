@@ -17,7 +17,7 @@ function ImagesCount({ callData }) {
   };
 
   useEffect(() => {
-    if (callData.page > 0) {
+    if (callData.page > -1) {
       const fetchData = async () => {
         const imageData = await imageList(callData.page,callData.pid);
         setImg(imageData);
@@ -25,15 +25,17 @@ function ImagesCount({ callData }) {
       fetchData();
     }
     return () => {
-      img.forEach((imageData) => {
-        URL.revokeObjectURL(imageData.original);
-      });
+      if(img.length >-1){
+        img?.forEach((imageData) => {
+          URL.revokeObjectURL(imageData.original);
+        });
+      }
     };
   }, [callData]);
 
   return (
     <>
-      {callData.page > 0?  
+      {callData.page > -1?  
         <ImagesItemList images={img} />:
         null
       }

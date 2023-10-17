@@ -19,14 +19,14 @@ const postByGameApi = createApi({
             return headers;
         },
         fetchFn: async (...args) => {
-            await pause(2000);
+            await pause(1000);
             return fetch(...args)
         }
     }),
     endpoints(builder){
         return{
             fetchFollowedGame: builder.query({
-                providesTags:['Followed'],
+                providesTags:['FollowedGames'],
                 query:(postData) => {
                     return {
                         url:`/posts/game?gid=${parseInt(postData.gid)}&page=${postData.page}`,

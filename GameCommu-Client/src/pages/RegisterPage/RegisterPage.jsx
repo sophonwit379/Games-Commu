@@ -19,6 +19,8 @@ import {
   InputGroup
 } from "react-bootstrap";
 import './RegisterPage.css'
+import { gamesApi } from '../../store/apis/gamesApi';
+import { selectGamesApi } from '../../store/apis/selectGamesApi';
 import Spinner from 'react-bootstrap/Spinner';
 
 function RegisterPage() {
@@ -85,7 +87,9 @@ function RegisterPage() {
           error = rejected.data;
         }
       });
-      setSpin(false)
+      setSpin(false);
+      dispatch(gamesApi.util.resetApiState());
+      dispatch(selectGamesApi.util.resetApiState());
       navigate('/select-game');
   };
 

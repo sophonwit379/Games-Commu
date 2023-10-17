@@ -12,7 +12,7 @@ import { selectGamesApi } from "../../store/apis/selectGamesApi";
 import { postApi } from "../../store/apis/postApi";
 import { postByGameApi } from "../../store/apis/postByGameApi";
 import { imageApi } from "../../store/apis/imageApi";
-
+import { likeApi } from "../../store/apis/likeApi";
 
 function AddGame(props) {
   const dispatch = useDispatch();
@@ -80,6 +80,7 @@ function AddGame(props) {
       dispatch(gamesApi.util.invalidateTags(['Followed']));
       dispatch(selectGamesApi.util.resetApiState());
       dispatch(imageApi.util.resetApiState());
+      dispatch(likeApi.util.resetApiState());
       setSpin(false)
       props.onHide();
       toast.success('เพิ่มเกมสำเร็จ', {

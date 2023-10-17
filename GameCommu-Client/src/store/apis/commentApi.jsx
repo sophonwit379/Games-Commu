@@ -36,6 +36,7 @@ const commentApi = createApi({
                 }
             }),
             addReply: builder.mutation({
+                invalidatesTags:['Reply'],
                 query: (reply) => {
                     return{
                         url:'/comments/reply',
@@ -54,9 +55,10 @@ const commentApi = createApi({
                 },
             }),
             fetchReply: builder.query({
+                providesTags:['Reply'],
                 query: (data) => {
                     return{
-                        url:`/comments/post?pid=${data.rid}&page=${data.page}`,
+                        url:`/comments/comment?rid=${data.rid}&page=${data.page}`,
                         method: 'GET',
                     }
                 },

@@ -65,7 +65,15 @@ const imageApi = createApi({
                         body:file,
                     }
                 }
-            })
+            }),
+            countCommentImg: builder.query({
+                query: (cid) => {
+                    return {
+                        url:`/images/count?cid=${cid}`,
+                        method:'GET',
+                    }
+                }
+            }),
         }
     }
 });
@@ -75,5 +83,6 @@ export const {
     useUploadPostImgMutation,
     useCountPostImgQuery,
     useCallPostImgQuery,
-    useUploadCommentImgMutation
+    useUploadCommentImgMutation,
+    useCountCommentImgQuery
 } = imageApi;

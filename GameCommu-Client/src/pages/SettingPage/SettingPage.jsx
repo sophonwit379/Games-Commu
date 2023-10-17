@@ -25,7 +25,7 @@ function SettingPage() {
     const navigate = useNavigate();
 
     const uploadImg = () => {
-        
+        SetEditImg(true);
     }
 
     const validationSchema = yup.object().shape({

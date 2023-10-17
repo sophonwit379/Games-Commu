@@ -22,6 +22,7 @@ import {
     useRemoveLikePostMutation,
 } from "../store";
 
+
 function PostItemList({pid,gid,username,date,detail,uid,isOwner,page,setPage}) {
     const reportFormRef = useRef(null);
     const [openComment,setOpenComment] = useState(false);
@@ -81,6 +82,40 @@ function PostItemList({pid,gid,username,date,detail,uid,isOwner,page,setPage}) {
     const handleCloseModal = () => {
         setOpenReport(false);
         reportFormRef.current.resetForm();
+    }
+
+    const handleOpenReport = () => {
+        if(token){
+            setOpenReport(true);
+        }else{
+            toast.info("กรุณาล็อกอิน", {
+                position: "bottom-right",
+                autoClose: 1000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                progress: undefined,
+                theme: "light",
+              });
+            navigate('/login');
+        }
+    }
+
+    const handleOpenComment = () => {
+        if(token){
+            setOpenComment(true);
+        }else{
+            toast.info("กรุณาล็อกอิน", {
+                position: "bottom-right",
+                autoClose: 1000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                progress: undefined,
+                theme: "light",
+              });
+            navigate('/login');
+        }
     }
 
     if (isLike || loadLike){
@@ -159,27 +194,30 @@ function PostItemList({pid,gid,username,date,detail,uid,isOwner,page,setPage}) {
                     {LikeContent}
                     <div className='d-flex'>
                         <h6 className="m-0 hover">
-                            <AiOutlineComment onClick={()=>setOpenComment(true)} className="mr-1" size={25}/>
+                            <AiOutlineComment onClick={handleOpenComment} className="mr-1" size={25}/>
                         </h6>
                         <h6 className="m-0 hover">
-                            <GoReport onClick={()=>setOpenReport(true)} className="mr-1" size={25}/>
+                            <GoReport onClick={handleOpenReport} className="mr-1" size={25}/>
                         </h6>
                     </div>
-                    <Comment
-                        show={openComment}
-                        onHide={()=>setOpenComment(false)}
-                        pid={pid}
-                        page={page}
-                        uid={uid}
-                    />
-                    <ReportPost
-                        show={openReport}
-                        onHide={handleCloseModal}
-                        pid={pid}
-                        reportFormRef={reportFormRef}
-                    />
+                    {token && <>
+                        {openComment && 
+                            <Comment
+                                show={openComment}
+                                onHide={()=>setOpenComment(false)}
+                                pid={pid}
+                                page={page}
+                                uid={uid}
+                            />
+                        }
+                        <ReportPost
+                            show={openReport}
+                            onHide={handleCloseModal}
+                            pid={pid}
+                            reportFormRef={reportFormRef}
+                        />
+                    </>}
                 </Card.Footer>
-                
             </Card>
     }
     

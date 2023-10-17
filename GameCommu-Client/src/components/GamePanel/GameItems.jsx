@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import Skeleton from "react-loading-skeleton";
 import { useDispatch } from "react-redux";
 import { postApi } from "../../store/apis/postApi"; 
+import { likeApi } from "../../store/apis/likeApi";
+import { imageApi } from "../../store/apis/imageApi";
 import './GameItem.css'
 
 // eslint-disable-next-line react/prop-types
@@ -16,6 +18,8 @@ export default function GameItems ({setPage}){
         dispatch(setData([]));
         dispatch(postByGameApi.util.resetApiState());
         dispatch(postApi.util.resetApiState());
+        dispatch(imageApi.util.resetApiState());
+        dispatch(likeApi.util.resetApiState());
     }
 
     let content;

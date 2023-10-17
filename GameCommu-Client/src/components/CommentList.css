@@ -5,3 +5,11 @@
     color: red;
     cursor: pointer;
 }
+
+#reply-hover{
+    margin-right: 0.25rem;
+}
+#reply-hover:hover{
+    color: #526D82;
+    cursor: pointer;
+}

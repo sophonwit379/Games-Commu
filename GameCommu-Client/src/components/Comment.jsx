@@ -7,6 +7,8 @@ import { useState } from "react";
 import * as formik from 'formik';
 import * as yup from 'yup';
 import CommentList from "./CommentList";
+import { useDispatch } from "react-redux";
+import { commentApi } from "../store/apis/commentApi";
 import { 
     useFetchCommentQuery,
     useAddCommentMutation,
@@ -14,6 +16,7 @@ import {
 } from "../store";
 
 function Comment({show,onHide,page,rid,pid,uid}) {
+    const dispatch = useDispatch();
     const { Formik } = formik;
     const [ postComment,setPostComment ] = useState(false);
     const { data:commentData,isFetching:isComment } = useFetchCommentQuery({pid,page});
@@ -26,7 +29,7 @@ function Comment({show,onHide,page,rid,pid,uid}) {
     let content;
     if(isComment){
         content = <Skeleton width={400} height={100}/>
-    }else if(commentData.length === 0){
+    }else if(commentData?.length === 0){
         content = <h5 className="pt-2">
             ไม่มีคอมเม้นต์
         </h5>
@@ -50,6 +53,8 @@ function Comment({show,onHide,page,rid,pid,uid}) {
                     isOwner={isOwner}
                     date={formattedDate}
                     username={data.username}
+                    page={page}
+                    detail={data.detail}
                 />
             )
         })
@@ -107,7 +112,7 @@ function Comment({show,onHide,page,rid,pid,uid}) {
         <Modal.Header>
             <h5 >Comment</h5>
         </Modal.Header>
-            <Container className="p-1" fluid>
+            <Container className="p-1 position-sticky" fluid>
                 <br/>
                 {content}
             </Container>
@@ -118,7 +123,10 @@ function Comment({show,onHide,page,rid,pid,uid}) {
                     <Button
                         className="mr-2"
                         variant='outline-secondary'
-                        onClick={()=>onHide()}
+                        onClick={()=>{
+                            onHide();
+                            dispatch(commentApi.util.resetApiState());
+                        }}
                     >
                         <PiKeyReturnBold className="mr-1" size={25}/>ย้อนกลับ
                     </Button>

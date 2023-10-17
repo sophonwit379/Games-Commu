@@ -18,6 +18,7 @@ import { useDispatch } from 'react-redux';
 import { postApi } from '../../store/apis/postApi';
 import { postByGameApi } from '../../store/apis/postByGameApi';
 import { imageApi } from '../../store/apis/imageApi';
+import { likeApi } from '../../store/apis/likeApi';
 
 function HomePage() {
   const dispatch = useDispatch();
@@ -38,6 +39,7 @@ function HomePage() {
     dispatch(postByGameApi.util.resetApiState());
     dispatch(postApi.util.resetApiState());
     dispatch(imageApi.util.resetApiState());
+    dispatch(likeApi.util.resetApiState());
     navigate('/');
     toast.success('ออกจากระบบสำเร็จ', {
       position: "bottom-right",
@@ -67,6 +69,7 @@ function HomePage() {
     dispatch(postApi.util.resetApiState());
     dispatch(postByGameApi.util.resetApiState());
     dispatch(imageApi.util.resetApiState());
+    dispatch(likeApi.util.resetApiState());
     setPage(0);
   }
 

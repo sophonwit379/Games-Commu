@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import { postApi } from "../store/apis/postApi";
 import { postByGameApi } from "../store/apis/postByGameApi";
 import { imageApi } from "../store/apis/imageApi";
+import { likeApi } from "../store/apis/likeApi";
 
 function ConfirmRemovePost({show,onHide,pid,setPage}) {
     const dispatch = useDispatch();
@@ -21,6 +22,7 @@ function ConfirmRemovePost({show,onHide,pid,setPage}) {
         dispatch(postApi.util.resetApiState());
         dispatch(postByGameApi.util.resetApiState());
         dispatch(imageApi.util.resetApiState());
+        dispatch(likeApi.util.resetApiState());
         setSpin(false);
         toast.success('ลบโพสต์สำเร็จ', {
             position: "bottom-right",

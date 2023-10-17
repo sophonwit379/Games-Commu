@@ -130,7 +130,8 @@ export {
     useCountPostImgQuery,
     useUploadCommentImgMutation,
     useCallPostImgQuery,
-    useUploadPostImgMutation
+    useUploadPostImgMutation,
+    useCountCommentImgQuery
 } from './apis/imageApi';
 
 

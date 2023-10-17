@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import { postApi } from "../store/apis/postApi";
 import { postByGameApi } from "../store/apis/postByGameApi";
 import { imageApi } from "../store/apis/imageApi";
+import { likeApi } from "../store/apis/likeApi";
 import * as formik from 'formik';
 import * as yup from 'yup';
 
@@ -33,6 +34,7 @@ function ConfirmEditPost({show,onHide,pid,pageNumber,setPage,detail}) {
         dispatch(postApi.util.resetApiState());
         dispatch(postByGameApi.util.resetApiState());
         dispatch(imageApi.util.resetApiState());
+        dispatch(likeApi.util.resetApiState());
         setSpin(false);
         toast.success('แก้ไขโพสต์สำเร็จ', {
             position: "bottom-right",

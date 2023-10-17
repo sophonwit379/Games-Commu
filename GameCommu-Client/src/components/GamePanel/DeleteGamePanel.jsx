@@ -12,6 +12,7 @@ import { selectGamesApi } from "../../store/apis/selectGamesApi";
 import { gamesApi } from "../../store/apis/gamesApi";
 import { postByGameApi } from "../../store/apis/postByGameApi";
 import { imageApi } from "../../store/apis/imageApi";
+import { likeApi } from "../../store/apis/likeApi";
 
 
 function DeleteGamePanel(props) {
@@ -80,6 +81,7 @@ function DeleteGamePanel(props) {
       dispatch(gamesApi.util.invalidateTags(['Followed']));
       dispatch(selectGamesApi.util.resetApiState());
       dispatch(imageApi.util.resetApiState());
+      dispatch(likeApi.util.resetApiState());
       setSpin(false)
       props.onHide();
       toast.success('ลบเกมสำเร็จ', {

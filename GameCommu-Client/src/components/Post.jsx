@@ -12,6 +12,7 @@ import { postByGameApi } from '../store/apis/postByGameApi';
 import { postApi } from '../store/apis/postApi';
 import { imageApi } from '../store/apis/imageApi';
 import { toast } from 'react-toastify';
+import { likeApi } from '../store/apis/likeApi';
 
 function Post({ show,onHide,modalFormRef,gid,setPage }) {
     const dispatch = useDispatch();
@@ -98,6 +99,7 @@ function Post({ show,onHide,modalFormRef,gid,setPage }) {
         dispatch(postByGameApi.util.resetApiState());
         dispatch(postApi.util.resetApiState());
         dispatch(imageApi.util.resetApiState());
+        dispatch(likeApi.util.resetApiState());
         setSpin(false);
         setSelectedValue(false);
         toast.success('โพสต์สำเร็จ', {

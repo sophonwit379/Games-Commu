@@ -55,14 +55,26 @@ public class ImagesController {
 			@RequestParam(required = false, name = "cid") Integer cid,
 			@RequestParam(required = false, name = "uid") Integer uid) {
 		if (gid != null && pid == null && cid == null) {
-			return ResponseEntity.ok(imagesService.countByGID(gid));
+			int num = imagesService.countByGID(gid);
+			if(num == 0)
+				num = -1;
+			return ResponseEntity.ok(num);
 		} else if (gid == null && pid != null && cid == null) {
-			return ResponseEntity.ok(imagesService.countByPID(pid));
+			int num = imagesService.countByPID(pid);
+			if(num == 0)
+				num = -1;
+			return ResponseEntity.ok(num);
 		} else if (gid == null && pid == null && cid != null) {
-			return ResponseEntity.ok(imagesService.countByCID(cid));
+			int num = imagesService.countByCID(cid);
+			if(num == 0)
+				num = -1;
+			return ResponseEntity.ok(num);
 		} else if (gid == null && pid == null && cid == null) {
 			Users u = usersService.getByUID(uid);
-			return ResponseEntity.ok(imagesService.countByEmail(u.getEmail()));
+			int num = imagesService.countByEmail(u.getEmail());
+			if(num == 0)
+				num = -1;
+			return ResponseEntity.ok(num);
 		} else {
 			return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("ID types must not exceed 1 type");
 		}

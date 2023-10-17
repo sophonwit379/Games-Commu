@@ -19,7 +19,7 @@ public interface CommentsRepository extends PagingAndSortingRepository<Comments,
 
 	@Query(value = "SELECT c.cid, c.uid, c.rid, c.detail, c.date, u.username "
 			+ "FROM comments AS c INNER JOIN users AS u ON c.uid = u.uid "
-			+ "WHERE c.cid = :rid ORDER BY c.date DESC", nativeQuery = true)
+			+ "WHERE c.rid = :rid ORDER BY c.date DESC", nativeQuery = true)
 	public List<Object> getRepliesOfComment(@Param("rid") int rid);
 
 }

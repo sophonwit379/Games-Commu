@@ -94,4 +94,12 @@ public class ImagesService {
 		Images i = new Images(u, path);
 		imagesRepository.save(i);
 	}
+	
+	public void updateImageForUser(String email, String path) {
+		Users u = usersRepository.findByEmail(email);
+		List<Images> old = imagesRepository.findByUsers(u);
+		Images i = old.get(0);
+		i.setPath(path);
+		imagesRepository.save(i);
+	}
 }

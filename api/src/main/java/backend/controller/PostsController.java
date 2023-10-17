@@ -79,6 +79,12 @@ public class PostsController {
 		Users u = usersService.getByEmail(currentUserEmail);
 		return ResponseEntity.ok(postsService.getMaxPageOfComment(u.getUid()));
 	}
+	
+	@GetMapping("/posts/post")
+	public ResponseEntity<Posts> getByPID(@RequestParam int pid) {
+		Posts p = postsService.getByPID(pid);
+		return ResponseEntity.ok(p);
+	}
 
 	@GetMapping("/posts/notlogin")
 	public ResponseEntity<List<PostsDRO>> getAllByPage(@RequestParam int page) {

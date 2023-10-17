@@ -26,6 +26,10 @@ public class UsersService implements UserDetailsService {
 	public List<Users> getAll() {
 		return (List<Users>) usersRepository.findAll();
 	}
+	
+	public Users getByUID(int uid) {
+		return usersRepository.findById(uid).get();
+	}
 
 	public Users getByEmail(String email) {
 		return usersRepository.findByEmail(email);

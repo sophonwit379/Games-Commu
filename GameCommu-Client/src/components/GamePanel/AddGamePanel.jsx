@@ -79,7 +79,7 @@ function AddGame(props) {
       dispatch(postByGameApi.util.resetApiState());
       dispatch(gamesApi.util.invalidateTags(['Followed']));
       dispatch(selectGamesApi.util.resetApiState());
-      dispatch(imageApi.util.resetApiState());
+      dispatch(imageApi.util.invalidateTags(['PostImg']));
       dispatch(likeApi.util.resetApiState());
       setSpin(false)
       props.onHide();

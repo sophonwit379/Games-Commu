@@ -1,9 +1,8 @@
 /* eslint-disable react/prop-types */
-import { useFetchFollowedGameQuery } from "../store";
+import { useFetchFollowedGameQuery,setData,selectData } from "../store";
 import { Container } from "react-bootstrap";
 import PostItemList from "./PostItemList";
 import Skeleton from "react-loading-skeleton";
-import { setData,selectData } from '../store/index';
 import { useDispatch,useSelector } from "react-redux";
 import { useEffect } from "react";
 import Comment from './Comment';
@@ -20,7 +19,7 @@ function PostByGame({postData,className,uid,setPage}) {
     },[dispatch, isFetching])
 
     let content;
-    if(isFetching && storeData.length===0){
+    if(isFetching && storeData?.length===0){
         content = 
             <Container className="p-0" fluid>
                 <Skeleton height={650}/>

@@ -145,7 +145,8 @@ export {
     useFetchNotLoginQuery,
     useRemovePostMutation,
     useFetchAllPostedQuery,
-    useFetchAllCommentPostedQuery
+    useFetchAllCommentPostedQuery,
+    useFetchByDetailQuery
 } from './apis/postApi';
 
 export {

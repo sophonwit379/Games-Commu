@@ -27,7 +27,7 @@ function PostedItems({setPage}) {
         dispatch(setData([]));
         dispatch(postByGameApi.util.resetApiState());
         dispatch(postApi.util.resetApiState());
-        dispatch(imageApi.util.resetApiState());
+        dispatch(imageApi.util.invalidateTags(['PostImg']));
         dispatch(likeApi.util.resetApiState());
     }
     let content;

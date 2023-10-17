@@ -133,6 +133,28 @@ const postApi = createApi({
                 forceRefetch({ currentArg, previousArg }) {
                     return currentArg !== previousArg
                 },
+            }),
+            fetchByDetail: builder.query({
+                providesTags: ['Detail'],
+                query:(search) => {
+                    return {
+                        url:`/posts/search?search=${search.search}&page=${search.page}`,
+                        method:'GET',
+                    }
+                },
+                serializeQueryArgs: ({endpointName}) => {
+                    return endpointName
+                },
+                merge: (currentCache, newItems) => {
+                    if(newItems.length > 0){
+                        currentCache.push(...newItems)
+                    }else{
+                        return;
+                    }
+                },
+                forceRefetch({ currentArg, previousArg }) {
+                    return currentArg !== previousArg
+                },
             })
 
 
@@ -149,4 +171,5 @@ export const {
     useFetchNotLoginQuery,
     useFetchAllPostedQuery,
     useFetchAllCommentPostedQuery,
+    useFetchByDetailQuery
 } = postApi;

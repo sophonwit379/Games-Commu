@@ -20,7 +20,7 @@ const likeApi = createApi({
             return headers;
         },
         fetchFn: async (...args) => {
-            await pause(1000);
+            await pause(500);
             return fetch(...args)
         }
     }),

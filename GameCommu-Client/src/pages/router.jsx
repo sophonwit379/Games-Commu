@@ -10,6 +10,7 @@ import SettingPage from "./SettingPage/SettingPage";
 import PrivateRoute from "./Util/PrivateRoute";
 import AnonymousPage from "./AnonymousPage/AnonymousPage";
 import AdminRoute from './Util/AdminRoute';
+
 export const router  = createBrowserRouter([
     {
       path: "/",
@@ -47,6 +48,11 @@ export const router  = createBrowserRouter([
         },
         {
           path: "posted/:id",
+          element: <HomePage />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "search/:detail",
           element: <HomePage />,
           errorElement: <ErrorPage />,
         },

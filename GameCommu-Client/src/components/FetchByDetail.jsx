@@ -1,15 +1,15 @@
 /* eslint-disable react/prop-types */
-import { useFetchAllCommentPostedQuery,setData,selectData, } from "../store";
+import { useFetchByDetailQuery,setData,selectData, } from "../store";
 import { Container } from "react-bootstrap";
 import { useSelector,useDispatch } from "react-redux";
 import PostItemList from "./PostItemList";
 import Skeleton from "react-loading-skeleton";
 import { useEffect } from "react";
 
-function FetchAllCommented({page,className,uid,setPage}) {
+function FetchByDetail({page,className,uid,setPage,search}) {
     const dispatch = useDispatch();
     const storeData = useSelector(selectData);
-    const { data,isFetching } = useFetchAllCommentPostedQuery(page);
+    const { data,isFetching } = useFetchByDetailQuery({search,page});
 
     useEffect(()=>{
         if(!isFetching){ 
@@ -44,9 +44,9 @@ function FetchAllCommented({page,className,uid,setPage}) {
                     pid={post.pid}
                     gid={post.gid}
                     uid={uid}
-                    postUid={post.uid}
                     username={post.username}
                     isOwner={isOwner}
+                    postUid={post.uid}
                     page={page}
                     date={formattedDate.toString()}
                     detail={post.detail}
@@ -73,4 +73,4 @@ function FetchAllCommented({page,className,uid,setPage}) {
     )
 }
 
-export default FetchAllCommented;
+export default FetchByDetail;

@@ -22,6 +22,7 @@ import FetchAllPosted from '../../components/FetchAllPosted';
 import FetchAllCommented from '../../components/FetchAllCommented';
 import ImageProfile from '../../components/ImageProfile';
 import Skeleton from 'react-loading-skeleton';
+import FetchByDetail from '../../components/FetchByDetail';
 
 function HomePage() {
   const dispatch = useDispatch();
@@ -34,6 +35,9 @@ function HomePage() {
   const modalFormRef = useRef(null);
   const gid = location.pathname.split('/home/')[1];
   const posted = location.pathname.split('/home/posted/')[1];
+  const search = location.pathname.split('h/')[0];
+  const [searchValue, setSearchValue] = useState('');
+  const [realSearch, setRealSearch] = useState('');
 
   let userDropdown;
   let content;
@@ -54,6 +58,7 @@ function HomePage() {
       }, 2000);
     }
     const handleLogout = () => {
+      setPage(0);
       dispatch(setData([]));
       dispatch(postByGameApi.util.resetApiState());
       dispatch(postApi.util.resetApiState());
@@ -111,17 +116,20 @@ function HomePage() {
           setPage={setPage}
         />
 
-        {gid===undefined &&posted===undefined &&
+        {gid===undefined && posted===undefined && search!=='/home/searc' &&
           <PostItem className='mt-4 w-75' setPage={setPage} page={page} uid={user?.uid}/>
         }
-        {gid &&posted===undefined &&
+        {gid &&posted===undefined && search!=='/home/searc' &&
           <PostByGame className='mt-4 w-75' setPage={setPage} postData={{page,gid}} uid={user?.uid}/>
         }
-        {gid==='posted/0' &&
+        {gid==='posted/0' && search!=='/home/searc' &&
           <FetchAllPosted className='mt-4 w-75' setPage={setPage} page={page} uid={user?.uid}/>
         }
-        {gid==='posted/1' &&
+        {gid==='posted/1' && search!=='/home/searc' &&
           <FetchAllCommented className='mt-4 w-75' setPage={setPage} page={page} uid={user?.uid}/>
+        }
+        {search==='/home/searc' &&
+          <FetchByDetail className='mt-4 w-75' setPage={setPage} page={page} uid={user?.uid} search={realSearch}/>
         }
         <Button 
           className='mt-4 w-75 d-flex justify-content-center align-items-center mb-5 shadow-none' variant='outline-secondary' 
@@ -139,13 +147,32 @@ function HomePage() {
 
   
   const handleClick = ()=>{
+    setPage(0);
     dispatch(setData([]));
     dispatch(postApi.util.resetApiState());
     dispatch(postByGameApi.util.resetApiState());
-    dispatch(imageApi.util.resetApiState());
+    dispatch(imageApi.util.invalidateTags(['PostImg']));
     dispatch(likeApi.util.resetApiState());
-    setPage(0);
+
   }
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    setRealSearch(searchValue);
+    setPage(0);
+    dispatch(setData([]));
+    dispatch(postApi.util.resetApiState());
+    dispatch(postByGameApi.util.resetApiState());
+    dispatch(imageApi.util.invalidateTags(['PostImg']));
+    dispatch(likeApi.util.resetApiState());
+    navigate(`/home/search/${searchValue}`)
+  }
+
+  const handleInputChange = (e) => {
+    setSearchValue(e.target.value);
+  }
+
+  console.log(gid,posted,search);
 
   return (
     <div className='min-vh-100' >
@@ -159,16 +186,18 @@ function HomePage() {
           <Navbar.Toggle id='nav-tog' aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id='nav-collapse'> 
           <Nav className="w-100 d-flex justify-content-between">
-            <Form className="d-flex align-items-center nav-search">
+            <Form noValidate className="d-flex align-items-center nav-search" onSubmit={handleSearch}>
               <Form.Control
                 name='search'
                 type="search"
                 placeholder="Search"
                 className="me-2"
                 aria-label="Search"
+                value={searchValue}
+                onChange={handleInputChange}
               />
-              <Button variant="secondary" className='d-flex flex-row align-items-center'> 
-                <IoSearchCircleOutline size={25}/> Search
+              <Button type='submit' variant="secondary" className='d-flex flex-row align-items-center'> 
+                <IoSearchCircleOutline size={25}/> ค้นหา                                   
               </Button>
             </Form>
               {userDropdown}

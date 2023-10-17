@@ -19,7 +19,7 @@ function PostItem({page,className,uid,setPage}) {
 
 
     let content;
-    if(isFetching && storeData.length === 0){
+    if(isFetching && storeData?.length === 0){
         content = 
             <Container className="p-0" fluid>
                 <Skeleton height={650}/>

@@ -48,6 +48,7 @@ const imageApi = createApi({
                 },
             }),
             countPostImg: builder.query({
+                providesTags:['PostImg'],
                 query: (pid) => {
                     return {
                         url:`/images/count?pid=${pid}`,
@@ -67,6 +68,7 @@ const imageApi = createApi({
                 }
             }),
             countCommentImg: builder.query({
+                providesTags:['CommentImg'],
                 query: (cid) => {
                     return {
                         url:`/images/count?cid=${cid}`,
@@ -86,6 +88,7 @@ const imageApi = createApi({
                 }
             }),
             countProfileImg: builder.query({
+                providesTags:['ProfileImg'],
                 query: (uid) => {
                     return {
                         url:`/images/count?uid=${uid}`,

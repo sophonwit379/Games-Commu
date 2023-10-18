@@ -172,8 +172,6 @@ function HomePage() {
     setSearchValue(e.target.value);
   }
 
-  console.log(gid,posted,search);
-
   return (
     <div className='min-vh-100' >
       <Navbar expand="lg" className="nav-bg d-flex justify-content-between">

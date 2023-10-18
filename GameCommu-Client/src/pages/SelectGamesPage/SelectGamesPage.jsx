@@ -4,13 +4,11 @@ import {
   Button,
   Card,
   Container,
-  Image,
-  Row
 } from "react-bootstrap";
 import { toast } from 'react-toastify';
 import { useFetchNotSelectedGamesQuery,useAddSelectGameMutation } from "../../store";
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
-import noImg from '../../assets/no-image.svg'
+import ImageGame from '../../components/ImageGame'
 import './SelectGamesPage.css'
 import Spinner from 'react-bootstrap/Spinner';
 
@@ -61,7 +59,7 @@ function SelectGamesPage() {
           }}
         >
             <div style={{width:'95%',height:'95%'}} className="position-relative justify-content-center d-flex align-items-center flex-column">
-              <Image src={noImg} rounded height={125} width={175} className="z-1"/>
+              <ImageGame gid={game.gid} height={125} className="z-1"/>
               <div className="z-1 d-flex flex-column align-items-center">
                 <h6 className="text-break text-center">{game.name}</h6>
                 <p>{game.year}</p>

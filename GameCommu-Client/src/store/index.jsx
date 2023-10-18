@@ -134,7 +134,8 @@ export {
     useCountCommentImgQuery,
     useCountProfileImgQuery,
     useUploadProfileImgMutation,
-    useEditProfileImgMutation
+    useEditProfileImgMutation,
+    useCountGameImgQuery
 } from './apis/imageApi';
 
 

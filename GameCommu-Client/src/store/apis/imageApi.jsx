@@ -107,6 +107,15 @@ const imageApi = createApi({
                     }
                 }
             }),
+            countGameImg: builder.query({
+                providesTags:['GameImg'],
+                query: (gid) => {
+                    return {
+                        url:`/images/count?gid=${gid}`,
+                        method:'GET',
+                    }
+                }
+            })
         }
     }
 });
@@ -120,5 +129,6 @@ export const {
     useCountCommentImgQuery,
     useCountProfileImgQuery,
     useUploadProfileImgMutation,
-    useEditProfileImgMutation
+    useEditProfileImgMutation,
+    useCountGameImgQuery
 } = imageApi;

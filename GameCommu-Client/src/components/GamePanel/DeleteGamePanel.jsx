@@ -4,7 +4,7 @@ import { useRemoveGameOfUserMutation,useFetchGameOfUserQuery,setData } from "../
 import Skeleton from "react-loading-skeleton";
 import { useState } from "react";
 import { toast } from 'react-toastify';
-import noImg from '../../assets/no-image.svg'
+import ImageGame from '../ImageGame';
 import Spinner from 'react-bootstrap/Spinner';
 import { postApi } from "../../store/apis/postApi"; 
 import { useDispatch } from "react-redux";
@@ -57,7 +57,7 @@ function DeleteGamePanel(props) {
           }}
         >
             <div style={{width:'95%',height:'95%'}} className="position-relative justify-content-center d-flex align-items-center flex-column">
-              <Image src={noImg} rounded height={125} width={175} className="z-1"/>
+              <ImageGame gid={game.gid} height={125} className="z-1"/>
               <div className="z-1 d-flex flex-column align-items-center">
                 <h6 className="text-break text-center">{game.name}</h6>
                 <p>{game.year}</p>

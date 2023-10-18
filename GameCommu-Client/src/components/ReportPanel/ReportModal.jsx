@@ -2,7 +2,6 @@
 import React from 'react'
 import Modal from 'react-bootstrap/Modal';
 import { Button } from 'react-bootstrap';
-import {PostViewItem} from '../AdminPostViewPanel/PostViewItem'
 
 function ReportModal(props) {
   return (
@@ -19,7 +18,7 @@ function ReportModal(props) {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <PostViewItem props={props}/>
+
       </Modal.Body>
       <Modal.Footer>
         <Button onClick={props.onHide}>Close</Button>

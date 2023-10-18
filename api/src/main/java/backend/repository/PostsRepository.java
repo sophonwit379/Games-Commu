@@ -16,6 +16,10 @@ public interface PostsRepository extends PagingAndSortingRepository<Posts, Integ
 			+ "FROM posts AS p INNER JOIN users AS u ON p.uid = u.uid ORDER BY p.date DESC", nativeQuery = true)
 	public List<Object> getAll();
 
+	@Query(value = "SELECT p.pid,p.uid,p.gid,p.detail,p.date,u.username "
+			+ "FROM posts AS p INNER JOIN users AS u ON p.uid = u.uid WHERE p.pid=:pid", nativeQuery = true)
+	public List<Object> getByPID(@Param("pid") int pid);
+
 	@Query(value = "SELECT count(*) FROM posts AS p", nativeQuery = true)
 	public int countAll();
 
@@ -54,15 +58,13 @@ public interface PostsRepository extends PagingAndSortingRepository<Posts, Integ
 	@Query(value = "SELECT count(*) FROM posts AS p INNER JOIN users AS u ON p.uid = u.uid "
 			+ "WHERE p.uid = :uid ORDER BY p.date DESC", nativeQuery = true)
 	public int countByUser(@Param("uid") int uid);
-	
+
 	@Query(value = "SELECT DISTINCT p.pid,p.uid,p.gid,p.detail,p.date,u.username "
-			+ "FROM posts AS p INNER JOIN users AS u ON p.uid = u.uid "
-			+ "INNER JOIN comments AS c ON p.pid = c.pid "
+			+ "FROM posts AS p INNER JOIN users AS u ON p.uid = u.uid " + "INNER JOIN comments AS c ON p.pid = c.pid "
 			+ "WHERE c.uid = :uid ORDER BY p.date DESC;", nativeQuery = true)
 	public List<Object> getByComment(@Param("uid") int uid);
-	
-	@Query(value = "SELECT COUNT(DISTINCT p.pid) AS count "
-			+ "FROM posts AS p INNER JOIN users AS u ON p.uid = u.uid "
+
+	@Query(value = "SELECT COUNT(DISTINCT p.pid) AS count " + "FROM posts AS p INNER JOIN users AS u ON p.uid = u.uid "
 			+ "INNER JOIN comments AS c ON p.pid = c.pid "
 			+ "WHERE c.uid = :uid ORDER BY p.date DESC;", nativeQuery = true)
 	public int countByComment(@Param("uid") int uid);

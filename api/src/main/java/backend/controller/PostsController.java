@@ -81,8 +81,8 @@ public class PostsController {
 	}
 	
 	@GetMapping("/posts/post")
-	public ResponseEntity<Posts> getByPID(@RequestParam int pid) {
-		Posts p = postsService.getByPID(pid);
+	public ResponseEntity<PostsDRO> getByPID(@RequestParam int pid) {
+		PostsDRO p = postsService.getPostByPID(pid);
 		return ResponseEntity.ok(p);
 	}
 

@@ -24,6 +24,12 @@ public class PostsService {
 		return postsRepository.findById(pid).get();
 	}
 	
+	public PostsDRO getPostByPID(int pid) {
+		List<Object> o = postsRepository.getByPID(pid);
+		List<PostsDRO> p = PostsDRO.convertToPostsDRO(o);
+		return p.get(0);
+	}
+	
 	public int getMaxPageOfAll() {
 		int count = postsRepository.countAll();
 		System.out.println(count);

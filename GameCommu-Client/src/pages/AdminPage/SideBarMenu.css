@@ -1,3 +1,11 @@
 #parentM li a:hover{
     background: lightblue;
 }
+#dropdownLogout{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#dropdownLogout a{
+    border-color: white;
+}

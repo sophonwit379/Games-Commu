@@ -24,7 +24,7 @@ export function ReportItem() {
         <td>{item.reason}</td>
         <td>{item.status}</td>
         <td>
-        <Button variant="success" onClick={() => setModalShow(true)}>
+        <Button variant="success" onClick={() => setModalShow(true)} props = {item.pid}>
         View Post
       </Button>
 

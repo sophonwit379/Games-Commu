@@ -123,7 +123,8 @@ export {
 export {
     useGetGamesQuery,
     useFetchNotSelectedGamesQuery,
-    useFetchGameByIdQuery
+    useFetchGameByIdQuery,
+    useAddGameMutation
 } from './apis/gamesApi';
 
 export {

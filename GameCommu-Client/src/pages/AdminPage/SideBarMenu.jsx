@@ -62,10 +62,21 @@ export function SideBarMenu(props) {
                   </span>
                   </Link>
                 </button>
+              </li><li className="nav-item my-1 py-2 py-sm-0">
+                <button
+                  className="nav-link text-white my-1 text-center text-sm-start"
+                  aria-current="page"
+                >
+                  <Link to="AddGame" className="text-white text-decoration-none">
+                  <i className="bi bi-plus-circle-fill"></i>
+                  <span className="ms-2 d-none d-sm-inline">
+                      Add Game
+                  </span>
+                  </Link>
+                </button>
               </li>
             </ul>
-  
-            <div className="dropdown open">
+            <div className="dropdown open" id="dropdownLogout">
               <a
                 className="btn bordor-none dropdown-toggle text-white text-center text-sm-start"
                 type="button"

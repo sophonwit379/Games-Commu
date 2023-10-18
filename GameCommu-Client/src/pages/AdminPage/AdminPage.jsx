@@ -4,6 +4,7 @@ import {TablePages} from "../AdminTablePage/TablePages"
 import {SideBarMenu} from "./SideBarMenu"
 import "./SideBarMenu.css"
 import "./AdminPage.css"
+import {AddGamePage} from '../AddGamePage/AddGamePage'
 
 function AdminPage() {
   return (
@@ -15,6 +16,7 @@ function AdminPage() {
         <Routes>
           <Route path="/ReportTable" element={<TablePages props="report"/>} />
           <Route path="/RequestTable" element={<TablePages props="request"/>} />
+          <Route path="/AddGame" element={<AddGamePage/>} />
         </Routes>
       </div>
     </div>

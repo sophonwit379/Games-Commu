@@ -2,7 +2,7 @@
 import React from 'react'
 import Modal from 'react-bootstrap/Modal';
 import { Button } from 'react-bootstrap';
-import  HomePage  from '../../pages/HomePage/HomePage'
+import {PostViewItem} from '../AdminPostViewPanel/PostViewItem'
 
 function ReportModal(props) {
   return (
@@ -19,7 +19,7 @@ function ReportModal(props) {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <HomePage/>
+        <PostViewItem props={props}/>
       </Modal.Body>
       <Modal.Footer>
         <Button onClick={props.onHide}>Close</Button>

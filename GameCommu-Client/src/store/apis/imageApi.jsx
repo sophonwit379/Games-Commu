@@ -115,7 +115,20 @@ const imageApi = createApi({
                         method:'GET',
                     }
                 }
-            })
+            }),
+            uploadGameImg: builder.mutation({
+              providesTags: ["uploadGameImg"],
+              query: (images) => {
+                  console.log(images.file);
+                  const file = new FormData();
+                  file.append(`file`, images.file);
+                  return {
+                    url: `/images/upload?gid=${images.gid}`,
+                    method: "POST",
+                    body: file,
+                  };
+                },
+            }),
         }
     }
 });
@@ -130,5 +143,6 @@ export const {
     useCountProfileImgQuery,
     useUploadProfileImgMutation,
     useEditProfileImgMutation,
-    useCountGameImgQuery
+    useCountGameImgQuery,
+    useUploadGameImgMutation,
 } = imageApi;

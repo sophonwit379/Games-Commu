@@ -155,6 +155,15 @@ const postApi = createApi({
                 forceRefetch({ currentArg, previousArg }) {
                     return currentArg !== previousArg
                 },
+            }),
+            FetchPostById: builder.query({
+                providesTags: ['FetchPost'],
+                query:(post)=>{
+                    return{
+                        url:`/posts/post?pid=${post}`,
+                        method:'GET',
+                    }
+                }
             })
 
 
@@ -171,5 +180,6 @@ export const {
     useFetchNotLoginQuery,
     useFetchAllPostedQuery,
     useFetchAllCommentPostedQuery,
-    useFetchByDetailQuery
+    useFetchByDetailQuery,
+    useFetchPostByIdQuery
 } = postApi;

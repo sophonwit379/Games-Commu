@@ -136,7 +136,8 @@ export {
     useCountProfileImgQuery,
     useUploadProfileImgMutation,
     useEditProfileImgMutation,
-    useCountGameImgQuery
+    useCountGameImgQuery,
+    useUploadGameImgMutation
 } from './apis/imageApi';
 
 
@@ -148,7 +149,8 @@ export {
     useRemovePostMutation,
     useFetchAllPostedQuery,
     useFetchAllCommentPostedQuery,
-    useFetchByDetailQuery
+    useFetchByDetailQuery,
+    useFetchPostByIdQuery
 } from './apis/postApi';
 
 export {

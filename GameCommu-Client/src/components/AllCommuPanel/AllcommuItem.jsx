@@ -1,15 +1,20 @@
-import { useFetchReportQuery } from "../../store";
-import { useState } from "react";
+import { React, useState } from "react";
+import { useGetGamesQuery } from "../../store";
 import { Button, Pagination } from "react-bootstrap";
-import ReportModal from "./ReportModal";
 
-export function ReportItem() {
-  const { data, isFetching } = useFetchReportQuery();
+function AllcommuItem() {
+  const { data, isFetching } = useGetGamesQuery();
+  console.log(data);
   let content;
-  const [modalShow, setModalShow] = useState(false);
-  const itemsPerPage = 5;
+  const itemsPerPage = 7;
   const [currentPage, setCurrentPage] = useState(1);
   let totalPages;
+  const DeleteHandle=()=>{
+
+  }
+  const UpdateHandle=()=>{
+    
+  }
 
   const MapTable = () => {
     const startIndex = (currentPage - 1) * itemsPerPage;
@@ -18,19 +23,22 @@ export function ReportItem() {
     console.log(itemsToDisplay);
     content = itemsToDisplay?.map((item, id) => (
       <tr key={id}>
-        <td>{item.rpid}</td>
-        <td>{item.pid}</td>
-        <td>{item.username}</td>
-        <td>{item.reason}</td>
-        <td>{item.status}</td>
+        <td>{item.gid}</td>
+        <td>{item.name}</td>
+        <td>{item.year}</td>
         <td>
-          <Button
-            variant="success"
-            onClick={() => setModalShow(true)}
-          >
-            Detail
+          <Button variant="success" onClick={()=>{
+            UpdateHandle();
+          }}>
+            Update
           </Button>
-          <ReportModal show={modalShow} onHide={() => setModalShow(false)} data={item.pid}/>
+        </td>
+        <td>
+          <Button variant="success" onClick={()=>{
+            DeleteHandle();
+          }}>
+            Delete
+          </Button>
         </td>
       </tr>
     ));
@@ -46,7 +54,6 @@ export function ReportItem() {
     totalPages = Math.ceil(data?.length / itemsPerPage);
     MapTable();
   }
-
   return (
     <div>
       <div className="tableContent-con table-responsive ">
@@ -58,12 +65,11 @@ export function ReportItem() {
         >
           <thead>
             <tr>
-              <th>No.</th>
-              <th>Post</th>
-              <th>Report By</th>
-              <th>Desc</th>
-              <th>Status</th>
-              <th>Link</th>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Year</th>
+              <th>Update</th>
+              <th>Delete</th>
             </tr>
           </thead>
           <tbody>{content}</tbody>
@@ -105,3 +111,5 @@ export function ReportItem() {
     </div>
   );
 }
+
+export default AllcommuItem;

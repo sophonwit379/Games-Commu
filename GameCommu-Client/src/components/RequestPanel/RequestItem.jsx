@@ -1,10 +1,11 @@
-import { useFetchReportQuery } from "../../store";
-import { useState } from "react";
+import { useFetchRequestQuery,useRejectRequestMutation } from "../../store";
+import { useState, React } from "react";
 import { Button, Pagination } from "react-bootstrap";
-import ReportModal from "./ReportModal";
+import "../../pages/AdminTablePage/TableStyle.css";
+import { RequestModal } from "./RequestModal";
 
-export function ReportItem() {
-  const { data, isFetching } = useFetchReportQuery();
+export function RequestItem() {
+  const { data, isFetching } = useFetchRequestQuery();
   let content;
   const [modalShow, setModalShow] = useState(false);
   const itemsPerPage = 5;
@@ -18,19 +19,18 @@ export function ReportItem() {
     console.log(itemsToDisplay);
     content = itemsToDisplay?.map((item, id) => (
       <tr key={id}>
-        <td>{item.rpid}</td>
-        <td>{item.pid}</td>
-        <td>{item.username}</td>
-        <td>{item.reason}</td>
+        <td>{item.rgid}</td>
+        <td>{item.uid}</td>
+        <td>{item.year}</td>
         <td>{item.status}</td>
         <td>
           <Button
             variant="success"
             onClick={() => setModalShow(true)}
           >
-            Detail
+            Add
           </Button>
-          <ReportModal show={modalShow} onHide={() => setModalShow(false)} data={item.pid}/>
+          <RequestModal show={modalShow} onHide={() => setModalShow(false)} data={item} />
         </td>
       </tr>
     ));
@@ -59,11 +59,10 @@ export function ReportItem() {
           <thead>
             <tr>
               <th>No.</th>
-              <th>Post</th>
-              <th>Report By</th>
-              <th>Desc</th>
+              <th>Game</th>
+              <th className="w-30">Year</th>
               <th>Status</th>
-              <th>Link</th>
+              <th>Add</th>
             </tr>
           </thead>
           <tbody>{content}</tbody>
@@ -105,3 +104,5 @@ export function ReportItem() {
     </div>
   );
 }
+
+export default RequestItem;

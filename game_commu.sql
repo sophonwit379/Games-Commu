@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 13, 2023 at 11:00 AM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- Generation Time: Oct 19, 2023 at 05:36 PM
+-- Server version: 10.4.27-MariaDB
+-- PHP Version: 8.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -36,17 +36,6 @@ CREATE TABLE `comments` (
   `date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `comments`
---
-
-INSERT INTO `comments` (`cid`, `uid`, `pid`, `rid`, `detail`, `date`) VALUES
-(1, 2, 1, NULL, 'Agreed!', '2023-07-23 09:07:00'),
-(2, 4, 1, NULL, 'test', '2023-10-08 08:39:08'),
-(3, 4, 1, NULL, 'test reply', '2023-10-08 08:40:29'),
-(5, 2, 1, NULL, 'afehnoaefjphf', '2023-10-13 08:34:20'),
-(6, 2, NULL, 1, 'afehnoaefjasfadgsphf', '2023-10-13 08:57:36');
-
 -- --------------------------------------------------------
 
 --
@@ -66,7 +55,28 @@ CREATE TABLE `games` (
 INSERT INTO `games` (`gid`, `name`, `year`) VALUES
 (1, 'League of Legends', '2009'),
 (2, 'Arknights (Global)', '2020'),
-(3, '0', '0');
+(4, 'Cyberpunk 2077', '2020'),
+(5, 'Grand Theft Auto V', '2015'),
+(6, 'Monster Hunter: World', '2018'),
+(7, 'Spotted wood sandpiper', '2010'),
+(8, 'Jaguar', '1964'),
+(9, 'Crab, sally lightfoot', '2005'),
+(10, 'Red-legged pademelon', '1991'),
+(11, 'Harbor seal', '1986'),
+(12, 'Black-throated butcher bird', '2005'),
+(13, 'Waterbuck, defassa', '1998'),
+(14, 'Shrew, mandras tree', '2007'),
+(15, 'Gonolek, burchell\'s', '1992'),
+(16, 'Hartebeest, red', '2009'),
+(17, 'Suricate', '1984'),
+(18, 'North American river otter', '1997'),
+(19, 'Red-knobbed coot', '2004'),
+(20, 'African red-eyed bulbul', '2009'),
+(21, 'Malleefowl', '1997'),
+(22, 'Armadillo, nine-banded', '1987'),
+(34, 'game', '2014'),
+(35, 'test1', '2023'),
+(36, 'test1', '1111');
 
 -- --------------------------------------------------------
 
@@ -86,7 +96,29 @@ CREATE TABLE `games_of_users` (
 
 INSERT INTO `games_of_users` (`guid`, `uid`, `gid`) VALUES
 (1, 1, 2),
-(5, 1, 1);
+(5, 1, 1),
+(6, 9, 5),
+(7, 9, 4),
+(8, 9, 6),
+(10, 10, 5),
+(33, 10, 1),
+(35, 16, 5),
+(36, 16, 4),
+(37, 17, 4),
+(38, 17, 6),
+(55, 22, 10),
+(56, 22, 11),
+(65, 10, 4),
+(67, 10, 2),
+(69, 10, 6),
+(70, 23, 1),
+(71, 23, 2),
+(72, 23, 4),
+(73, 23, 5),
+(74, 23, 6),
+(76, 24, 2),
+(77, 24, 4),
+(78, 24, 5);
 
 -- --------------------------------------------------------
 
@@ -111,7 +143,17 @@ INSERT INTO `images` (`iid`, `path`, `uid`, `gid`, `pid`, `cid`) VALUES
 (1, 'a3aa1b58-bd87-43f4-8c6b-fc1f1daa6ed6.jpg', NULL, NULL, 1, NULL),
 (2, 'ef1b5bda-291f-4a9c-b431-c57dd7091163.jpg', NULL, NULL, 1, NULL),
 (3, '3509ffc9-52b6-49b4-882b-c6325e77798f.png', NULL, NULL, 1, NULL),
-(4, '7f5e157f-04c8-4449-8fe4-93dda8a5808b.png', NULL, NULL, 1, NULL);
+(4, '7f5e157f-04c8-4449-8fe4-93dda8a5808b.png', NULL, NULL, 1, NULL),
+(6, '8733e1c3-f985-43ed-b176-4aafe853ab12.jpg', NULL, NULL, 14, NULL),
+(15, '25cf3959-8bcd-4932-87c9-683c5a0308ac.jpg', NULL, NULL, 24, NULL),
+(39, '967924b8-9693-45e2-a813-6ce17b23579e.png', 10, NULL, NULL, NULL),
+(43, 'cc1fe227-87e6-4a54-b562-1f85ab4ba67c.png', 23, NULL, NULL, NULL),
+(46, '52ee4d93-bce0-43aa-9119-c7b971057b33.jpg', NULL, NULL, 109, NULL),
+(47, 'e6d7d239-6ae0-4ed2-b3a6-f9d632c360ea.JPG', NULL, NULL, 109, NULL),
+(48, 'af626040-ee87-4ba0-a0f5-96204a158eaa.jpg', NULL, NULL, 110, NULL),
+(49, 'f6a99794-d5f1-4a00-8f02-e907c3b2850a.JPG', NULL, NULL, 113, NULL),
+(50, 'cae9645d-e4cc-49cf-bff1-985713763109.jpg', NULL, 34, NULL, NULL),
+(56, '0facd7bc-5cd4-4e37-858d-8d2484e21b13.png', 24, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -131,7 +173,7 @@ CREATE TABLE `liked` (
 --
 
 INSERT INTO `liked` (`lid`, `uid`, `pid`, `cid`) VALUES
-(1, 2, 1, NULL);
+(42, 23, 14, NULL);
 
 -- --------------------------------------------------------
 
@@ -152,18 +194,12 @@ CREATE TABLE `posts` (
 --
 
 INSERT INTO `posts` (`pid`, `uid`, `gid`, `detail`, `date`) VALUES
-(1, 1, 2, 'Fix Test', '2023-07-23 09:04:11'),
-(2, 1, 1, 'Testadsgva', '2023-10-08 08:24:15'),
-(3, 1, 1, 'Test2', '2023-10-08 08:24:25'),
-(4, 1, 1, 'Test3', '2023-10-08 08:24:32'),
-(5, 1, 1, 'Test4', '2023-10-08 08:24:35'),
-(6, 1, 1, 'Test5', '2023-10-08 08:24:38'),
-(7, 1, 1, 'Test6', '2023-10-08 08:24:40'),
-(8, 1, 1, 'Test6', '2023-10-12 13:15:53'),
-(9, 1, 3, 'aefg', '2023-10-12 14:17:52'),
-(10, 1, 3, 'aefg', '2023-10-12 14:17:57'),
-(11, 4, 2, 'asdgzxcv', '2023-10-12 14:19:18'),
-(12, 4, 2, 'asdgzxcv', '2023-10-12 14:19:23');
+(109, 23, 5, 'BEST GAME EVER', '2023-10-18 15:52:49'),
+(110, 23, 5, 'BEST MODS', '2023-10-18 15:53:23'),
+(111, 10, 5, 'VERY GOOD', '2023-10-18 15:54:20'),
+(112, 10, 5, 'SUPER FUN', '2023-10-18 15:54:29'),
+(113, 10, 5, 'BEAUTIFUL', '2023-10-18 15:56:03'),
+(114, 10, 5, 'HAHAHA', '2023-10-18 15:56:13');
 
 -- --------------------------------------------------------
 
@@ -185,7 +221,10 @@ CREATE TABLE `reported_posts` (
 
 INSERT INTO `reported_posts` (`rpid`, `pid`, `uid`, `reason`, `status`) VALUES
 (1, 1, 2, 'Useless.', 'Waiting for process'),
-(2, 1, 1, 'test', 'Waiting for process');
+(2, 1, 1, 'test', 'Waiting for process'),
+(8, 14, 10, 'Fake', 'Waiting for process'),
+(9, 110, 10, 'report', 'Waiting for process'),
+(10, 114, 24, 'ไม่เหมาะสม', 'Waiting for process');
 
 -- --------------------------------------------------------
 
@@ -206,8 +245,11 @@ CREATE TABLE `requested_games` (
 --
 
 INSERT INTO `requested_games` (`rgid`, `uid`, `name`, `year`, `status`) VALUES
-(1, 2, 'test1', '1111', 'Waiting for approval'),
-(2, 2, 'test3', '1111', 'Waiting for approval');
+(1, 2, 'test1', '1111', 'Approved'),
+(2, 2, 'test3', '1111', 'Waiting for approval'),
+(3, 10, 'boomzboss321', '4578', 'Waiting for approval'),
+(4, 10, 'GGGGGGGGG', '4578', 'Waiting for approval'),
+(5, 24, 'game', '2013', 'Waiting for approval');
 
 -- --------------------------------------------------------
 
@@ -236,8 +278,15 @@ INSERT INTO `users` (`uid`, `email`, `password`, `username`, `name`, `surname`, 
 (1, 'proqppq123@gmail.com', '6Eb88c@5', 'CloudyTLC', 'บวรวัชร', 'ทองอยู่', 'User', 'Normal', '2023-10-13 07:17:13', '2023-07-23 09:02:18'),
 (2, 'proqppq111@gmail.com', '6eb88cc5', 'Cloud', 'เมฆาคราม', 'เมฆาวงศ์', 'User', 'Normal', '2023-10-13 08:31:33', '2023-07-23 09:05:27'),
 (3, 'testtest', 'test', 'Testadsgva', 'test', 'test', 'Uesr', 'Normal', '2023-10-07 09:18:06', '2023-10-06 03:19:51'),
-(4, 'admin@gmail.com', 'admin', 'admin', 'admin', 'admin', 'Admin', 'Normal', '2023-10-13 06:30:44', '2023-10-06 08:43:43'),
-(7, 'admin@gmail.co', 'test', 'Testadsgva', 'test', 'test', 'Uesr', 'Normal', NULL, '2023-10-06 09:32:06');
+(4, 'admin@gmail.com', 'admin', 'admin', 'admin', 'admin', 'Admin', 'Normal', '2023-10-19 06:58:46', '2023-10-06 08:43:43'),
+(7, 'admin@gmail.co', 'test', 'Testadsgva', 'test', 'test', 'User', 'Normal', NULL, '2023-10-06 09:32:06'),
+(9, 'Namelessz555@windowslive.com', 'Namelessz555', 'Namelessz555', 'Namelessz555', 'Namelessz555', 'User', 'Normal', '2023-10-14 08:36:33', '2023-10-13 16:53:06'),
+(10, 'boomzboss123@gmail.com', 'boomzboss123', 'Namelessz', 'Namelessz', 'Namelessz', 'User', 'Normal', '2023-10-19 07:21:29', '2023-10-13 17:44:28'),
+(16, 'wqweeqw@gmail.com', 'wqweeqw547', 'wqweeqw547', 'wqweeqw547', 'wqweeqw547', 'User', 'Normal', '2023-10-14 08:36:38', '2023-10-14 07:22:46'),
+(17, 'boomzboss321@gmail.com', 'boomzboss321', 'boomzboss321', 'boomzboss321', 'boomzboss321', 'User', 'Normal', '2023-10-14 08:36:42', '2023-10-14 08:06:30'),
+(22, 'boomzboss777@gmail.com', 'boomzboss777', 'boomzboss777', 'boomzboss777', 'boomzboss777', 'User', 'Normal', '2023-10-14 09:25:54', '2023-10-14 09:25:54'),
+(23, 'sophonvid555@windowslive.com', 'sophonvid555', 'sophonvid555', 'sophonvid555', 'sophonvid555', 'User', 'Normal', '2023-10-18 15:50:30', '2023-10-17 14:12:18'),
+(24, 'sophonvidptt123@windowslive.com', 'sophonvidptt123', 'sophonvidptt', 'sophonvidptt', 'sophonvidptt', 'User', 'Normal', '2023-10-19 07:34:10', '2023-10-19 07:34:10');
 
 --
 -- Indexes for dumped tables
@@ -323,55 +372,55 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `cid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `cid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `games`
 --
 ALTER TABLE `games`
-  MODIFY `gid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `gid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `games_of_users`
 --
 ALTER TABLE `games_of_users`
-  MODIFY `guid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `guid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
 
 --
 -- AUTO_INCREMENT for table `images`
 --
 ALTER TABLE `images`
-  MODIFY `iid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `iid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- AUTO_INCREMENT for table `liked`
 --
 ALTER TABLE `liked`
-  MODIFY `lid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `lid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `pid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `pid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=116;
 
 --
 -- AUTO_INCREMENT for table `reported_posts`
 --
 ALTER TABLE `reported_posts`
-  MODIFY `rpid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `rpid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `requested_games`
 --
 ALTER TABLE `requested_games`
-  MODIFY `rgid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `rgid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `uid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `uid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- Constraints for dumped tables

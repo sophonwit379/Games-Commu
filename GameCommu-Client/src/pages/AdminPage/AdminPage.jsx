@@ -5,6 +5,7 @@ import {SideBarMenu} from "./SideBarMenu"
 import "./SideBarMenu.css"
 import "./AdminPage.css"
 import {AddGamePage} from '../AddGamePage/AddGamePage'
+import AllCommu from "../AllCommuPage/AllCommu";
 
 function AdminPage() {
   return (
@@ -17,6 +18,7 @@ function AdminPage() {
           <Route path="/ReportTable" element={<TablePages props="report"/>} />
           <Route path="/RequestTable" element={<TablePages props="request"/>} />
           <Route path="/AddGame" element={<AddGamePage/>} />
+          <Route path="/commus" element={<AllCommu/>} />
         </Routes>
       </div>
     </div>

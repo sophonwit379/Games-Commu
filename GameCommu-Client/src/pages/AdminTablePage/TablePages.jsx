@@ -1,6 +1,6 @@
 import { ReportItem } from "../../components/ReportPanel/ReportItem";
 import "./TableStyle.css";
-import {RequestItem} from "../../components/ReportPanel/RequestItem"
+import {RequestItem} from "../../components/RequestPanel/RequestItem"
 
 export function TablePages(props) {
   console.log(props);
@@ -10,19 +10,6 @@ export function TablePages(props) {
         <div className="AdminPageMain-con m-5">
           <div className="AdminPageHead-con">
             <span className="fs-1">Report</span>
-            <div className="PageHeadButton-con ">
-              <button
-                className="btn bordor-none dropdown-toggle text-white text-center text-sm-start border-top-color "
-                type="button"
-                id="triggerId"
-                data-bs-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              ></button>
-              <div className=" dropdown-menu " aria-labelledby="triggerId">
-                <a>Remove</a>
-              </div>
-            </div>
           </div>
           <div className="table-con">
             <ReportItem />
@@ -36,19 +23,6 @@ export function TablePages(props) {
         <div className="AdminPageMain-con m-5">
           <div className="AdminPageHead-con">
             <span className="fs-1">Request</span>
-            <div className="PageHeadButton-con ">
-              <button
-                className="btn bordor-none dropdown-toggle text-white text-center text-sm-start border-top-color "
-                type="button"
-                id="triggerId"
-                data-bs-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              ></button>
-              <div className=" dropdown-menu " aria-labelledby="triggerId">
-                <a>Remove</a>
-              </div>
-            </div>
           </div>
           <div className="table-con">
             <RequestItem />

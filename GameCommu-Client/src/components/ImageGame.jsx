@@ -13,7 +13,7 @@ function ImageGame({className,gid,height}) {
   if(isFetching){
     content = <Skeleton height={height}/>
   }else if(data > -1){
-    content = <ImageGameList uid={gid} className={className} height={height}/>
+    content = <ImageGameList gid={gid} className={className} height={height}/>
   }else{
     content = <Image className={className} src={no_img} height={height} alt="profile-image" roundedCircle/>
   }

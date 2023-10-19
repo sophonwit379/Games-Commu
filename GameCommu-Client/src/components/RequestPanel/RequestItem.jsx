@@ -20,7 +20,7 @@ export function RequestItem() {
     content = itemsToDisplay?.map((item, id) => (
       <tr key={id}>
         <td>{item.rgid}</td>
-        <td>{item.uid}</td>
+        <td>{item.name}</td>
         <td>{item.year}</td>
         <td>{item.status}</td>
         <td>

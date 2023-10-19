@@ -6,6 +6,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { Button } from "react-bootstrap";
 import { useAddGameMutation, useGetGamesQuery } from "../../store/apis/gamesApi";
+import { useUploadGameImgMutation } from '../../store/index';
 import { toast } from "react-toastify";
 
 function AddGameItem() {
@@ -18,7 +19,8 @@ function AddGameItem() {
     file: yup.mixed().required(),
   });
   const { data: games} = useGetGamesQuery();
-  const [addGame] = useAddGameMutation();
+  const [ addGame ] = useAddGameMutation();
+  const [ uploadGameImg ] = useUploadGameImgMutation();
   const handleEdit = async (values) => {
     const data = {
       name: values.name,
@@ -44,9 +46,17 @@ function AddGameItem() {
         }
       }
       setSpin(true);
-      addGame(data);
+      console.log(values);
+      const game = await addGame(data);
+      if(values?.file.length > 0){
+        const images = {
+          gid: game.data.gid,
+          file: values.file[0]
+        }
+        await uploadGameImg(images);
+      }
       setSpin(false);
-      toast.success("รายงานสำเร็จ", {
+      toast.success("เพิ่มเกมสำเร็จ", {
         position: "bottom-right",
         autoClose: 1000,
         hideProgressBar: false,
@@ -77,7 +87,7 @@ function AddGameItem() {
         file: null,
       }}
     >
-      {({ handleSubmit, handleChange, values, touched, errors }) => (
+      {({ handleSubmit, handleChange, values, setFieldValue, errors }) => (
         <Form noValidate onSubmit={handleSubmit}>
           <Row className="mb-3">
             <Form.Group
@@ -124,7 +134,10 @@ function AddGameItem() {
                 type="file"
                 required
                 name="file"
-                onChange={handleChange}
+                onChange={(event) => {
+                  const filesArray = [...event.target.files];
+                  setFieldValue('file', filesArray);
+              }}
                 isInvalid={!!errors.file}
               />
             </Form.Group>

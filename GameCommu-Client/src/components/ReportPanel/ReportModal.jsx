@@ -36,11 +36,11 @@ function ReportModal(props) {
         </Modal.Header>
         <Modal.Body>
           <div>
-            pid:{data.pid}
-            <br/>gid:{data.gid}
-            <br/>uid:{data.uid}
-            <br/>detail:{data.detail}
-            <br/>date:{data.date}
+            pid:{data?.pid}
+            <br/>gid:{data?.gid}
+            <br/>uid:{data?.uid}
+            <br/>detail:{data?.detail}
+            <br/>date:{data?.date}
             <br/><Button onClick={()=>{
               removeHandle(data.pid);
             }}>remove</Button>
